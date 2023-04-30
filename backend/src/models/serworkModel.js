@@ -1,0 +1,35 @@
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const newSchema = new Schema({
+
+TypeServ: {
+type: String,
+required: true
+},
+
+Wname: {
+type: String,
+required: true
+},
+
+Price: {
+type: String,
+required: true
+},
+
+Hours: {
+type: [String],
+required: true
+},
+
+rating:{
+type:Number,
+default:0
+},
+
+});
+   
+const model=mongoose.model('ServWork',newSchema);
+module.exports = model;
+

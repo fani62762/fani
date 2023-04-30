@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "532682408970",
+    "project_id": "fani-2",
+    "storage_bucket": "fani-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:532682408970:android:486e93afd8dc93d6b3cbf3",
+        "android_client_info": {
+          "package_name": "com.example.fani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "532682408970-8pe85vmo22752gkdqgsljg1oihdknlr8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fani",
+            "certificate_hash": "55d1742a5e319e56261a5d96bd5d295cf85500f0"
+          }
+        },
+        {
+          "client_id": "532682408970-pasllfpor71m04vf6ja4no0b67b2n237.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl69u_uep5qbkynMZFR0Fb13vKb-2IXVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532682408970-pasllfpor71m04vf6ja4no0b67b2n237.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
