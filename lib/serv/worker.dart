@@ -279,7 +279,6 @@ class _techState extends State<tech> {
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Container(
                   padding: EdgeInsets.all(20.0),
-                  //  height: 180,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
