@@ -1,6 +1,6 @@
 const workerModel= require('../models/workermodel');
 const nodemailer = require('nodemailer');
-
+//
 const forgotPassword = async (req, res) => {
   const { name } = req.body;
   try {
