@@ -29,8 +29,8 @@ class Uort extends StatefulWidget {
 class _UortState extends State<Uort> {
   final _formKey1 = GlobalKey<FormState>();
 
-  static const String signupUrl = 'https://fanii.onrender.com/users';
-  static const String signupUrlW = 'https://fanii.onrender.com/worker';
+  static const String signupUrl = 'https://fani-service.onrender.com/users';
+  static const String signupUrlW = 'https://fani-service.onrender.com/worker';
 
   Future<void> createworker(String name, String email, String password,
       String phone, String gen, String dat) async {

@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
   Future<void> getAlltype() async {
     servicesList.clear();
     final response =
-        await http.get(Uri.parse('https://fanii.onrender.com/type/3'));
+        await http.get(Uri.parse('https://fani-service.onrender.com/type/3'));
     print(response);
 
     if (response.statusCode == 200) {

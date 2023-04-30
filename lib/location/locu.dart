@@ -25,7 +25,7 @@ class _LocUState extends State<LocU> {
         {'address': address, 'latitude': latitude, 'longitude': longitude});
 
     final response = await http.put(
-      Uri.parse('https://fanii.onrender.com/users/location/$name'),
+      Uri.parse('https://fani-service.onrender.com/users/location/$name'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );

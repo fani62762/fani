@@ -229,8 +229,8 @@ class lim {
 
 class _UserpageState extends State<Userpage> {
   Future<void> userInfo(String name) async {
-    final responseU =
-        await http.get(Uri.parse('https://fanii.onrender.com/users/2/$name'));
+    final responseU = await http
+        .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
     if (responseU.statusCode == 200) {
       final userr = jsonDecode(responseU.body);
       naaCon = TextEditingController(text: userr['name']);
@@ -266,7 +266,7 @@ class _UserpageState extends State<Userpage> {
   Future<List<types>> getAlltype() async {
     // print("hi function get all");
     final resp = await http.get(
-      Uri.parse('https://fanii.onrender.com/type/'),
+      Uri.parse('https://fani-service.onrender.com/type/'),
       headers: {'Content-Type': 'application/json'},
     );
     final parsed = jsonDecode(resp.body) as List;
@@ -284,7 +284,7 @@ class _UserpageState extends State<Userpage> {
   Future<List<types>> getlimits() async {
     // print("hi function get all");
     final resp = await http.get(
-      Uri.parse('https://fanii.onrender.com/servwork/3'),
+      Uri.parse('https://fani-service.onrender.com/servwork/3'),
       headers: {'Content-Type': 'application/json'},
     );
     final parsed = jsonDecode(resp.body) as List;

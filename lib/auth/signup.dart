@@ -36,10 +36,10 @@ final TextEditingController cmob = TextEditingController();
 
 class _SignUpState extends State<SignUp> {
   Future<bool> fetchUserByName(String name) async {
-    final response =
-        await http.get(Uri.parse('https://fanii.onrender.com/users/2/$name'));
-    final responseW =
-        await http.get(Uri.parse('https://fanii.onrender.com/worker/2/$name'));
+    final response = await http
+        .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
+    final responseW = await http
+        .get(Uri.parse('https://fani-service.onrender.com/worker/2/$name'));
     if (response.statusCode == 200) {
       final user = jsonDecode(response.body);
       return (true);
@@ -126,7 +126,6 @@ class _SignUpState extends State<SignUp> {
                           } else if (value.length < 6) {
                             return 'كلمة المرور يجب أن تكون أكبر من 5';
                           } else {
-                            // print("the pass is " + value + " " + cpass.text);
                             passup = value;
                           }
                           return null;

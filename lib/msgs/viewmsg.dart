@@ -20,7 +20,8 @@ class ViewMsg extends StatefulWidget {
 
 class _ViewMsgState extends State<ViewMsg> {
   Future<void> getmyeWorker(String wName) async {
-    final String url = 'https://fanii.onrender.com/servwork/2/?Wname=$wName';
+    final String url =
+        'https://fani-service.onrender.com/servwork/2/?Wname=$wName';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
@@ -63,7 +64,7 @@ class _ViewMsgState extends State<ViewMsg> {
 
   Future<void> getAllWorkers() async {
     final response =
-        await http.get(Uri.parse('https://fanii.onrender.com/worker/'));
+        await http.get(Uri.parse('https://fani-service.onrender.com/worker/'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       setState(() {

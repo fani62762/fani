@@ -46,8 +46,7 @@ final TextEditingController cpass2 = TextEditingController();
 class _LoginState extends State<Login> {
   Future<void> submitCredentials(String name, String password) async {
     final response = await http.post(
-      Uri.parse(
-          'https://fanii.onrender.com/users/login'), //108 for shahd 212 for fanan
+      Uri.parse('https://fani-service.onrender.com/users/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': name,
@@ -56,7 +55,7 @@ class _LoginState extends State<Login> {
     );
 
     final responseW = await http.post(
-      Uri.parse('https://fanii.onrender.com/worker/login'),
+      Uri.parse('https://fani-service.onrender.com/worker/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': name,
@@ -75,7 +74,6 @@ class _LoginState extends State<Login> {
                       userName: name,
                     )));
       } else {
-        // print("hi worker $name");
         if (formkk.currentState!.validate()) {
           formkk.currentState!.save();
           Navigator.pushReplacement(
@@ -85,13 +83,11 @@ class _LoginState extends State<Login> {
                         techName: name,
                       )));
         }
-        // responseW result will be changed to worker page when its created
       }
     } else if (response.statusCode == 401 || responseW.statusCode == 410) {
       final message = jsonDecode(response.body)['message'];
       final messagee = jsonDecode(responseW.body)['message'];
       if (message == 'Invalid nameU' && messagee == 'Invalid nameW') {
-        // print("nameErrorU");
         AwesomeDialog(
           context: context,
           dialogType: DialogType.info,
@@ -100,7 +96,6 @@ class _LoginState extends State<Login> {
         ).show();
       } else if (message == 'Invalid passwordU' ||
           messagee == 'Invalid passwordW') {
-        // print("passwordErrorU");
         AwesomeDialog(
           context: context,
           dialogType: DialogType.info,

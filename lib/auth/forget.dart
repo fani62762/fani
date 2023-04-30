@@ -38,16 +38,14 @@ class _ForgetState extends State<Forget> {
   Future<void> resetPassword(String name) async {
     print(name);
     final response = await http.post(
-      Uri.parse(
-          'https://fanii.onrender.com/users/forgot-password'), //108 for shahd 212 for fanan
+      Uri.parse('https://fani-service.onrender.com/users/forgot-password'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': name,
       }),
     );
     final responseW = await http.post(
-      Uri.parse(
-          'https://fanii.onrender.com/worker/forgot-password'), //108 for shahd 212 for fanan
+      Uri.parse('https://fani-service.onrender.com/worker/forgot-password'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': name,

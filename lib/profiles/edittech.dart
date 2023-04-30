@@ -53,8 +53,8 @@ TextEditingController addrcon = TextEditingController();
 
 class _editTechState extends State<editTech> {
   Future<void> getalls(String name) async {
-    final response = await http
-        .get(Uri.parse('https://fanii.onrender.com/servwork/4/?Wname=$name'));
+    final response = await http.get(
+        Uri.parse('https://fani-service.onrender.com/servwork/4/?Wname=$name'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       setState(() {
@@ -78,7 +78,7 @@ class _editTechState extends State<editTech> {
     });
 
     final response = await http.put(
-      Uri.parse('https://fanii.onrender.com/worker/2/$name'),
+      Uri.parse('https://fani-service.onrender.com/worker/2/$name'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
@@ -93,7 +93,7 @@ class _editTechState extends State<editTech> {
       'bio': bio,
     });
     final response = await http.put(
-      Uri.parse('https://fanii.onrender.com/worker/4/$name'),
+      Uri.parse('https://fani-service.onrender.com/worker/4/$name'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
@@ -275,7 +275,8 @@ class _editTechState extends State<editTech> {
 
   Future<void> getmyeWorker(String wName) async {
     priceCont = TextEditingController(text: "");
-    final String url = 'https://fanii.onrender.com/servwork/2/?Wname=$wName';
+    final String url =
+        'https://fani-service.onrender.com/servwork/2/?Wname=$wName';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
@@ -299,7 +300,7 @@ class _editTechState extends State<editTech> {
     final body = jsonEncode(
         {"TypeServ": TypeServ, "Wname": Wname, "Price": Price, "Hours": Hours});
     final response = await http.post(
-      Uri.parse('https://fanii.onrender.com/servwork'),
+      Uri.parse('https://fani-service.onrender.com/servwork'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
@@ -313,7 +314,7 @@ class _editTechState extends State<editTech> {
   Future<void> deleteServworker(String TypeServ, String Wname) async {
     final body = jsonEncode({"TypeServ": TypeServ, "Wname": Wname});
     final response = await http.delete(
-      Uri.parse('https://fanii.onrender.com/servwork'),
+      Uri.parse('https://fani-service.onrender.com/servwork'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
@@ -328,7 +329,7 @@ class _editTechState extends State<editTech> {
   Future<void> getServiceWorker(String typeServ, String wName) async {
     priceCont = TextEditingController(text: "");
     final Uri uri = Uri.parse(
-        'https://fanii.onrender.com/servwork/1/?TypeServ=$typeServ&Wname=$wName');
+        'https://fani-service.onrender.com/servwork/1/?TypeServ=$typeServ&Wname=$wName');
     final http.Response response = await http.get(uri);
 
     if (response.statusCode == 200) {
@@ -346,8 +347,8 @@ class _editTechState extends State<editTech> {
   }
 
   Future<void> workerInfo(String name) async {
-    final responseW =
-        await http.get(Uri.parse('https://fanii.onrender.com/worker/2/$name'));
+    final responseW = await http
+        .get(Uri.parse('https://fani-service.onrender.com/worker/2/$name'));
     if (responseW.statusCode == 200) {
       final worker = jsonDecode(responseW.body);
       setState(() {
@@ -564,7 +565,7 @@ class _editTechState extends State<editTech> {
   Future<void> getAlltype() async {
     servicesList.clear();
     final response =
-        await http.get(Uri.parse('https://fanii.onrender.com/type/3'));
+        await http.get(Uri.parse('https://fani-service.onrender.com/type/3'));
     print(response);
 
     if (response.statusCode == 200) {
@@ -599,7 +600,7 @@ class _editTechState extends State<editTech> {
         'image': image,
       });
       final response = await http.put(
-        Uri.parse('https://fanii.onrender.com/worker/1/$name'),
+        Uri.parse('https://fani-service.onrender.com/worker/1/$name'),
         headers: {'Content-Type': 'application/json'},
         body: body,
       );

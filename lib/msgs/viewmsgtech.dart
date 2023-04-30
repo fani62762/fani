@@ -50,7 +50,7 @@ class _ViewMsgTState extends State<ViewMsgT> {
 
   Future<void> getAllusers() async {
     final response =
-        await http.get(Uri.parse('https://fanii.onrender.com/users/'));
+        await http.get(Uri.parse('https://fani-service.onrender.com/users/'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       setState(() {
