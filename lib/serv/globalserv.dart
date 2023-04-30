@@ -49,7 +49,7 @@ class _GservState extends State<Gserv> {
   Future<List<serv>> getAllserv() async {
     print("hi function$typef");
     final resp = await http2.get(
-      Uri.parse('http://192.168.1.212:3000/serv/2/$typef'),
+      Uri.parse('https://fani-service.onrender.com/serv/2/$typef'),
       headers: {'Content-Type': 'application/json'},
     );
     final parsed = jsonDecode(resp.body) as List;

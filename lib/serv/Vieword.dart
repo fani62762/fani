@@ -103,7 +103,7 @@ class _ViewordState extends State<Vieword> {
   Future<List<morder>> getworkordu() async {
     print(techname + "this is techname");
     final resp = await http2.get(
-      Uri.parse('http://192.168.1.212:3000/ord/6/$tname'),
+      Uri.parse('https://fani-service.onrender.com/ord/6/$tname'),
       headers: {'Content-Type': 'application/json'},
     );
     final parsed = jsonDecode(resp.body) as List;
@@ -122,7 +122,7 @@ class _ViewordState extends State<Vieword> {
       'acc': acc,
     });
     final response = await http2.put(
-      Uri.parse('http://192.168.1.212:3000/ord/7/$id'),
+      Uri.parse('https://fani-service.onrender.com/ord/7/$id'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
@@ -135,7 +135,7 @@ class _ViewordState extends State<Vieword> {
   Future<void> deleteo(String id) async {
     print("hihihid");
     final response = await http2.delete(
-      Uri.parse('http://192.168.1.212:3000/ord/$id'),
+      Uri.parse('https://fani-service.onrender.com/ord/$id'),
       headers: {'Content-Type': 'application/json'},
     );
     if (response.statusCode == 200) {
@@ -146,7 +146,7 @@ class _ViewordState extends State<Vieword> {
 
   Future<List<morder>> getworkordd() async {
     final resp = await http2.get(
-      Uri.parse('http://192.168.1.212:3000/ord/5/$tname'),
+      Uri.parse('https://fani-service.onrender.com/ord/5/$tname'),
       headers: {'Content-Type': 'application/json'},
     );
     final parsed = jsonDecode(resp.body) as List;

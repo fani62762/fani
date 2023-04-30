@@ -47,7 +47,7 @@ Future<void> createord(
     'isrepeated': isrepeated
   });
   final response = await http2.post(
-    Uri.parse('http://192.168.1.212:3000/ord'),
+    Uri.parse('https://fani-service.onrender.com/ord'),
     headers: {'Content-Type': 'application/json'},
     body: body,
   );

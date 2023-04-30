@@ -99,7 +99,8 @@ class _techState extends State<tech> {
   Future<List<workserv>> getw() async {
     print("hi function$typef");
     final resp = await http2.get(
-      Uri.parse('http://192.168.1.212:3000/servwork/4/$typef/$hourtosend'),
+      Uri.parse(
+          'https://fani-service.onrender.com/servwork/4/$typef/$hourtosend'),
       headers: {'Content-Type': 'application/json'},
     );
 
@@ -199,7 +200,8 @@ class _techState extends State<tech> {
   Future<List<workserv>> getow() async {
     print("hi function$typef");
     final resp = await http2.get(
-      Uri.parse('http://192.168.1.212:3000/servwork/5/$typef/$hourtosend'),
+      Uri.parse(
+          'https://fani-service.onrender.com/servwork/5/$typef/$hourtosend'),
       headers: {'Content-Type': 'application/json'},
     );
     final parsed = jsonDecode(resp.body) as List;

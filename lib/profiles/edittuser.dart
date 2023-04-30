@@ -21,8 +21,8 @@ File? imageFile;
 
 class _editUserState extends State<editUser> {
   Future<void> userInfo(String name) async {
-    final responseU =
-        await http.get(Uri.parse('https://fanii.onrender.com/users/2/$name'));
+    final responseU = await http
+        .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
     if (responseU.statusCode == 200) {
       final userr = jsonDecode(responseU.body);
       setState(() {
@@ -62,7 +62,7 @@ class _editUserState extends State<editUser> {
         'image': image,
       });
       final response = await http.put(
-        Uri.parse('https://fanii.onrender.com/users/1/$name'),
+        Uri.parse('https://fani-service.onrender.com/users/1/$name'),
         headers: {'Content-Type': 'application/json'},
         body: body,
       );
@@ -120,7 +120,7 @@ class _editUserState extends State<editUser> {
       });
 
       final response = await http.put(
-        Uri.parse('https://fanii.onrender.com/users/2/$name'),
+        Uri.parse('https://fani-service.onrender.com/users/2/$name'),
         headers: {'Content-Type': 'application/json'},
         body: body,
       );

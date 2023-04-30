@@ -34,8 +34,8 @@ class _TsUState extends State<TsU> {
   }
 
   Future<void> userInfo(String name) async {
-    final responseW =
-        await http.get(Uri.parse('https://fanii.onrender.com/users/2/$name'));
+    final responseW = await http
+        .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
     if (responseW.statusCode == 200) {
       final user = jsonDecode(responseW.body);
       setState(() {

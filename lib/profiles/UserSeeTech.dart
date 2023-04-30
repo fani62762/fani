@@ -39,8 +39,8 @@ class _UsTState extends State<UsT> {
   }
 
   Future<void> workerInfo(String name) async {
-    final responseW =
-        await http.get(Uri.parse('https://fanii.onrender.com/worker/2/$name'));
+    final responseW = await http
+        .get(Uri.parse('https://fani-service.onrender.com/worker/2/$name'));
     if (responseW.statusCode == 200) {
       final worker = jsonDecode(responseW.body);
       setState(() {
@@ -63,8 +63,8 @@ class _UsTState extends State<UsT> {
   }
 
   Future<void> getalls(String name) async {
-    final response = await http
-        .get(Uri.parse('https://fanii.onrender.com/servwork/4/?Wname=$name'));
+    final response = await http.get(
+        Uri.parse('https://fani-service.onrender.com/servwork/4/?Wname=$name'));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
 
