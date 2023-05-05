@@ -77,11 +77,20 @@ const updateAdmin= async (req,res)=>{
   }
 };
 
-const getAdmin= async (req, res) => {
+const getAdmin = async (req, res) => {
+  try {
     const { name } = req.params;
     const singleUser = await AdminModel.findById(name);
-    res.json (singleUser);
-};  
+    if (!singleUser) {
+      return res.status(404).json({ error: 'Admin not found' });
+    }
+    res.json(singleUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+  
 
 const updateadminimg =async (req , res)=> {
       const { name } = req.params;
