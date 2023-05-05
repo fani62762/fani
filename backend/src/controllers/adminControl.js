@@ -47,11 +47,11 @@ const submitCredentials = async (req, res) => {
   try {
     const user = await AdminModel.findOne({ name });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid nameU' });
+      return res.status(401).json({ message: 'Invalid nameAdmin' });
     }
     const isMatch = await AdminModel.findOne({password});
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid passwordU' });
+      return res.status(401).json({ message: 'Invalid passwordAdmin' });
     }
     return res.status(200).json({ message: 'Success' });
 
