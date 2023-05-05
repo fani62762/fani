@@ -40,5 +40,5 @@ default:"https://firebasestorage.googleapis.com/v0/b/fani-2.appspot.com/o/images
 
 });
    
-const model=mongoose.model('Admin',newSchema);
+const model=mongoose.model('admin',newSchema);
 module.exports = model;
