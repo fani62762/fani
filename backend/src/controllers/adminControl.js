@@ -77,7 +77,7 @@ const updateAdmin= async (req,res)=>{
   }
 };
 
-const getUser = async (req, res) => {
+const getAdmin = async (req, res) => {
   try {
     const name = req.params.name;
     const user = await UserModel.findOne({ name: name });
