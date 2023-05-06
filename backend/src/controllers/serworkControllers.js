@@ -110,7 +110,7 @@ const getSerWorkert  = async (req, res) => {
   const TypeServ= req.query.TypeServ;
  // const TypeServ  = req.params.TypeServ;  
   console.log(Wname);
-  const serviceWorkers = await serworkModel.findOne({ Wname :{$eq :Wname},TypeServ:{$eq :TypeServ} }).then(function(myDoc) {
+  const serviceWorkers = await serworkModel.find({ Wname :{$eq :Wname},TypeServ:{$eq :TypeServ} }).then(function(myDoc) {
     console.log(myDoc);
     res.json(myDoc);
     });

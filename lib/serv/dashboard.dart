@@ -661,7 +661,7 @@ class _StatsScreenState extends State<StatsScreen> {
       headers: {'Content-Type': 'application/json'},
     );
     if (resp.statusCode == 200) {
-      final parsed = jsonDecode(resp.body) as List;
+      final parsed = jsonDecode(resp.body);
       if (this.mounted) {
         setState(() {
           service = parsed.map((e) => servwork.fromJson(e)).toList();
