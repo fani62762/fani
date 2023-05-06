@@ -304,7 +304,7 @@ import 'dart:convert';
 
 int ch = 1;
 int ch2 = 1;
-double oldrat = 0;
+int oldrat = 0;
 
 class morder {
   final String TypeServ;
@@ -360,7 +360,7 @@ class servwork {
   final String Price;
   final List<String> Hour;
 
-  final double rating;
+  final int rating;
 
   String id;
   servwork({
@@ -424,7 +424,7 @@ class StatsGrid extends StatefulWidget {
   State<StatsGrid> createState() => _StatsGridState();
 }
 
-double _rating = 0;
+int _rating = 0;
 
 class _StatsGridState extends State<StatsGrid> {
   void showRatingDialog(int index) {
@@ -451,7 +451,7 @@ class _StatsGridState extends State<StatsGrid> {
                 },
                 onRatingUpdate: (rating) {
                   setState(() {
-                    _rating = rating.toDouble();
+                    _rating = rating.toInt();
                   });
                 },
               ),
@@ -661,7 +661,7 @@ class _StatsScreenState extends State<StatsScreen> {
       headers: {'Content-Type': 'application/json'},
     );
     if (resp.statusCode == 200) {
-      final parsed = jsonDecode(resp.body);
+      final parsed = jsonDecode(resp.body) as List;
       if (this.mounted) {
         setState(() {
           service = parsed.map((e) => servwork.fromJson(e)).toList();
@@ -724,13 +724,15 @@ class _StatsScreenState extends State<StatsScreen> {
   }
 
   Future<void> updaterate(
-      String name, String TypeServ, double rating, double oldrat) async {
+      String name, String TypeServ, int rating, int oldrat) async {
+    int newrate = ((rating + oldrat) / 2).round();
+    print(newrate);
     final body = jsonEncode({
-      'rating': ((rating + oldrat) / 2).round(),
+      'rating': newrate,
     });
     final response = await http2.put(
       Uri.parse(
-          'https://fani.herokuapp.com/servwork/3/?Wname=$name&TypeServ=$TypeServ'),
+          'https://fani.herokuapp.com/servwork/7/?Wname=$name&TypeServ=$TypeServ'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );

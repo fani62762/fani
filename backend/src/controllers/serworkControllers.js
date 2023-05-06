@@ -89,7 +89,7 @@ const updateworkerrate =async (req , res)=> {
       
         try {
           const updUser = await serworkModel.findOneAndUpdate(
-            { name , TypeServ },
+            { Wname :{$eq :Wname} , TypeServ :{$eq :TypeServ}},
             { rating:rating },
             { new: true }
           );
