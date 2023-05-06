@@ -83,8 +83,8 @@ const getmyService = async (req, res) => {
 };
 
 const updateworkerrate =async (req , res)=> {
-      const { name } = req.params;
-      const {TypeServ}=req.params;
+  const  Wname  = req.query.Wname;
+  const TypeServ= req.query.TypeServ;
         const { rating } = req.body;
       
         try {
@@ -106,11 +106,11 @@ const getSerWorker  = async (req, res) => {
 };
 const getSerWorkert  = async (req, res) => {
   
-  const  Wname  = req.params.Wname;
-  const TypeServ= req.params.TypeServ;
+  const  Wname  = req.query.Wname;
+  const TypeServ= req.query.TypeServ;
  // const TypeServ  = req.params.TypeServ;  
   console.log(Wname);
-  const serviceWorkers = await serworkModel.findOne({ Wname ,TypeServ }).then(function(myDoc) {
+  const serviceWorkers = await serworkModel.findOne({ Wname :{$eq :Wname},TypeServ:{$eq :TypeServ} }).then(function(myDoc) {
     console.log(myDoc);
     res.json(myDoc);
     });

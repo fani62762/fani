@@ -10,10 +10,10 @@ servworkrouter.get('/1/',getServiceWorker);
 servworkrouter.get('/2/',getmyService);
 servworkrouter.get('/4/',getSerWorker);
 servworkrouter.get('/3/',getlimits);
-servworkrouter.put('/3/:name/:TypeServ',updateworkerrate);
+servworkrouter.put('/3',updateworkerrate);
 servworkrouter.get('/4/:type/:hour',getw);
 servworkrouter.get('/5/:type/:hour',getow);
-servworkrouter.get('/6/:Wname/:TypeServ',getSerWorkert);
+servworkrouter.get('/6',getSerWorkert);
 
 
 

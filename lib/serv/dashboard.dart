@@ -656,7 +656,8 @@ class _StatsScreenState extends State<StatsScreen> {
     print(name);
     print(TypeServ);
     final resp = await http2.get(
-      Uri.parse('https://fani-service.onrender.com/servwork/6/$name/$TypeServ'),
+      Uri.parse(
+          'https://fani-service.onrender.com/servwork/6/?Wname=$name&TypeServ=$TypeServ'),
       headers: {'Content-Type': 'application/json'},
     );
     if (resp.statusCode == 200) {
@@ -728,7 +729,8 @@ class _StatsScreenState extends State<StatsScreen> {
       'rating': ((rating + oldrat) / 2).round(),
     });
     final response = await http2.put(
-      Uri.parse('https://fani.herokuapp.com/servwork/3/$name/$TypeServ'),
+      Uri.parse(
+          'https://fani.herokuapp.com/servwork/3/?Wname=$name&TypeServ=$TypeServ'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
