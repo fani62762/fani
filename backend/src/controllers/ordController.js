@@ -44,6 +44,13 @@ const  getUserordd = async (req, res) => {
     res.json(myDoc);
     });
 };
+const  getUserordc = async (req, res) => {
+  const uname= req.params.name;
+  const allserv = await ordModel.find({uname,acc:{ $eq: -2 }}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
+};
 
 const  getUserordu = async (req, res) => {
     const uname= req.params.name;
@@ -53,12 +60,29 @@ const  getUserordu = async (req, res) => {
     });
 };
 
+// const updateaccw= async (req,res)=>{
+//   const  id  = req.params.id;
+//   const { acc} = req.body;
+//   console.log(id);
+//   try {
+//     const updUser = await ordModel.findByIdAndUpdate(
+//       id,
+//       { acc :acc },
+//       { new: true }
+//     );
+//     res.json(updUser);
+//   } catch (error) {
+//     res.status(500).send('Server error');
+//   }
+// }
 const updateaccw= async (req,res)=>{
-  const { id } = req.params.id;
-  const { acc} = req.body;
+  const id  = req.params.id;
+  const acc = req.body.acc;
+  console.log(id);
+  console.log(acc);
   try {
-    const updUser = await ordModel.findOneAndUpdate(
-      { id },
+    const updUser = await ordModel.findByIdAndUpdate(
+      id ,
       { acc },
       { new: true }
     );
@@ -92,6 +116,7 @@ const updateaccu= async (req,res)=>{
     getUserordd,
     getUserordu,
     updateaccw,
-    updateaccu
+    updateaccu,
+    getUserordc,
 
 };

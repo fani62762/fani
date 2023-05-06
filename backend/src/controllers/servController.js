@@ -8,6 +8,7 @@ const createserv = async (req, res) => {
 
 const getAllserv= async(req,res)=>{
       const allserv = await servModel.find({}).then(function(myDoc) {
+        console.log(allserv);
       res.json(myDoc);
       });
   };

@@ -4,6 +4,7 @@ import 'package:fani/notifi/notifi_service.dart';
 import 'package:fani/profiles/foruser.dart';
 import 'package:flutter/material.dart';
 import 'package:fani/serv/globalserv.dart';
+import 'package:fani/serv/dashboard.dart';
 import 'dart:async';
 import 'package:flutter/rendering.dart';
 import 'dart:convert';
@@ -40,6 +41,7 @@ PreferredSize builbar() {
     child: AppBar(
       backgroundColor: dy,
       title: Text(
+        textDirection: TextDirection.rtl,
         '     مرحبا $nee',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
       ),
@@ -137,7 +139,9 @@ PreferredSize billenddrawer(BuildContext context) {
               style: TextStyle(color: db, fontWeight: FontWeight.w300),
             ),
             onTap: () {
-              //  Navigator.of(context).pushNamed("request");
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => StatsScreen()));
+              //   print("foruser profiles");
             },
           ),
           SizedBox(

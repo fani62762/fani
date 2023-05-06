@@ -3,7 +3,8 @@ import 'package:fani/msgs/viewmsg.dart';
 import 'package:flutter/material.dart';
 import 'package:fani/main.dart';
 import 'package:fani/profiles/edittuser.dart';
-import 'package:fani/serv/Viewordu.dart';
+//import 'package:fani/serv/Viewordu.dart';
+import 'package:fani/serv/dashboard.dart';
 
 class ForUser extends StatefulWidget {
   const ForUser({super.key});
@@ -14,11 +15,22 @@ class ForUser extends StatefulWidget {
 
 List addressList = addrr.split(',');
 
+// Order order = Order(
+//   typeOfService: 'Cleaning',
+//   hour: '2-4',
+//   workerName: 'John Doe',
+//   userName: 'Jane Doe',
+//   services: ['Kitchen', 'Bathroom', 'Living Room'],
+//   additionalServices: ['Windows Cleaning', 'Carpet Cleaning'],
+//   appointmentTime: '2-2-2002', //DateTime(2022, 5, 15, 14, 30),
+//   isRepeated: true,
+//   pricePerHour: 25.0,
+// );
+
 class _ForUserState extends State<ForUser> {
   @override
   void initState() {
     super.initState();
-    addressList = addrr.split(',');
   }
 
   @override
@@ -274,7 +286,7 @@ class _ForUserState extends State<ForUser> {
               case 2:
                 print("req");
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Viewordu()));
+                    MaterialPageRoute(builder: (context) => StatsScreen()));
                 break;
             }
           },

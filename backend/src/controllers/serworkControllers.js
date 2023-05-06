@@ -11,6 +11,7 @@ const getAllworks=async(req,res)=>{
       res.json(allWorks);
 };
 
+
 const getlimits = async (req, res) => {
     console.log("hi from there");
     const alltype = await serworkModel.aggregate([ 
@@ -83,10 +84,12 @@ const getmyService = async (req, res) => {
 
 const updateworkerrate =async (req , res)=> {
       const { name } = req.params;
+      const {TypeServ}=req.params;
         const { rating } = req.body;
+      
         try {
           const updUser = await serworkModel.findOneAndUpdate(
-            { name },
+            { name , TypeServ },
             { rating:rating },
             { new: true }
           );
@@ -101,6 +104,16 @@ const getSerWorker  = async (req, res) => {
       const serviceWorkers = await serworkModel.find({ Wname }); 
       res.json(serviceWorkers); 
 };
+const getSerWorkert  = async (req, res) => {
+  
+  const  Wname  = req.params.Wname;
+ // const TypeServ  = req.params.TypeServ;  
+  console.log(Wname);
+  const serviceWorkers = await serworkModel.findOne({ Wname }).then(function(myDoc) {
+    console.log(myDoc);
+    res.json(myDoc);
+    });
+};
     
 module.exports = {
   createWork,
@@ -112,5 +125,6 @@ module.exports = {
   getw,
   getow,
   updateworkerrate,
-  getSerWorker 
+  getSerWorker ,
+  getSerWorkert
 };

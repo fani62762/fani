@@ -30,6 +30,6 @@ default:0
 
 });
    
-const model=mongoose.model('ServWork',newSchema);
+const model=mongoose.model('servwork',newSchema);
 module.exports = model;
 
