@@ -466,17 +466,16 @@ class _StatsGridState extends State<StatsGrid> {
             ),
             TextButton(
               child: Text('تم'),
-              onPressed: () {
-                inst.getSerWorkert(naccp[index].Wname, naccp[index].TypeServ);
+              onPressed: () async {
+                await inst.getSerWorkert(
+                    naccp[index].Wname, naccp[index].TypeServ, index, _rating);
 
                 // TODO: save the rating
-                inst.updaterate(
-                    naccp[index].Wname, naccp[index].TypeServ, _rating, oldrat);
 
                 naccp[index].acc = 2;
                 accp.add(naccp[index]);
-                inst.updateaccw(naccp[index].id, 2);
-                naccp.removeAt(index);
+                await inst.updateaccw(naccp[index].id, 2);
+                await naccp.removeAt(index);
 
                 Navigator.of(context, rootNavigator: true).pop();
               },
@@ -644,6 +643,7 @@ class _StatsScreenState extends State<StatsScreen> {
     );
     final parsed = jsonDecode(resp.body) as List;
     if (this.mounted) {
+      print("func44");
       setState(() {
         naccp = parsed.map((e) => morder.fromJson(e)).toList();
         print(naccp);
@@ -652,23 +652,32 @@ class _StatsScreenState extends State<StatsScreen> {
     return parsed.map((e) => morder.fromJson(e)).toList();
   }
 
-  Future<List<servwork>> getSerWorkert(String name, String TypeServ) async {
+  Future<List<servwork>> getSerWorkert(
+      String name, String TypeServ, int index, int _rating) async {
     print(name);
     print(TypeServ);
+    print("func");
     final resp = await http2.get(
       Uri.parse(
           'https://fani-service.onrender.com/servwork/6/?Wname=$name&TypeServ=$TypeServ'),
       headers: {'Content-Type': 'application/json'},
     );
+    print("func2");
     if (resp.statusCode == 200) {
+      print("func3");
       final parsed = jsonDecode(resp.body) as List;
-      if (this.mounted) {
-        setState(() {
-          service = parsed.map((e) => servwork.fromJson(e)).toList();
-          print(service);
-          oldrat = service[0].rating;
-        });
-      }
+      //if (this.mounted) {
+      print("func4");
+      // setState(() {
+      service = parsed.map((e) => servwork.fromJson(e)).toList();
+      print(service);
+      oldrat = service[0].rating;
+      print(oldrat);
+      // });
+      print("func5");
+      inst.updaterate(naccp[index].Wname, naccp[index].TypeServ, _rating,
+          service[0].rating);
+      // }
 
       return parsed.map((e) => servwork.fromJson(e)).toList();
     } else {
@@ -726,10 +735,13 @@ class _StatsScreenState extends State<StatsScreen> {
   Future<void> updaterate(
       String name, String TypeServ, int rating, int oldrat) async {
     int newrate = ((rating + oldrat) / 2).round();
+    print(name);
+    print(TypeServ);
+    print(rating);
+    print(oldrat);
+    print("newrate");
     print(newrate);
-    final body = jsonEncode({
-      'rating': newrate,
-    });
+    final body = jsonEncode({'rating': newrate});
     final response = await http2.put(
       Uri.parse(
           'https://fani.herokuapp.com/servwork/7/?Wname=$name&TypeServ=$TypeServ'),

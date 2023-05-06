@@ -85,7 +85,10 @@ const getmyService = async (req, res) => {
 const updateworkerrate =async (req , res)=> {
   const  Wname  = req.query.Wname;
   const TypeServ= req.query.TypeServ;
-        const { rating } = req.body;
+  const { rating } = req.body;
+
+  console.log(rating);
+  console.log(Wname);
       
         try {
           const updUser = await serworkModel.findOneAndUpdate(
