@@ -13,7 +13,7 @@ servworkrouter.get('/3/',getlimits);
 servworkrouter.put('/3/:name/:TypeServ',updateworkerrate);
 servworkrouter.get('/4/:type/:hour',getw);
 servworkrouter.get('/5/:type/:hour',getow);
-servworkrouter.get('/6/:Wname',getSerWorkert);
+servworkrouter.get('/6/:Wname/:TypeServ',getSerWorkert);
 
 
 

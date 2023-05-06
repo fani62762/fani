@@ -30,7 +30,7 @@ const alltypes= async (req,res) =>{
 
 const getAlltype = async (req, res) => {
     const allserv = await typeModel.find().then(function(myDoc) {
-        console.log(allserv);
+        
     res.json(myDoc);
     });
 };
