@@ -76,11 +76,9 @@ const updateAdmin= async (req,res)=>{
     res.status(500).send('Server error');
   }
 };
-
 const getAdmin = async (req, res) => {
   try {
-    const name = req.params.name;
-    const user = await AdminModel.findOne({ name: name });
+    const user = await AdminModel.findOne();
     if (user) {
       res.status(200).json(user);
     } else {
@@ -90,8 +88,7 @@ const getAdmin = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
-}; 
-  
+};
 
 const updateadminimg =async (req , res)=> {
       const { name } = req.params;
