@@ -61,6 +61,18 @@ class _ViewMsgState extends State<ViewMsg> {
   }
 
   List<dynamic> workers = [];
+  Future<void> getAdmin() async {
+    final response =
+        await http.get(Uri.parse('https://fani-service.onrender.com/admin/'));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        workers.add(data);
+      });
+    } else {
+      print('Error fetching Users data: ${response.statusCode}');
+    }
+  }
 
   Future<void> getAllWorkers() async {
     final response =
@@ -70,6 +82,7 @@ class _ViewMsgState extends State<ViewMsg> {
       setState(() {
         workers = data;
       });
+      await getAdmin();
     } else {
       print('Error fetching workers data: ${response.statusCode}');
     }
@@ -156,11 +169,19 @@ class _ViewMsgState extends State<ViewMsg> {
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 8.0),
-                            Text(
-                              '  تواصل مع ${work['name']}  ',
-                              style:
-                                  TextStyle(fontSize: 16.0, color: Colors.grey),
-                            ),
+                            if (index == workers.length - 1) ...{
+                              Text(
+                                'تواصل مع المُدير',
+                                style: TextStyle(
+                                    fontSize: 16.0, color: Colors.red),
+                              ),
+                            } else ...{
+                              Text(
+                                'تواصل مع ${work['name']}',
+                                style: TextStyle(
+                                    fontSize: 16.0, color: Colors.grey),
+                              ),
+                            }
                           ],
                         ),
                       ),
