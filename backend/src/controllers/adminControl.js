@@ -96,7 +96,7 @@ const updateadminimg =async (req , res)=> {
       const { name } = req.params;
         const { image } = req.body;
         try {
-          const updUser = await UserModel.findOneAndUpdate(
+          const updUser = await AdminModel.findOneAndUpdate(
             { name },
             { image:image },
             { new: true }
