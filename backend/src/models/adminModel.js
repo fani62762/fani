@@ -29,7 +29,11 @@ gender:
 type: String,
 default:""
 },
-    
+date:
+{
+type: String,
+default:""
+},  
 image:
 {
 type:String,

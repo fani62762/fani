@@ -56,6 +56,20 @@ class _ViewMsgTState extends State<ViewMsgT> {
       setState(() {
         Users = data;
       });
+      await getAdmin();
+    } else {
+      print('Error fetching Users data: ${response.statusCode}');
+    }
+  }
+
+  Future<void> getAdmin() async {
+    final response =
+        await http.get(Uri.parse('https://fani-service.onrender.com/admin/'));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      setState(() {
+        Users.add(data);
+      });
     } else {
       print('Error fetching Users data: ${response.statusCode}');
     }
@@ -151,11 +165,19 @@ class _ViewMsgTState extends State<ViewMsgT> {
                                     fontWeight: FontWeight.bold),
                               ),
                               SizedBox(height: 8.0),
-                              Text(
-                                '  تواصل مع ${user['name']}  ',
-                                style: TextStyle(
-                                    fontSize: 16.0, color: Colors.grey),
-                              ),
+                              if (index == Users.length - 1) ...{
+                                Text(
+                                  'تواصل مع المُدير',
+                                  style: TextStyle(
+                                      fontSize: 16.0, color: Colors.red),
+                                ),
+                              } else ...{
+                                Text(
+                                  'تواصل مع ${user['name']}',
+                                  style: TextStyle(
+                                      fontSize: 16.0, color: Colors.grey),
+                                ),
+                              }
                             ],
                           ),
                         ),
