@@ -744,7 +744,7 @@ class _StatsScreenState extends State<StatsScreen> {
     final body = jsonEncode({"rating": newrate});
     final response = await http2.put(
       Uri.parse(
-          'https://fani.herokuapp.com/servwork/7/?Wname=$name&TypeServ=$TypeServ'),
+          'https://fani-service.onrender.com/servwork/7/?Wname=$name&TypeServ=$TypeServ'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
