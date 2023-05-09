@@ -60,17 +60,19 @@ const submitCredentials = async (req, res) => {
   }
 };
 
-const updateAdmin= async (req,res)=>{
+const updateAdmin = async (req, res) => {
   const { name } = req.params;
-  const { password, email, gender, phone} = req.body;
+  const { name: newName, password, email, gender, phone } = req.body;
   try {
-    const updUser = await AdminModel.findOneAndUpdate(
+    const updatedUser = await AdminModel.findOneAndUpdate(
       { name },
-      { password, email, gender, phone },
+      { name: newName, password, email, gender, phone },
       { new: true }
     );
-
-    res.json(updUser);
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
