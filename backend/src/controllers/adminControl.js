@@ -62,11 +62,11 @@ const submitCredentials = async (req, res) => {
 
 const updateAdmin = async (req, res) => {
   const { name } = req.params;
-  const { name: newName, password, email, gender, phone } = req.body;
+  const { name: newName, password, email, gender, phone,date } = req.body;
   try {
     const updatedUser = await AdminModel.findOneAndUpdate(
       { name },
-      { name: newName, password, email, gender, phone },
+      { name: newName, password, email, gender, phone,date },
       { new: true }
     );
     if (!updatedUser) {
