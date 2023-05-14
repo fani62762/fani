@@ -5,7 +5,6 @@ const workerSchema = new Schema({
     
 email: {
 type: String,
-required: true,
 },
 
 password: {
@@ -27,19 +26,19 @@ required: true,
 gender:
 {
 type: String,
-default:""
+default:"لم يتم التعيين بعد"
 },
 
 date:
 {
 type: String,
-default:""
+default:"لم يتم التعيين بعد"
 },
    
 bio:
 {
 type:String,
-default:""
+default:"لم يتم التعيين بعد"
 },
 
 rating:{
