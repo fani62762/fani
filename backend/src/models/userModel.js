@@ -5,6 +5,7 @@ const newSchema = new Schema({
     
 email: {
 type: String,
+defult:"",
 },
 
 password: {

@@ -5,6 +5,7 @@ const workerSchema = new Schema({
     
 email: {
 type: String,
+defult:"",
 },
 
 password: {
