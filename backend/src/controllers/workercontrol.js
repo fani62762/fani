@@ -68,6 +68,21 @@ const submitCredentials = async (req, res) => {
   }
 };
 
+const updateworkerimg =async (req , res)=> {
+  const { name } = req.params;
+    const { image } = req.body;
+    try {
+      const updwor = await workerModel.findOneAndUpdate(
+        { name },
+        { image:image },
+        { new: true }
+      );
+      res.json(updwor);
+    } catch (error) {
+      res.status(500).send('Server error');
+    }
+};
+
 const updateworkerrate =async (req , res)=> {
   const { name } = req.params;
     const { rating } = req.body;
