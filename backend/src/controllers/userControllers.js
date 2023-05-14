@@ -8,7 +8,6 @@ const forgotPassword = async (req, res) => {
     if (!use) {
       return res.status(404).json({ message: 'هذا الاسم غير مسجل بالنظام' });
     }
-
     // Generate a random password with 6 characters, including letters and digits
     const resetCode = Math.random().toString(36).slice(-6);
     console.log(resetCode);
@@ -29,7 +28,6 @@ const forgotPassword = async (req, res) => {
       subject: 'طلب كلمة سر جديدة',
      text:`${resetCode} كلمة السر الجديدة الخاصة بك هي \n يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية  `,
       // html: `يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية.<b>كلمة السر الجديدة الخاصة بك هي: ${resetCode}</b>`
-     
     };
 
     await transporter.sendMail(mailOptions);
@@ -42,19 +40,13 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
-  try {
-    const { name, email, password, phone, gender, date } = req.body;
-    const newUser = await UserModel.create({ name, email, password, phone, gender, date });
-    res.json(newUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+const adduser= async (req,res) => {
+  const {name,password,email,gender,phone,date}=req.body;
+  const newworker= await UserModel.create({name,password,email,gender,phone,date});
+  res.json(newworker);
 };
 
-const getAllUsers=async(req,res)=>
-{
+const getAllUsers=async(req,res)=>{
     const allUsers = await UserModel.find();
     res.json(allUsers);
 };
@@ -66,12 +58,11 @@ const submitCredentials = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid nameU' });
     }
-    const isMatch = await UserModel.findOne({password});
+    const isMatch = await UserModel.findOne({ name, password });
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid passwordU' });
     }
     return res.status(200).json({ message: 'Success' });
-
   } catch (error) {
     return res.status(500).json({ message: 'An error occurred while trying to log in. Please try again later.' });
   }
@@ -152,7 +143,7 @@ const updateuserimg =async (req , res)=> {
 }; 
 
 module.exports = {
-    createUser,
+    adduser,
     updateuserimg,
     getAllUsers,
     updateUser,

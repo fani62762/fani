@@ -7,7 +7,7 @@ email: {
 type: String,
 default:"لم يتم التعيين بعد"
 },
-
+        
 password: {
 type: String,
 required: true

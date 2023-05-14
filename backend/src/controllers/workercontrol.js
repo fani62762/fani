@@ -58,7 +58,7 @@ const submitCredentials = async (req, res) => {
     if (!wor) {
       return res.status(401).json({ message: 'Invalid nameW' });
     }
-    const isMatch = await workerModel.findOne({password});
+    const isMatch = await workerModel.findOne({ name, password });
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid passwordW' });
     }
@@ -66,21 +66,6 @@ const submitCredentials = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: 'An error occurred while trying to log in. Please try again later.' });
   }
-};
-
-const updateworkerimg =async (req , res)=> {
-  const { name } = req.params;
-    const { image } = req.body;
-    try {
-      const updwor = await workerModel.findOneAndUpdate(
-        { name },
-        { image:image },
-        { new: true }
-      );
-      res.json(updwor);
-    } catch (error) {
-      res.status(500).send('Server error');
-    }
 };
 
 const updateworkerrate =async (req , res)=> {
