@@ -5,7 +5,7 @@ const workerSchema = new Schema({
     
 email: {
 type: String,
-defult:"",
+default:"لم يتم التعيين بعد"
 },
 
 password: {
