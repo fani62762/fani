@@ -12,6 +12,7 @@ import 'package:path/path.dart';
 import 'package:fani/location/loc.dart';
 
 String tname = "";
+var ge,dt;
 List<dynamic> servwork = [];
 List<dynamic> selecServv = [];
 List<String> timeSelecc = [];
@@ -28,8 +29,6 @@ class editTech extends StatefulWidget {
 }
 
 String ne = "";
-String ge = "";
-String dt = "";
 String em = "";
 String ps = "";
 String pn = "";
@@ -37,6 +36,7 @@ String pt = "";
 String bio = "";
 String addr = "";
 int rt = 0;
+DateTime ?selectedDate;
 
 List<String> selecServ = [];
 List<String> timeSelec = [];
@@ -47,7 +47,7 @@ TextEditingController naCon = TextEditingController();
 TextEditingController emCon = TextEditingController();
 TextEditingController psCon = TextEditingController();
 TextEditingController mobC = TextEditingController();
-TextEditingController gnCon = TextEditingController();
+// TextEditingController gnCon = TextEditingController();
 TextEditingController dtCon = TextEditingController();
 TextEditingController addrcon = TextEditingController();
 
@@ -102,6 +102,23 @@ class _editTechState extends State<editTech> {
       print('Failed to update worker bio');
     }
   }
+ Future<void> _selectDate(BuildContext context) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(1900),
+    lastDate: DateTime.now(),
+    // You can customize the date picker appearance and behavior further if needed
+  );
+  if (picked != null && picked != selectedDate) {
+    setState(() {
+      selectedDate = picked;
+        dt =
+                          "${picked.year.toString()}-${picked.month.toString()}-${picked.day.toString()}";
+                           dtCon = TextEditingController(text:"${picked.year.toString()}-${picked.month.toString()}-${picked.day.toString()}");
+    });
+  }
+}
 
   bool obscuredw = true;
   Widget builedittinfo(BuildContext context) {
@@ -184,27 +201,9 @@ class _editTechState extends State<editTech> {
         ),
       ),
       SizedBox(height: 15.0),
-      SizedBox(height: 15.0),
-      TextField(
-        controller: gnCon,
-        decoration: InputDecoration(
-          hintText: "نوع المستخدم",
-          hintStyle: TextStyle(
-            color: dy,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: db,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: dy,
-            ),
-          ),
-        ),
-      ),
-      SizedBox(height: 15.0),
+     
+
+     
       TextField(
         controller: addrcon,
         decoration: InputDecoration(
@@ -225,25 +224,59 @@ class _editTechState extends State<editTech> {
         ),
       ),
       SizedBox(height: 15.0),
-      TextField(
-        controller: dtCon,
-        decoration: InputDecoration(
-          hintText: "تاريخ الميلاد ",
-          hintStyle: TextStyle(
+    
+         GestureDetector(
+  onTap: () {
+    _selectDate(context);
+  },
+  child: AbsorbPointer(
+    child: TextField(
+      controller: dtCon,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        hintText: "تاريخ الميلاد",
+        hintStyle: TextStyle(
+          color: dy,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: db,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
             color: dy,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: db,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: dy,
-            ),
           ),
         ),
       ),
+    ),
+  ),
+),
+   
+      SizedBox(height: 15.0),
+       DropdownButtonFormField<String>(
+         value: ge,
+         decoration: InputDecoration(
+           labelText: 'اختر الجنس',
+           icon: Icon(Icons.person),
+         ),
+         items: [
+           DropdownMenuItem<String>(
+             value: 'ذكر',
+             child: Center(child: Text('ذكر')),
+           ),
+           DropdownMenuItem<String>(
+             value: 'أنثى',
+             child: Center(child: Text('أنثى')),
+           ),
+         ],
+         onChanged: (value) {
+           setState(() {
+             ge = value;
+           });
+         },
+       ),
+       
       SizedBox(height: 15.0),
       ElevatedButton(
         onPressed: () async {
@@ -251,9 +284,10 @@ class _editTechState extends State<editTech> {
             naCon.text.toString(),
             psCon.text.toString(),
             emCon.text.toString(),
-            gnCon.text.toString(),
+            ge as String,
             mobC.text.toString(),
-            dtCon.text.toString(),
+            // dtCon.text.toString(),
+            dt as String,
             addrcon.text.toString(),
           );
           Navigator.pushReplacement(
@@ -356,7 +390,7 @@ class _editTechState extends State<editTech> {
         emCon = TextEditingController(text: worker['email']);
         mobC = TextEditingController(text: worker['phone']);
         psCon = TextEditingController(text: worker['password']);
-        gnCon = TextEditingController(text: worker['gender']);
+        // gnCon = TextEditingController(text: worker['gender']);
         dtCon = TextEditingController(text: worker['date']);
         bioController = TextEditingController(text: worker['bio']);
         addrcon = TextEditingController(text: worker['address']);
