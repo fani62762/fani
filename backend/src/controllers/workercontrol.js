@@ -64,6 +64,7 @@ const submitCredentials = async (req, res) => {
     }
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'An error occurred while trying to log in. Please try again later.' });
   }
 };
