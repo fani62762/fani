@@ -5,9 +5,9 @@ const newSchema = new Schema({
     
 email: {
 type: String,
-required: true,
+default:"لم يتم التعيين بعد"
 },
-
+        
 password: {
 type: String,
 required: true
@@ -27,13 +27,13 @@ required: true,
 gender:
 {
 type: String,
-default:""
+default:"لم يتم التعيين بعد"
 },
 
 date:
 {
 type: String,
-default:""
+default:"لم يتم التعيين بعد"
 },
     
 image:

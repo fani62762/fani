@@ -49,7 +49,7 @@ const submitCredentials = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid nameAdmin' });
     }
-    const isMatch = await AdminModel.findOne({password});
+    const isMatch = await AdminModel.findOne({ name, password });
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid passwordAdmin' });
     }
@@ -60,17 +60,19 @@ const submitCredentials = async (req, res) => {
   }
 };
 
-const updateAdmin= async (req,res)=>{
+const updateAdmin = async (req, res) => {
   const { name } = req.params;
-  const { password, email, gender, phone} = req.body;
+  const { name: newName, password, email, gender, phone,date } = req.body;
   try {
-    const updUser = await AdminModel.findOneAndUpdate(
+    const updatedUser = await AdminModel.findOneAndUpdate(
       { name },
-      { password, email, gender, phone },
+      { name: newName, password, email, gender, phone,date },
       { new: true }
     );
-
-    res.json(updUser);
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
@@ -94,7 +96,7 @@ const updateadminimg =async (req , res)=> {
       const { name } = req.params;
         const { image } = req.body;
         try {
-          const updUser = await UserModel.findOneAndUpdate(
+          const updUser = await AdminModel.findOneAndUpdate(
             { name },
             { image:image },
             { new: true }

@@ -58,12 +58,13 @@ const submitCredentials = async (req, res) => {
     if (!wor) {
       return res.status(401).json({ message: 'Invalid nameW' });
     }
-    const isMatch = await workerModel.findOne({password});
+    const isMatch = await workerModel.findOne({ name, password });
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid passwordW' });
     }
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'An error occurred while trying to log in. Please try again later.' });
   }
 };

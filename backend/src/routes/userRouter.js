@@ -1,5 +1,5 @@
 const express=require('express');
-const { createUser,forgotPassword, getAllUsers,submitCredentials,updateuserimg,updatUsererLoc, updateUser, deleteUser, getSingleUser, getUser } = require('../controllers/userControllers');
+const { adduser,forgotPassword, getAllUsers,submitCredentials,updateuserimg,updatUsererLoc, updateUser, deleteUser, getSingleUser, getUser } = require('../controllers/userControllers');
 const cors = require('cors');
 const router=express.Router()
 router.use(cors());
@@ -8,7 +8,7 @@ router.get('/2/:name',getUser);
 router.post('/login',submitCredentials);
 router.get('/',getAllUsers);
 router.get('/:userId', getSingleUser );
-router.post('/',createUser);
+router.post('/',adduser);
 router.put('/2/:name',updateUser );
 router.put('/location/:name',updatUsererLoc);
 router.delete('/:userId', deleteUser );
