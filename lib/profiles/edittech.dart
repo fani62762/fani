@@ -65,7 +65,6 @@ class _editTechState extends State<editTech> {
       print('Error fetching workers data: ${response.statusCode}');
     }
   }
-
   Future<void> updateWorker(String name, String password, String email,
       String gender, String phone, String date, String address) async {
     final body = jsonEncode({
@@ -87,7 +86,6 @@ class _editTechState extends State<editTech> {
       print('Failed to update worker');
     }
   }
-
   Future<void> updateWorkerbio(String name, String bio) async {
     final body = jsonEncode({
       'bio': bio,
@@ -102,7 +100,7 @@ class _editTechState extends State<editTech> {
       print('Failed to update worker bio');
     }
   }
- Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
   final DateTime? picked = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
@@ -201,9 +199,6 @@ class _editTechState extends State<editTech> {
         ),
       ),
       SizedBox(height: 15.0),
-     
-
-     
       TextField(
         controller: addrcon,
         decoration: InputDecoration(
@@ -224,8 +219,7 @@ class _editTechState extends State<editTech> {
         ),
       ),
       SizedBox(height: 15.0),
-    
-         GestureDetector(
+      GestureDetector(
   onTap: () {
     _selectDate(context);
   },
@@ -252,9 +246,8 @@ class _editTechState extends State<editTech> {
     ),
   ),
 ),
-   
       SizedBox(height: 15.0),
-       DropdownButtonFormField<String>(
+      DropdownButtonFormField<String>(
          value: ge,
          decoration: InputDecoration(
            labelText: 'اختر الجنس',
@@ -275,8 +268,7 @@ class _editTechState extends State<editTech> {
              ge = value;
            });
          },
-       ),
-       
+       ), 
       SizedBox(height: 15.0),
       ElevatedButton(
         onPressed: () async {
