@@ -361,6 +361,9 @@ class servwork {
   final List<String> Hour;
 
   final int rating;
+  final int master;
+  final int behave;
+  final int timing;
 
   String id;
   servwork({
@@ -369,6 +372,9 @@ class servwork {
     this.Price = "",
     this.Hour = const [],
     this.rating = 0,
+    this.timing = 0,
+    this.behave = 0,
+    this.master = 0,
     this.id = "",
   });
 
@@ -377,6 +383,9 @@ class servwork {
       TypeServ: json['TypeServ'],
       Wname: json['Wname'],
       rating: json['rating'],
+      timing: json['timing'],
+      behave: json['behave'],
+      master: json['master'],
       Hour: json['Hour'],
       id: json['_id'],
       Price: json['Price'],
@@ -384,7 +393,7 @@ class servwork {
   }
   @override
   String toString() {
-    return 'servwork{Wname: $Wname, Price: $Price,Hour:$Hour,,reating:$rating}';
+    return 'servwork{Wname: $Wname, Price: $Price,Hour:$Hour,,reating:$rating,timing:$timing,master:$master,behave:$behave}';
   }
 }
 
@@ -428,6 +437,10 @@ int _rating = 0;
 
 class _StatsGridState extends State<StatsGrid> {
   void showRatingDialog(int index) {
+    int masteryRating = 0;
+    int behaviorRating = 0;
+    int timeAccuracyRating = 0;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -438,20 +451,57 @@ class _StatsGridState extends State<StatsGrid> {
             children: <Widget>[
               Text('كيف تقيم العامل في هذه المهنة ؟'),
               SizedBox(height: 20),
+              Text('تقييم الإتقان'),
               RatingBar.builder(
-                initialRating: _rating.toDouble(),
+                initialRating: masteryRating.toDouble(),
                 minRating: 1,
                 maxRating: 5,
                 itemCount: 5,
                 itemBuilder: (context, index) {
                   return Icon(
-                    index < _rating ? Icons.star : Icons.star_border,
+                    index < masteryRating ? Icons.star : Icons.star_border,
                     color: Colors.amber,
                   );
                 },
                 onRatingUpdate: (rating) {
                   setState(() {
-                    _rating = rating.toInt();
+                    masteryRating = rating.toInt();
+                  });
+                },
+              ),
+              Text('تقييم السلوك'),
+              RatingBar.builder(
+                initialRating: behaviorRating.toDouble(),
+                minRating: 1,
+                maxRating: 5,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Icon(
+                    index < behaviorRating ? Icons.star : Icons.star_border,
+                    color: Colors.amber,
+                  );
+                },
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    behaviorRating = rating.toInt();
+                  });
+                },
+              ),
+              Text('تقييم الدقة الزمنية'),
+              RatingBar.builder(
+                initialRating: timeAccuracyRating.toDouble(),
+                minRating: 1,
+                maxRating: 5,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return Icon(
+                    index < timeAccuracyRating ? Icons.star : Icons.star_border,
+                    color: Colors.amber,
+                  );
+                },
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    timeAccuracyRating = rating.toInt();
                   });
                 },
               ),
@@ -468,9 +518,15 @@ class _StatsGridState extends State<StatsGrid> {
               child: Text('تم'),
               onPressed: () async {
                 await inst.getSerWorkert(
-                    naccp[index].Wname, naccp[index].TypeServ, index, _rating);
+                    naccp[index].Wname,
+                    naccp[index].TypeServ,
+                    index,
+                    _rating,
+                    masteryRating,
+                    behaviorRating,
+                    timeAccuracyRating);
 
-                // TODO: save the rating
+                // TODO: save the ratings
 
                 naccp[index].acc = 2;
                 accp.add(naccp[index]);
@@ -485,6 +541,64 @@ class _StatsGridState extends State<StatsGrid> {
       },
     );
   }
+  // void showRatingDialog(int index) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('تقييم عامل'),
+  //         content: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: <Widget>[
+  //             Text('كيف تقيم العامل في هذه المهنة ؟'),
+  //             SizedBox(height: 20),
+  //             RatingBar.builder(
+  //               initialRating: _rating.toDouble(),
+  //               minRating: 1,
+  //               maxRating: 5,
+  //               itemCount: 5,
+  //               itemBuilder: (context, index) {
+  //                 return Icon(
+  //                   index < _rating ? Icons.star : Icons.star_border,
+  //                   color: Colors.amber,
+  //                 );
+  //               },
+  //               onRatingUpdate: (rating) {
+  //                 setState(() {
+  //                   _rating = rating.toInt();
+  //                 });
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text('الغاء'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //           TextButton(
+  //             child: Text('تم'),
+  //             onPressed: () async {
+  //               await inst.getSerWorkert(
+  //                   naccp[index].Wname, naccp[index].TypeServ, index, _rating);
+
+  //               // TODO: save the rating
+
+  //               naccp[index].acc = 2;
+  //               accp.add(naccp[index]);
+  //               await inst.updateaccw(naccp[index].id, 2);
+  //               await naccp.removeAt(index);
+
+  //               Navigator.of(context, rootNavigator: true).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -652,8 +766,8 @@ class _StatsScreenState extends State<StatsScreen> {
     return parsed.map((e) => morder.fromJson(e)).toList();
   }
 
-  Future<List<servwork>> getSerWorkert(
-      String name, String TypeServ, int index, int _rating) async {
+  Future<List<servwork>> getSerWorkert(String name, String TypeServ, int index,
+      int _rating, int master, int behave, int timing) async {
     print(name);
     print(TypeServ);
     print("func");
@@ -675,8 +789,11 @@ class _StatsScreenState extends State<StatsScreen> {
       print(oldrat);
       // });
       print("func5");
+      int newm = ((master + service[0].master) / 2).round();
+      int newt = ((behave + service[0].behave) / 2).round();
+      int newb = ((timing + service[0].timing) / 2).round();
       inst.updaterate(naccp[index].Wname, naccp[index].TypeServ, _rating,
-          service[0].rating);
+          service[0].rating, newm, newb, newt);
       // }
 
       return parsed.map((e) => servwork.fromJson(e)).toList();
@@ -732,8 +849,8 @@ class _StatsScreenState extends State<StatsScreen> {
     }
   }
 
-  Future<void> updaterate(
-      String name, String TypeServ, int rating, int oldrat) async {
+  Future<void> updaterate(String name, String TypeServ, int rating, int oldrat,
+      int master, int behave, int timing) async {
     int newrate = ((rating + oldrat) / 2).round();
     print(name);
     print(TypeServ);
