@@ -13,6 +13,12 @@ List<String> wHour = selectedHour;
 String typef = typeofserv;
 String hourtosend = '';
 List<workserv> workers = [];
+List<workserv> topm = [];
+List<workserv> topb = [];
+List<workserv> topt = [];
+List<workserv> topp = [];
+List<workserv> topd = [];
+List<workserv> temp = [];
 String ordwname = "";
 String ordprice = "";
 
@@ -245,7 +251,21 @@ class _techState extends State<tech> {
       });
     }
     int mincost = 1000;
+    // int rt = -1000;
+    // int rm = -1000;
+    // int rb = -1000;
+    // int rp = 10000;
     List<String> prefr = ordpref.split(',');
+    temp = otherworkers;
+    temp.sort((a, b) => b.timing.compareTo(a.timing));
+    topt = temp.take(3).toList();
+    temp.sort((a, b) => b.master.compareTo(a.master));
+    topm = temp.take(3).toList();
+    temp.sort((a, b) => b.behave.compareTo(a.behave));
+    topb = temp.take(3).toList();
+    workers.sort((a, b) => a.Price.compareTo(b.Price));
+    topp = temp.take(3).toList();
+
     for (int g = 0; g < otherworkers.length; g++) {
       for (int o = 0; o < prefr.length; o++) {
         if (prefr[o] == 'b') {
