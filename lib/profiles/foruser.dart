@@ -6,6 +6,13 @@ import 'package:fani/profiles/edittuser.dart';
 //import 'package:fani/serv/Viewordu.dart';
 import 'package:fani/serv/dashboard.dart';
 
+class Preference {
+  final String id;
+  final String label;
+
+  Preference(this.id, this.label);
+}
+
 class ForUser extends StatefulWidget {
   const ForUser({super.key});
 
@@ -14,6 +21,15 @@ class ForUser extends StatefulWidget {
 }
 
 List addressList = addrr.split(',');
+List<Preference> orderedPreferences = [];
+List<Preference> availablePreferences = [
+  Preference('d', 'المسافة'),
+  Preference('p', 'السعر'),
+  Preference('m', 'الاتقان'),
+  Preference('t', 'الدقة في المواعيد'),
+  Preference('b', 'الاسلوب'),
+  // Add more preferences as needed
+];
 
 // Order order = Order(
 //   typeOfService: 'Cleaning',
@@ -31,6 +47,11 @@ class _ForUserState extends State<ForUser> {
   @override
   void initState() {
     super.initState();
+    List<String> preferenceIds = ordpref.split(',');
+    orderedPreferences = preferenceIds.map((id) {
+      return availablePreferences
+          .firstWhere((preference) => preference.id.toString() == id);
+    }).toList();
   }
 
   @override
@@ -111,6 +132,46 @@ class _ForUserState extends State<ForUser> {
                 ),
               ],
             ),
+            Row(
+              children: [
+                // Other widgets in the Row
+                Expanded(
+                    child: ListView.builder(
+                  itemCount: orderedPreferences.length,
+                  itemBuilder: (context, index) {
+                    Preference preference = orderedPreferences[index];
+
+                    return ListTile(
+                      title: Text(preference.label),
+                      // leading: Checkbox(
+                      //   value: selectedPreferences.contains(preference),
+                      //   onChanged: (value) {
+                      //     togglePreferenceSelection(preference);
+                      //   },
+                      // ),
+                    );
+                  },
+                )),
+              ],
+            )
+//             Row(
+//              child: ListView.builder(
+//   itemCount: orderedPreferences.length,
+//   itemBuilder: (context, index) {
+//     Preference preference = orderedPreferences[index];
+
+//     return ListTile(
+//       title: Text(preference.label),
+//       leading: Checkbox(
+//         value: selectedPreferences.contains(preference),
+//         onChanged: (value) {
+//           togglePreferenceSelection(preference);
+//         },
+//       ),
+//     );
+//   },
+// )
+//             ),
           ],
         ),
       );

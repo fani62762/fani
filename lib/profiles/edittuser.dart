@@ -9,6 +9,15 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:fani/location/locu.dart';
 import 'package:path/path.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class Preference {
+  final String id;
+  final String label;
+
+  Preference(this.id, this.label);
+}
 
 class editUser extends StatefulWidget {
   const editUser({required this.UserName, super.key});
@@ -20,6 +29,23 @@ class editUser extends StatefulWidget {
 File? imageFile;
 
 class _editUserState extends State<editUser> {
+  List<Preference> availablePreferences = [
+    Preference('d', 'المسافة'),
+    Preference('p', 'السعر'),
+    Preference('m', 'الاتقان'),
+    Preference('t', 'الدقة في المواعيد'),
+    Preference('b', 'الاسلوب'),
+    // Add more preferences as needed
+  ];
+
+  List<Preference> selectedPreferences = [
+    Preference('d', 'المسافة'),
+    Preference('p', 'السعر'),
+    Preference('m', 'الاتقان'),
+    Preference('t', 'الدقة في المواعيد'),
+    Preference('b', 'الاسلوب'),
+    // Add more preferences as needed
+  ];
   Future<void> userInfo(String name) async {
     final responseU = await http
         .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
@@ -52,6 +78,44 @@ class _editUserState extends State<editUser> {
   void initState() {
     super.initState();
     userInfo(nee);
+    fetchSelectedPreferences();
+  }
+
+  void fetchSelectedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? selectedIds = prefs.getStringList('selectedPreferences');
+
+    if (selectedIds != null) {
+      setState(() {
+        selectedPreferences = availablePreferences
+            .where((preference) => selectedIds.contains(preference.id))
+            .toList();
+      });
+    }
+  }
+
+  String orderString = "";
+  void saveSelectedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Store the order of selected preference IDs as a string
+    List<String> preferenceOrder = selectedPreferences
+        .map((preference) => preference.id.toString())
+        .toList();
+    orderString = preferenceOrder.join(',');
+    print(orderString);
+
+    await prefs.setString('preferenceOrder', orderString);
+  }
+
+  void togglePreferenceSelection(Preference preference) {
+    if (selectedPreferences.contains(preference)) {
+      // If the preference is already selected, remove it
+      selectedPreferences.remove(preference);
+    } else {
+      // If the preference is not selected, add it at the end
+      selectedPreferences.add(preference);
+    }
   }
 
   bool obscurede = true;
@@ -108,15 +172,23 @@ class _editUserState extends State<editUser> {
       });
     }
 
-    Future<void> updateUser(String name, String password, String email,
-        String gender, String phone, String date, String address) async {
+    Future<void> updateUser(
+        String name,
+        String password,
+        String email,
+        String gender,
+        String phone,
+        String date,
+        String address,
+        String pref) async {
       final body = jsonEncode({
         'password': password,
         'email': email,
         'gender': gender,
         'phone': phone,
         'date': date,
-        'address': address
+        'address': address,
+        'pref': pref
       });
 
       final response = await http.put(
@@ -274,17 +346,54 @@ class _editUserState extends State<editUser> {
           ),
         ),
         SizedBox(height: 15.0),
+        SizedBox(height: 20.0),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 300),
+          child: ReorderableListView(
+            onReorder: (oldIndex, newIndex) {
+              setState(() {
+                if (newIndex > oldIndex) {
+                  newIndex -= 1;
+                }
+                final Preference preference =
+                    selectedPreferences.removeAt(oldIndex);
+                selectedPreferences.insert(newIndex, preference);
+              });
+            },
+            children: List.generate(selectedPreferences.length, (index) {
+              Preference preference = selectedPreferences[index];
+
+              return ListTile(
+                key: Key(preference.label),
+                title: Text(preference.label),
+                leading: Icon(Icons.drag_handle),
+              );
+            }),
+          ),
+        ),
+        // floatingActionButton: FloatingActionButton(
+        //   child: Icon(Icons.save),
+        //   onPressed: () {
+        //     saveSelectedPreferences();
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       SnackBar(
+        //         content: Text('Preferences saved'),
+        //       ),
+        //     );
+        //   },
+        // ),
         ElevatedButton(
           onPressed: () async {
+            saveSelectedPreferences();
             await updateUser(
-              naaCon.text.toString(),
-              pssCon.text.toString(),
-              emmCon.text.toString(),
-              gnnCon.text.toString(),
-              mobbC.text.toString(),
-              dttCon.text.toString(),
-              addrrcon.text.toString(),
-            );
+                naaCon.text.toString(),
+                pssCon.text.toString(),
+                emmCon.text.toString(),
+                gnnCon.text.toString(),
+                mobbC.text.toString(),
+                dttCon.text.toString(),
+                addrrcon.text.toString(),
+                orderString);
 
             Navigator.pushReplacement(
                 context,
@@ -349,25 +458,26 @@ class _editUserState extends State<editUser> {
     }
 
     return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => ForUser()));
-            },
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ForUser()));
+              },
+            ),
+            title: Text(
+              'تعديل صفحتي الشخصية',
+              style:
+                  TextStyle(fontSize: MediaQuery.of(context).size.width / 20),
+            ),
+            backgroundColor: dy,
+            centerTitle: true,
           ),
-          title: Text(
-            'تعديل صفحتي الشخصية',
-            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 20),
-          ),
-          backgroundColor: dy,
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Container(
+          body: SingleChildScrollView(
+              child: Container(
             padding: EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -424,11 +534,35 @@ class _editUserState extends State<editUser> {
                 ),
                 SizedBox(height: 20.0),
                 builedittinfo(),
+
+                //             },
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
+            // floatingActionButton: FloatingActionButton(
+            //   child: Icon(Icons.save),
+            //   onPressed: () {
+            //     saveSelectedPreferences();
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //       SnackBar(
+            //         content: Text('Preferences saved'),
+            //       ),
+            //     );
+            //   },
+            // ),
+          )),
+        ));
+
+    //           ],
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }

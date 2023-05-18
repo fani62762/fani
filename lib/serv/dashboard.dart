@@ -789,6 +789,7 @@ class _StatsScreenState extends State<StatsScreen> {
       print(oldrat);
       // });
       print("func5");
+      _rating = ((master + behave + timing) / 3).round();
       int newm = ((master + service[0].master) / 2).round();
       int newt = ((behave + service[0].behave) / 2).round();
       int newb = ((timing + service[0].timing) / 2).round();
@@ -858,7 +859,12 @@ class _StatsScreenState extends State<StatsScreen> {
     print(oldrat);
     print("newrate");
     print(newrate);
-    final body = jsonEncode({"rating": newrate});
+    final body = jsonEncode({
+      "rating": newrate,
+      "timing": timing,
+      "master": master,
+      "behave": behave
+    });
     final response = await http2.put(
       Uri.parse(
           'https://fani-service.onrender.com/servwork/7/?Wname=$name&TypeServ=$TypeServ'),

@@ -23,6 +23,7 @@ TextEditingController gnnCon = TextEditingController();
 TextEditingController dttCon = TextEditingController();
 TextEditingController addrrcon = TextEditingController();
 
+String ordpref = "";
 String nee = "";
 String gee = "";
 String dtt = "";
@@ -248,6 +249,7 @@ class _UserpageState extends State<Userpage> {
       nee = userr['name'];
       gee = userr['gender'];
       dtt = userr['date'];
+      ordpref = userr['pref'];
       emm = userr['email'];
       pss = userr['password'];
       pnn = userr['phone'];

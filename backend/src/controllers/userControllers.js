@@ -70,11 +70,11 @@ const submitCredentials = async (req, res) => {
 
 const updateUser= async (req,res)=>{
   const { name } = req.params;
-  const { password, email, gender, phone, date,address } = req.body;
+  const { password, email, gender, phone, date,address, pref} = req.body;
   try {
     const updUser = await UserModel.findOneAndUpdate(
       { name },
-      { password, email, gender, phone, date,address },
+      { password, email, gender, phone, date,address,pref },
       { new: true }
     );
 

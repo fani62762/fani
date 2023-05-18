@@ -19,6 +19,7 @@ required: true,
 unique: true
 },
 
+
 phone: {
 type: String,
 required: true,
@@ -59,6 +60,10 @@ longitude:
 type: Number,
 default:35.22223124412008
 }
+pref: {
+    type: String,
+   
+},
 
 });
    
