@@ -95,14 +95,16 @@ class _editUserState extends State<editUser> {
   }
 
   String orderString = "";
-  void saveSelectedPreferences() async {
+  Future<void> saveSelectedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // Store the order of selected preference IDs as a string
     List<String> preferenceOrder = selectedPreferences
         .map((preference) => preference.id.toString())
         .toList();
-    orderString = preferenceOrder.join(',');
+    setState(() {
+      orderString = preferenceOrder.join(',');
+    });
     print(orderString);
 
     await prefs.setString('preferenceOrder', orderString);
@@ -181,6 +183,7 @@ class _editUserState extends State<editUser> {
         String date,
         String address,
         String pref) async {
+      print(pref + "inside func");
       final body = jsonEncode({
         'password': password,
         'email': email,
@@ -384,16 +387,17 @@ class _editUserState extends State<editUser> {
         // ),
         ElevatedButton(
           onPressed: () async {
-            saveSelectedPreferences();
+            await saveSelectedPreferences();
             await updateUser(
-                naaCon.text.toString(),
-                pssCon.text.toString(),
-                emmCon.text.toString(),
-                gnnCon.text.toString(),
-                mobbC.text.toString(),
-                dttCon.text.toString(),
-                addrrcon.text.toString(),
-                orderString);
+              naaCon.text.toString(),
+              pssCon.text.toString(),
+              emmCon.text.toString(),
+              gnnCon.text.toString(),
+              mobbC.text.toString(),
+              dttCon.text.toString(),
+              addrrcon.text.toString(),
+              orderString,
+            );
 
             Navigator.pushReplacement(
                 context,

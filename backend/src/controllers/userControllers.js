@@ -79,6 +79,7 @@ const updateUser= async (req,res)=>{
     );
 
     res.json(updUser);
+    console.log(updUser);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');

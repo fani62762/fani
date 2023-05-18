@@ -44,6 +44,14 @@ List<Preference> availablePreferences = [
 // );
 
 class _ForUserState extends State<ForUser> {
+  bool showPreferences = false; // Flag to control visibility
+
+  void togglePreferencesVisibility() {
+    setState(() {
+      showPreferences = !showPreferences;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -134,24 +142,35 @@ class _ForUserState extends State<ForUser> {
             ),
             Row(
               children: [
+                ElevatedButton(
+                  onPressed: togglePreferencesVisibility,
+                  child: Text('الاولويات'),
+                ),
                 // Other widgets in the Row
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: orderedPreferences.length,
-                  itemBuilder: (context, index) {
-                    Preference preference = orderedPreferences[index];
+                Visibility(
+                  visible: showPreferences,
+                  child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: 300,
+                        maxWidth: 800,
+                      ),
+                      child: ListView.builder(
+                        itemCount: orderedPreferences.length,
+                        itemBuilder: (context, index) {
+                          Preference preference = orderedPreferences[index];
 
-                    return ListTile(
-                      title: Text(preference.label),
-                      // leading: Checkbox(
-                      //   value: selectedPreferences.contains(preference),
-                      //   onChanged: (value) {
-                      //     togglePreferenceSelection(preference);
-                      //   },
-                      // ),
-                    );
-                  },
-                )),
+                          return ListTile(
+                            title: Text(preference.label),
+                            // leading: Checkbox(
+                            //   value: selectedPreferences.contains(preference),
+                            //   onChanged: (value) {
+                            //     togglePreferenceSelection(preference);
+                            //   },
+                            // ),
+                          );
+                        },
+                      )),
+                )
               ],
             )
 //             Row(
