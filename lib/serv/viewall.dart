@@ -70,7 +70,7 @@ class _viewaState extends State<viewa> {
   //];
   bool isDes1 = false;
   bool isDes2 = false;
-  bool ord = false;
+  int ord = 0;
   List<workserv> otherworkers = [];
 
   @override
@@ -130,10 +130,20 @@ class _viewaState extends State<viewa> {
                               quarterTurns: 1,
                               child: Icon(Icons.compare_arrows, size: 28)),
                           label: Text(
-                            ord ? 'حسب السعر ' : 'حسب التقييم',
+                            ord == 0
+                                ? 'حسب السعر '
+                                : ord == 1
+                                    ? 'حسب التقييم'
+                                    : 'ترتيب عام',
                             style: TextStyle(fontSize: 16),
                           ),
-                          onPressed: () => setState(() => ord = !ord),
+                          onPressed: () => setState(() {
+                            // ord = !ord;
+                            ord += 1;
+                            if (ord == 3) {
+                              ord = 0;
+                            }
+                          }),
                         ),
                       ],
                     ),
@@ -162,11 +172,14 @@ class _viewaState extends State<viewa> {
                         shrinkWrap: true,
                         itemCount: allworkers.length,
                         itemBuilder: (BuildContext context, int index) {
-                          ord
+                          ord == 0
                               ? workers
                                   .sort((a, b) => a.Price.compareTo(b.Price))
-                              : workers
-                                  .sort((a, b) => a.rating.compareTo(b.rating));
+                              : ord == 1
+                                  ? workers.sort(
+                                      (a, b) => a.rating.compareTo(b.rating))
+                                  : workers.sort(
+                                      (a, b) => a.points.compareTo(b.points));
                           allworkers =
                               isDes1 ? workers : workers.reversed.toList();
                           return InkResponse(

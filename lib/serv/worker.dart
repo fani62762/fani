@@ -67,6 +67,10 @@ class workserv {
   List<dynamic> mHour;
   List<dynamic> worder;
   final int rating;
+  final int timing;
+  final int master;
+  final int behave;
+  int points;
 
   workserv({
     this.Wname = "",
@@ -76,6 +80,10 @@ class workserv {
     this.mHour = const [],
     this.worder = const [],
     this.rating = 0,
+    this.timing = 0,
+    this.behave = 0,
+    this.master = 0,
+    this.points = 0,
   });
 
   factory workserv.fromJson(Map<String, dynamic> json) {
@@ -85,6 +93,9 @@ class workserv {
       Hour: json['Hours'],
       worder: json['Worders'],
       rating: json['rating'],
+      timing: json['timing'],
+      master: json['master'],
+      behave: json['behave'],
     );
   }
   @override
@@ -127,6 +138,28 @@ class _techState extends State<tech> {
       });
     }
     print(workers);
+    int mincost = 1000;
+    List<String> prefr = ordpref.split(',');
+    for (int g = 0; g < workers.length; g++) {
+      for (int o = 0; o < prefr.length; o++) {
+        if (prefr[o] == 'b') {
+          workers[g].points += (prefr.length - o) + workers[g].behave;
+        }
+        if (prefr[o] == 'm') {
+          workers[g].points += (prefr.length - o) + workers[g].master;
+        }
+        if (prefr[o] == 't') {
+          workers[g].points += (prefr.length - o) + workers[g].timing;
+        }
+        if (prefr[o] == 'p') {
+          if (int.parse(workers[g].Price) <= mincost) {
+            workers[g].points += (prefr.length - o) + 1;
+            mincost = int.parse(workers[g].Price);
+          }
+        }
+      }
+    }
+
     for (int g = 0; g < workers.length; g++) {
       int d = 0;
       for (int y = 0; y < workers[g].worder.length; y++) {
@@ -210,6 +243,27 @@ class _techState extends State<tech> {
         // make changes here
         otherworkers = parsed.map((e) => workserv.fromJson(e)).toList();
       });
+    }
+    int mincost = 1000;
+    List<String> prefr = ordpref.split(',');
+    for (int g = 0; g < otherworkers.length; g++) {
+      for (int o = 0; o < prefr.length; o++) {
+        if (prefr[o] == 'b') {
+          otherworkers[g].points += (prefr.length - o) + otherworkers[g].behave;
+        }
+        if (prefr[o] == 'm') {
+          otherworkers[g].points += (prefr.length - o) + otherworkers[g].master;
+        }
+        if (prefr[o] == 't') {
+          otherworkers[g].points += (prefr.length - o) + otherworkers[g].timing;
+        }
+        if (prefr[o] == 'p') {
+          if (int.parse(workers[g].Price) <= mincost) {
+            workers[g].points += (prefr.length - o) + 1;
+            mincost = int.parse(workers[g].Price);
+          }
+        }
+      }
     }
     return parsed.map((e) => workserv.fromJson(e)).toList();
   }

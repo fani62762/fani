@@ -66,6 +66,7 @@ class _editUserState extends State<editUser> {
         pss = userr['password'];
         pnn = userr['phone'];
         addrr = userr['address'];
+        ordpref = userr['pref'];
         imagg = NetworkImage(userr['image']);
       });
     } else {

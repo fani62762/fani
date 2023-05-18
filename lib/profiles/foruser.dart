@@ -140,12 +140,14 @@ class _ForUserState extends State<ForUser> {
                 ),
               ],
             ),
-            Row(
+            SingleChildScrollView(
+                child: Row(
               children: [
                 ElevatedButton(
                   onPressed: togglePreferencesVisibility,
                   child: Text('الاولويات'),
                 ),
+
                 // Other widgets in the Row
                 Visibility(
                   visible: showPreferences,
@@ -172,7 +174,7 @@ class _ForUserState extends State<ForUser> {
                       )),
                 )
               ],
-            )
+            ))
 //             Row(
 //              child: ListView.builder(
 //   itemCount: orderedPreferences.length,
