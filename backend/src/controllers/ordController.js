@@ -110,11 +110,14 @@ const getOrdersCountByMonth = async () => {
   try {
     const orders = await ordModel.find();
     const ordersCountByMonth = {};
-
+console.log("hi");
     orders.forEach(order => {
+     
       const date = new Date(Date.parse(order.date));
+       console.log(date);
       const month = date.getMonth() + 1; // Add 1 because month index starts from 0
       const year = date.getFullYear();
+      console.log(month);
       const monthKey = `${year}-${month}`;
 
       if (ordersCountByMonth.hasOwnProperty(monthKey)) {
