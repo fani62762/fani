@@ -3,7 +3,7 @@ const {getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkor
 
 const router=express.Router()
 router.get('/1/:id', getorder );
-router.get('/getOrdersCountByMonth', getOrdersCountByMonth );
+router.get('/getmon', getOrdersCountByMonth );
 router.post('/',createord);
 router.delete('/:id', deleteord );
 router.get('/5/:name',getworkordd);
