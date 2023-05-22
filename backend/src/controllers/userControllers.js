@@ -122,6 +122,21 @@ const getUser = async (req, res) => {
       }
 }; 
 
+const gendercount = async (req, res) => {
+  try {
+    const ug = await UserModel.find();
+    const maleCount = ug.filter(worker => worker.gender === 'أنثى').length;
+    const femaleCount = ug.filter(worker => worker.gender === 'ذكر').length;
+
+    res.json({
+      maleCount: maleCount,
+      femaleCount: femaleCount
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve genderuser' });
+  }
+};
+
 const deleteUser = async (req, res) =>{
     const { userId } = req.params;
     const deleteduser = await UserModel.findByIdAndDelete (userId)
@@ -153,5 +168,6 @@ module.exports = {
     getUser,
     submitCredentials,
     forgotPassword,
-    updatUsererLoc
+    updatUsererLoc,
+    gendercount
 };

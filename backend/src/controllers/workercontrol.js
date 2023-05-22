@@ -175,7 +175,7 @@ const gendercount = async (req, res) => {
       femaleCount: femaleCount
     });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve workers' });
+    res.status(500).json({ error: 'Failed to retrieve genderworkers' });
   }
 };
 
