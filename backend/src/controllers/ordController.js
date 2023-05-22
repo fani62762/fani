@@ -134,16 +134,18 @@ const getOrdersCountByDay = async (req, res) => {
     const orders = await ordModel.find();
     const ordersCountByDay = {};
 
+    // Initialize the ordersCountByDay object with all days set to 0
+    const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayAbbreviations.forEach(dayAbbreviation => {
+      ordersCountByDay[dayAbbreviation] = 0;
+    });
+
     orders.forEach(order => {
       const date = new Date(Date.parse(order.date));
       const day = date.getDay(); // Get the day of the week (0 - Sunday, 1 - Monday, etc.)
-      const dayName = getDayName(day); // Function to get the day name from the day index
+      const dayAbbreviation = getDayAbbreviation(day); // Function to get the day abbreviation from the day index
 
-      if (ordersCountByDay.hasOwnProperty(dayName)) {
-        ordersCountByDay[dayName]++;
-      } else {
-        ordersCountByDay[dayName] = 1;
-      }
+      ordersCountByDay[dayAbbreviation]++;
     });
 
     res.json(ordersCountByDay);
@@ -151,6 +153,13 @@ const getOrdersCountByDay = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+// Function to get the day abbreviation from the day index (0 - Sunday, 1 - Monday, etc.)
+const getDayAbbreviation = (dayIndex) => {
+  const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return dayAbbreviations[dayIndex];
+};
+
 
 // Function to get the day name from the day index (0 - Sunday, 1 - Monday, etc.)
 const getDayName = (dayIndex) => {
