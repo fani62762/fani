@@ -165,62 +165,67 @@ class _techState extends State<tech> {
         }
       }
     }
+    for (int g = 0; g < workers.length; g++) {
+      print(workers[g].Wname + " " + workers[g].points.toString());
+    }
 
     for (int g = 0; g < workers.length; g++) {
       int d = 0;
-      for (int y = 0; y < workers[g].worder.length; y++) {
-        if (workers[g].worder[y]['isrepeated'] == 'مرة واحدة') {
-          if (workers[g].worder[y]['date'] == orddate) {
-            for (int o = 0; o < workers[g].mHour.length; o++) {
-              if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
-                workers[g].mHour.removeAt(o);
-                o = 0;
+      if (workers[g].worder != null) {
+        for (int y = 0; y < workers[g].worder.length; y++) {
+          if (workers[g].worder[y]['isrepeated'] == 'مرة واحدة') {
+            if (workers[g].worder[y]['date'] == orddate) {
+              for (int o = 0; o < workers[g].mHour.length; o++) {
+                if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
+                  workers[g].mHour.removeAt(o);
+                  o = 0;
+                }
               }
             }
           }
-        }
-        if (workers[g].worder[y]['isrepeated'] == 'يومياً') {
-          DateTime dt1 = DateTime.parse(workers[g].worder[y]['date']);
-          DateTime dt2 = DateTime.parse(orddate);
-          print(dt1);
-          print(workers[g].worder[y]['date'] + " date s");
-          print(orddate + " orddate");
-          print(dt2);
-          if (dt2.isAfter(dt1)) {
-            for (int o = 0; o < workers[g].mHour.length; o++) {
-              if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
-                workers[g].mHour.removeAt(o);
-                o = 0;
+          if (workers[g].worder[y]['isrepeated'] == 'يومياً') {
+            DateTime dt1 = DateTime.parse(workers[g].worder[y]['date']);
+            DateTime dt2 = DateTime.parse(orddate);
+            print(dt1);
+            print(workers[g].worder[y]['date'] + " date s");
+            print(orddate + " orddate");
+            print(dt2);
+            if (dt2.isAfter(dt1)) {
+              for (int o = 0; o < workers[g].mHour.length; o++) {
+                if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
+                  workers[g].mHour.removeAt(o);
+                  o = 0;
+                }
               }
             }
           }
-        }
-        if (workers[g].worder[y]['isrepeated'] == 'اسبوعياً') {
-          DateTime dt1 = DateTime.parse(workers[g].worder[y]['date']);
-          DateTime dt2 = DateTime.parse(orddate);
-          print(dt1);
-          print(dt2);
-          final difference = dt2.difference(dt1).inDays;
-          if (dt2.isAfter(dt1) && (difference % 7 == 0)) {
-            for (int o = 0; o < workers[g].mHour.length; o++) {
-              if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
-                workers[g].mHour.removeAt(o);
-                o = 0;
+          if (workers[g].worder[y]['isrepeated'] == 'اسبوعياً') {
+            DateTime dt1 = DateTime.parse(workers[g].worder[y]['date']);
+            DateTime dt2 = DateTime.parse(orddate);
+            print(dt1);
+            print(dt2);
+            final difference = dt2.difference(dt1).inDays;
+            if (dt2.isAfter(dt1) && (difference % 7 == 0)) {
+              for (int o = 0; o < workers[g].mHour.length; o++) {
+                if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
+                  workers[g].mHour.removeAt(o);
+                  o = 0;
+                }
               }
             }
           }
-        }
-        if (workers[g].worder[y]['isrepeated'] == 'شهرياً ') {
-          DateTime dt1 = DateTime.parse(workers[g].worder[y]['date']);
-          DateTime dt2 = DateTime.parse(orddate);
-          print(dt1);
-          print(dt2);
-          final difference = dt2.difference(dt1).inDays;
-          if (dt2.isAfter(dt1) && (difference % 30 == 0)) {
-            for (int o = 0; o < workers[g].mHour.length; o++) {
-              if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
-                workers[g].mHour.removeAt(o);
-                o = 0;
+          if (workers[g].worder[y]['isrepeated'] == 'شهرياً ') {
+            DateTime dt1 = DateTime.parse(workers[g].worder[y]['date']);
+            DateTime dt2 = DateTime.parse(orddate);
+            print(dt1);
+            print(dt2);
+            final difference = dt2.difference(dt1).inDays;
+            if (dt2.isAfter(dt1) && (difference % 30 == 0)) {
+              for (int o = 0; o < workers[g].mHour.length; o++) {
+                if (workers[g].worder[y]['Hour'] == workers[g].mHour[o]) {
+                  workers[g].mHour.removeAt(o);
+                  o = 0;
+                }
               }
             }
           }

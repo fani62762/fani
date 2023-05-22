@@ -854,6 +854,10 @@ class _StatsScreenState extends State<StatsScreen> {
       int master, int behave, int timing) async {
     int newrate = ((rating + oldrat) / 2).round();
     print(name);
+
+    print(behave);
+    print(master);
+    print(timing);
     print(TypeServ);
     print(rating);
     print(oldrat);
@@ -872,6 +876,7 @@ class _StatsScreenState extends State<StatsScreen> {
       body: body,
     );
     if (response.statusCode == 200) {
+      print("success update all rate");
       // Worker rating updated successfully
     } else {
       print('Failed to update worker rating');

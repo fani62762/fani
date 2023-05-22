@@ -35,6 +35,7 @@ Future<void> createord(
     List<String> add,
     List<String> serv,
     String type) async {
+  print(type + wname + uname);
   final body = jsonEncode({
     'TypeServ': type,
     'Wname': wname,

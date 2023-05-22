@@ -91,6 +91,9 @@ const updateworkerrate =async (req , res)=> {
   const { behave } = req.body.behave;
 
   console.log(rating);
+  console.log(timing);
+  console.log(behave);
+  console.log(master);
   console.log(Wname);
       
         try {
