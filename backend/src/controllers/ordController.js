@@ -129,7 +129,7 @@ console.log("hi");
 
     return ordersCountByMonth;
   } catch (error) {
-    throw new Error('Failed to retrieve orders');
+    res.status(500).send('Server error');
   }
 };
 
