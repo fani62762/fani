@@ -106,6 +106,30 @@ const updateaccu= async (req,res)=>{
     res.status(500).send('Server error');
   }
 }
+const getOrdersCountByMonth = async () => {
+  try {
+    const orders = await ordModel.find();
+    const ordersCountByMonth = {};
+
+    orders.forEach(order => {
+      const date = new Date(order.date);
+      const month = date.getMonth() + 1; // Add 1 because month index starts from 0
+      const year = date.getFullYear();
+      const monthKey = `${year}-${month}`;
+
+      if (ordersCountByMonth.hasOwnProperty(monthKey)) {
+        ordersCountByMonth[monthKey]++;
+      } else {
+        ordersCountByMonth[monthKey] = 1;
+      }
+    });
+
+    return ordersCountByMonth;
+  } catch (error) {
+    throw new Error('Failed to retrieve orders');
+  }
+};
+
 
   module.exports = {
     getorder , 
@@ -118,5 +142,6 @@ const updateaccu= async (req,res)=>{
     updateaccw,
     updateaccu,
     getUserordc,
+    getOrdersCountByMonth
 
 };
