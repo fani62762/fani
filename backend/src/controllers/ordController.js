@@ -160,12 +160,22 @@ const getDayAbbreviation = (dayIndex) => {
   return dayAbbreviations[dayIndex];
 };
 
+const getOrderCountsByService = async (req, res)=> {
+  try {
+   const orderCountsByService = await orderModel.aggregate([
+     {
+       $group: {
+         _id: '$TypeServ',
+         count: { $sum: 1 }
+       }
+     }
+   ]);
 
-// Function to get the day name from the day index (0 - Sunday, 1 - Monday, etc.)
-const getDayName = (dayIndex) => {
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  return dayNames[dayIndex];
-};
+   res.json(orderCountsByService);
+ } catch (error) {
+   res.status(500).json({ error: 'Failed to retrieve order counts by service' });
+ };
+}
 
 
 
@@ -181,6 +191,7 @@ const getDayName = (dayIndex) => {
     updateaccu,
     getUserordc,
     getOrdersCountByMonth,
-    getOrdersCountByDay
+    getOrdersCountByDay,
+    getOrderCountsByService
 
 };
