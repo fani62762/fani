@@ -14,6 +14,9 @@ String typef = typeofserv;
 String hourtosend = '';
 List<workserv> workers = [];
 List<workserv> topm = [];
+List<workserv> top1 = [];
+List<workserv> top2 = [];
+List<workserv> top3 = [];
 List<workserv> topb = [];
 List<workserv> topt = [];
 List<workserv> topp = [];
@@ -21,6 +24,9 @@ List<workserv> topd = [];
 List<workserv> temp = [];
 String ordwname = "";
 String ordprice = "";
+String desc1 = "";
+String desc2 = "";
+String desc3 = "";
 
 class tech extends StatefulWidget {
   const tech({Key? key}) : super(key: key);
@@ -275,17 +281,65 @@ class _techState extends State<tech> {
       for (int o = 0; o < prefr.length; o++) {
         if (prefr[o] == 'b') {
           otherworkers[g].points += (prefr.length - o) + otherworkers[g].behave;
+          if (o == 0) {
+            top1 = topb;
+            desc1 = "الأعلى تقييما في السلوك ";
+          }
+          if (o == 1) {
+            top2 = topb;
+            desc2 = "الأعلى تقييما في السلوك ";
+          }
+          if (o == 2) {
+            top3 = topb;
+            desc3 = "الأعلى تقييما في السلوك ";
+          }
         }
-        if (prefr[o] == 'm') {
+        if (prefr[o] == 'm' || prefr[o] == 'd') {
           otherworkers[g].points += (prefr.length - o) + otherworkers[g].master;
+          if (o == 0) {
+            top1 = topm;
+            desc1 = "الأعلى تقييما في الاتقان ";
+          }
+          if (o == 1) {
+            top2 = topm;
+            desc2 = "الأعلى تقييما في الاتقان ";
+          }
+          if (o == 2) {
+            top3 = topm;
+            desc3 = "الأعلى تقييما في الاتقان ";
+          }
         }
         if (prefr[o] == 't') {
           otherworkers[g].points += (prefr.length - o) + otherworkers[g].timing;
+          if (o == 0) {
+            top1 = topt;
+            desc1 = "الأعلى تقييما في المواعيد ";
+          }
+          if (o == 1) {
+            top2 = topt;
+            desc2 = "الأعلى تقييما في المواعيد ";
+          }
+          if (o == 2) {
+            top3 = topt;
+            desc3 = "الأعلى تقييما في المواعيد ";
+          }
         }
         if (prefr[o] == 'p') {
           if (int.parse(workers[g].Price) <= mincost) {
             workers[g].points += (prefr.length - o) + 1;
             mincost = int.parse(workers[g].Price);
+            if (o == 0) {
+              top1 = topp;
+              desc1 = "الاقل سعرا";
+            }
+            if (o == 1) {
+              top2 = topp;
+              desc2 = "الاقل سعرا";
+            }
+            if (o == 2) {
+              top3 = topp;
+              desc3 = "الاقل سعرا";
+            }
           }
         }
       }
@@ -538,7 +592,7 @@ class _techState extends State<tech> {
                           '',
                         )),
                     Text(
-                      'أخرى قد تكون مناسبة ',
+                      desc1,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -554,11 +608,83 @@ class _techState extends State<tech> {
                 itemBuilder: (BuildContext context, int index) {
                   return FadeAnimation(
                       (1.0 + index) / 4,
-                      workerContainer(
-                          otherworkers[index].Wname,
-                          otherworkers[index].Price,
-                          otherworkers[index].rating,
-                          otherworkers[index].Hour));
+                      workerContainer(top1[index].Wname, top1[index].Price,
+                          top1[index].rating, top1[index].Hour));
+                }),
+          ),
+          // SizedBox(
+          //   height: 150,
+          // ),
+          SizedBox(
+            height: 20,
+          ),
+          FadeAnimation(
+              1.3,
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, right: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '',
+                        )),
+                    Text(
+                      desc2,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              )),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 120,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: otherworkers.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return FadeAnimation(
+                      (1.0 + index) / 4,
+                      workerContainer(top2[index].Wname, top2[index].Price,
+                          top2[index].rating, top2[index].Hour));
+                }),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          FadeAnimation(
+              1.3,
+              Padding(
+                padding: EdgeInsets.only(left: 20.0, right: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '',
+                        )),
+                    Text(
+                      desc3,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              )),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            height: 120,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: otherworkers.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return FadeAnimation(
+                      (1.0 + index) / 4,
+                      workerContainer(top3[index].Wname, top3[index].Price,
+                          top3[index].rating, top3[index].Hour));
                 }),
           ),
           SizedBox(
