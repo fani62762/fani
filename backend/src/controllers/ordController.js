@@ -112,7 +112,7 @@ const getOrdersCountByMonth = async () => {
     const ordersCountByMonth = {};
 
     orders.forEach(order => {
-      const date = new Date(order.date);
+      const date = new Date(Date.parse(order.date));
       const month = date.getMonth() + 1; // Add 1 because month index starts from 0
       const year = date.getFullYear();
       const monthKey = `${year}-${month}`;
