@@ -162,7 +162,7 @@ const getDayAbbreviation = (dayIndex) => {
 
 const getOrderCountsByService = async (req, res)=> {
   try {
-   const orderCountsByService = await orderModel.aggregate([
+   const orderCountsByService = await ordModel.aggregate([
      {
        $group: {
          _id: '$TypeServ',
