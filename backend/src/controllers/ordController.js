@@ -129,6 +129,34 @@ const getOrdersCountByMonth = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+const getOrdersCountByDay = async (req, res) => {
+  try {
+    const orders = await ordModel.find();
+    const ordersCountByDay = {};
+
+    orders.forEach(order => {
+      const date = new Date(Date.parse(order.date));
+      const day = date.getDay(); // Get the day of the week (0 - Sunday, 1 - Monday, etc.)
+      const dayName = getDayName(day); // Function to get the day name from the day index
+
+      if (ordersCountByDay.hasOwnProperty(dayName)) {
+        ordersCountByDay[dayName]++;
+      } else {
+        ordersCountByDay[dayName] = 1;
+      }
+    });
+
+    res.json(ordersCountByDay);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
+// Function to get the day name from the day index (0 - Sunday, 1 - Monday, etc.)
+const getDayName = (dayIndex) => {
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  return dayNames[dayIndex];
+};
 
 
 
@@ -143,6 +171,7 @@ const getOrdersCountByMonth = async (req, res) => {
     updateaccw,
     updateaccu,
     getUserordc,
-    getOrdersCountByMonth
+    getOrdersCountByMonth,
+    getOrdersCountByDay
 
 };
