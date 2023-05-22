@@ -85,10 +85,10 @@ const getmyService = async (req, res) => {
 const updateworkerrate =async (req , res)=> {
   const  Wname  = req.query.Wname;
   const TypeServ= req.query.TypeServ;
-  const { rating } = req.body.rating;
-  const { timing } = req.body.timing;
-  const { master } = req.body.master;
-  const { behave } = req.body.behave;
+  const  rating  = req.body.rating;
+  const  timing  = req.body.timing;
+  const  master  = req.body.master;
+  const  behave  = req.body.behave;
 
   console.log(rating);
   console.log(timing);
