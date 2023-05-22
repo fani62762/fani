@@ -128,7 +128,7 @@ const getOrdersCountByMonth = async () => {
       }
     });
 
-    return ordersCountByMonth;
+    res.json(ordersCountByMonth);
   } catch (error) {
     res.status(500).send('Server error');
   }
