@@ -107,10 +107,11 @@ const updateaccu= async (req,res)=>{
   }
 }
 const getOrdersCountByMonth = async () => {
+  console.log("hi");
   try {
     const orders = await ordModel.find();
     const ordersCountByMonth = {};
-console.log("hi");
+
     orders.forEach(order => {
      
       const date = new Date(Date.parse(order.date));
