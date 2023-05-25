@@ -374,15 +374,18 @@ class _techState extends State<tech> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DateAndTime()),
-              );
-            },
-            icon: Icon(Icons.arrow_back_ios),
-          ),
+          leading: Directionality(
+              textDirection: TextDirection.rtl,
+              child: IconButton(
+                icon: Icon(Icons.arrow_forward),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DateAndTime()),
+                  );
+                },
+                //icon: Icon(Icons.arrow_back_ios),
+              )),
           backgroundColor: lb,
           automaticallyImplyLeading: false,
         ),

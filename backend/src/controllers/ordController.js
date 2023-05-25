@@ -60,6 +60,26 @@ const  getUserordu = async (req, res) => {
     });
 };
 
+const  getUserordwork = async (req, res) => {
+  const uname= req.params.uname;
+  const Wname= req.params.wname;
+  
+  const allserv = await ordModel.find({uname,Wname}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
+};
+
+const  getUserord = async (req, res) => {
+  const uname= req.params.uname;
+ 
+  
+  const allserv = await ordModel.find({uname}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
+};
+
 // const updateaccw= async (req,res)=>{
 //   const  id  = req.params.id;
 //   const { acc} = req.body;
@@ -192,6 +212,8 @@ const getOrderCountsByService = async (req, res)=> {
     getUserordc,
     getOrdersCountByMonth,
     getOrdersCountByDay,
-    getOrderCountsByService
+    getOrderCountsByService,
+    getUserordwork,
+    getUserord,
 
 };

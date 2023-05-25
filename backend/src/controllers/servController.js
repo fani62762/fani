@@ -25,7 +25,15 @@ const getserv = async (req, res) => {
   const allserv = await servModel.find({type:type}).then(function(myDoc) {
   res.json(myDoc);
   });
+ };
+ const getAllservn = async (req, res) => {
+  const type= req.params.type;
+  const allserv = await servModel.find({name:name}).then(function(myDoc) {
+  res.json(myDoc);
+  });
  }; 
+ 
+
     
 
 const deleteserv = async (req, res) =>{
@@ -40,6 +48,8 @@ module.exports = {
     updateserv,
     deleteserv,
     getserv,
+    getAllservt,
+    getAllservn,
 };
 
 
