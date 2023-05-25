@@ -1,11 +1,12 @@
 const express= require('express');
-const {addworker,getallworker,forgotPassword,updateworker,updateworkerbio,getsingleworker,deleteworker,updateworkerimg,getworker,submitCredentials, updateworkerrate, updateworkerLoc} = require('../controllers/workercontrol');
+const {gendercount,addworker,getallworker,forgotPassword,updateworker,updateworkerbio,getsingleworker,deleteworker,updateworkerimg,getworker,submitCredentials, updateworkerrate, updateworkerLoc} = require('../controllers/workercontrol');
 const workerrouter =express.Router();
 const cors = require('cors');
 
 workerrouter.use(cors());
 workerrouter.get('/1/:userId', getsingleworker );
 workerrouter.get('/2/:name',getworker);
+workerrouter.get('/wgender',gendercount);
 workerrouter.post('/login',submitCredentials);
 workerrouter.get('/',getallworker);
 workerrouter.post('/',addworker);

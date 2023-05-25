@@ -1,10 +1,11 @@
 const express=require('express');
-const { adduser,forgotPassword, getAllUsers,submitCredentials,updateuserimg,updatUsererLoc, updateUser, deleteUser, getSingleUser, getUser } = require('../controllers/userControllers');
+const { gendercount,adduser,forgotPassword, getAllUsers,submitCredentials,updateuserimg,updatUsererLoc, updateUser, deleteUser, getSingleUser, getUser } = require('../controllers/userControllers');
 const cors = require('cors');
 const router=express.Router()
 router.use(cors());
 router.get('/1/:userId', getSingleUser );
 router.get('/2/:name',getUser);
+router.get('/ugender',gendercount);
 router.post('/login',submitCredentials);
 router.get('/',getAllUsers);
 router.get('/:userId', getSingleUser );
