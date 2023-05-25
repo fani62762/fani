@@ -38,8 +38,8 @@ const getw = async (req, res) => {
 
 const getow = async (req, res) => {
     const TypeServ= req.params.type;
-    const hours = req.params.hour.split(';');
-    const allwork = await serworkModel.find({TypeServ,Hours:{ $nin: hours },rating: { $gt: 3 }}).then(function(myDoc) {
+    const hours = req.params.hour.split(';');//.find({TypeServ,Hours:{ $nin: hours },rating: { $gt: 3 }}).
+    const allwork = await serworkModel.find({TypeServ,Hours:{ $nin: hours }}).then(function(myDoc) {
     console.log(myDoc);
     res.json(myDoc);
     });

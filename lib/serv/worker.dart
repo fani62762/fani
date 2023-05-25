@@ -261,6 +261,8 @@ class _techState extends State<tech> {
         otherworkers = parsed.map((e) => workserv.fromJson(e)).toList();
       });
     }
+    print(" otherworkers");
+    print(otherworkers);
     int mincost = 1000;
     // int rt = -1000;
     // int rm = -1000;
@@ -274,71 +276,76 @@ class _techState extends State<tech> {
     topm = temp.take(3).toList();
     temp.sort((a, b) => b.behave.compareTo(a.behave));
     topb = temp.take(3).toList();
-    workers.sort((a, b) => a.Price.compareTo(b.Price));
+    temp.sort((a, b) => a.Price.compareTo(b.Price));
     topp = temp.take(3).toList();
 
-    for (int g = 0; g < otherworkers.length; g++) {
-      for (int o = 0; o < prefr.length; o++) {
-        if (prefr[o] == 'b') {
-          otherworkers[g].points += (prefr.length - o) + otherworkers[g].behave;
-          if (o == 0) {
-            top1 = topb;
-            desc1 = "الأعلى تقييما في السلوك ";
-          }
-          if (o == 1) {
-            top2 = topb;
-            desc2 = "الأعلى تقييما في السلوك ";
-          }
-          if (o == 2) {
-            top3 = topb;
-            desc3 = "الأعلى تقييما في السلوك ";
-          }
-        }
-        if (prefr[o] == 'm' || prefr[o] == 'd') {
-          otherworkers[g].points += (prefr.length - o) + otherworkers[g].master;
-          if (o == 0) {
-            top1 = topm;
-            desc1 = "الأعلى تقييما في الاتقان ";
-          }
-          if (o == 1) {
-            top2 = topm;
-            desc2 = "الأعلى تقييما في الاتقان ";
-          }
-          if (o == 2) {
-            top3 = topm;
-            desc3 = "الأعلى تقييما في الاتقان ";
-          }
-        }
-        if (prefr[o] == 't') {
-          otherworkers[g].points += (prefr.length - o) + otherworkers[g].timing;
-          if (o == 0) {
-            top1 = topt;
-            desc1 = "الأعلى تقييما في المواعيد ";
-          }
-          if (o == 1) {
-            top2 = topt;
-            desc2 = "الأعلى تقييما في المواعيد ";
-          }
-          if (o == 2) {
-            top3 = topt;
-            desc3 = "الأعلى تقييما في المواعيد ";
-          }
-        }
-        if (prefr[o] == 'p') {
-          if (int.parse(workers[g].Price) <= mincost) {
-            workers[g].points += (prefr.length - o) + 1;
-            mincost = int.parse(workers[g].Price);
+    if (!otherworkers.isEmpty) {
+      for (int g = 0; g < otherworkers.length; g++) {
+        for (int o = 0; o < prefr.length; o++) {
+          if (prefr[o] == 'b') {
+            otherworkers[g].points +=
+                (prefr.length - o) + otherworkers[g].behave;
             if (o == 0) {
-              top1 = topp;
-              desc1 = "الاقل سعرا";
+              top1 = topb;
+              desc1 = "الأعلى تقييما في السلوك ";
             }
             if (o == 1) {
-              top2 = topp;
-              desc2 = "الاقل سعرا";
+              top2 = topb;
+              desc2 = "الأعلى تقييما في السلوك ";
             }
             if (o == 2) {
-              top3 = topp;
-              desc3 = "الاقل سعرا";
+              top3 = topb;
+              desc3 = "الأعلى تقييما في السلوك ";
+            }
+          }
+          if (prefr[o] == 'm' || prefr[o] == 'd') {
+            otherworkers[g].points +=
+                (prefr.length - o) + otherworkers[g].master;
+            if (o == 0) {
+              top1 = topm;
+              desc1 = "الأعلى تقييما في الاتقان ";
+            }
+            if (o == 1) {
+              top2 = topm;
+              desc2 = "الأعلى تقييما في الاتقان ";
+            }
+            if (o == 2) {
+              top3 = topm;
+              desc3 = "الأعلى تقييما في الاتقان ";
+            }
+          }
+          if (prefr[o] == 't') {
+            otherworkers[g].points +=
+                (prefr.length - o) + otherworkers[g].timing;
+            if (o == 0) {
+              top1 = topt;
+              desc1 = "الأعلى تقييما في المواعيد ";
+            }
+            if (o == 1) {
+              top2 = topt;
+              desc2 = "الأعلى تقييما في المواعيد ";
+            }
+            if (o == 2) {
+              top3 = topt;
+              desc3 = "الأعلى تقييما في المواعيد ";
+            }
+          }
+          if (prefr[o] == 'p') {
+            if (int.parse(otherworkers[g].Price) <= mincost) {
+              otherworkers[g].points += (prefr.length - o) + 1;
+              mincost = int.parse(otherworkers[g].Price);
+              if (o == 0) {
+                top1 = topp;
+                desc1 = "الاقل سعرا";
+              }
+              if (o == 1) {
+                top2 = topp;
+                desc2 = "الاقل سعرا";
+              }
+              if (o == 2) {
+                top3 = topp;
+                desc3 = "الاقل سعرا";
+              }
             }
           }
         }
@@ -388,16 +395,21 @@ class _techState extends State<tech> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => viewa()),
-                          );
-                        },
-                        child: Text(
-                          'عرض الكل',
-                        )),
+                    !workers.isEmpty
+                        ? TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => viewa()),
+                              );
+                            },
+                            child: Text(
+                              'عرض الكل',
+                            ))
+                        : SizedBox(
+                            height: 5,
+                          ),
                     Text(
                       'الأكثر ملائمة ',
                       style:
@@ -464,37 +476,41 @@ class _techState extends State<tech> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(children: [
-                                  PopupMenuButton(
-                                    onSelected: (value) => setState(
-                                        () => ordhour = value.toString()),
-                                    itemBuilder: (context) => workers[0]
-                                        .mHour
-                                        .map((item) => PopupMenuItem<String>(
-                                              value: item,
-                                              child: Text(
-                                                item,
-                                              ),
-                                            ))
-                                        .toList(),
-                                  ),
-                                  workers.isEmpty
-                                      ? Text(
-                                          "",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : Text(
-                                          workers[0].Wname,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                !workers.isEmpty
+                                    ? Row(children: [
+                                        PopupMenuButton(
+                                          onSelected: (value) => setState(
+                                              () => ordhour = value.toString()),
+                                          itemBuilder: (context) => workers[0]
+                                              .mHour
+                                              .map((item) =>
+                                                  PopupMenuItem<String>(
+                                                    value: item,
+                                                    child: Text(
+                                                      item,
+                                                    ),
+                                                  ))
+                                              .toList(),
                                         ),
-                                ]),
-                                SizedBox(
-                                  height: 5,
-                                ),
+                                        workers.isEmpty
+                                            ? Text(
+                                                "",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            : Text(
+                                                workers[0].Wname,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                      ])
+                                    : SizedBox(
+                                        height: 5,
+                                      ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   // child: Image.network(image)),
@@ -526,48 +542,81 @@ class _techState extends State<tech> {
                       SizedBox(
                         height: 40,
                       ),
-                      Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(15.0)),
-                        child: TextButton(
-                            style: TextButton.styleFrom(
-                                minimumSize: const Size.fromHeight(50)),
-                            child: Text(
-                              'حجز',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                      !workers.isEmpty
+                          ? Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(15.0)),
+                              child: TextButton(
+                                  style: TextButton.styleFrom(
+                                      minimumSize: const Size.fromHeight(50)),
+                                  child: Text(
+                                    'حجز',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18),
+                                  ),
+                                  onPressed: () {
+                                    ordhour == ""
+                                        ? AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.info,
+                                            animType: AnimType.BOTTOMSLIDE,
+                                            desc:
+                                                'الرجاء اختيار ساعة من القائمة بجوار الاسم,',
+                                          ).show()
+                                        : {
+                                            ordwname = workers[0].Wname,
+                                            ordprice = workers[0].Price,
+                                            print(orduname +
+                                                " " +
+                                                ordwname +
+                                                " " +
+                                                ordhour +
+                                                " " +
+                                                ordprice +
+                                                " " +
+                                                ordrepeated +
+                                                " " +
+                                                orddate +
+                                                " " +
+                                                ordtype),
+                                            showAlertDialog(context),
+                                          };
+                                  }),
+                            )
+                          : Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.work,
+                                      size: 48,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(height: 16),
+                                    Text(
+                                      'لا يوجد عمال في الوقت المحدد',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      'الرجاء اختيار موعد اخر او اختيار عمال من القائمة بالأسفل',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            onPressed: () {
-                              ordhour == ""
-                                  ? AwesomeDialog(
-                                      context: context,
-                                      dialogType: DialogType.info,
-                                      animType: AnimType.BOTTOMSLIDE,
-                                      desc:
-                                          'الرجاء اختيار ساعة من القائمة بجوار الاسم,',
-                                    ).show()
-                                  : {
-                                      ordwname = workers[0].Wname,
-                                      ordprice = workers[0].Price,
-                                      print(orduname +
-                                          " " +
-                                          ordwname +
-                                          " " +
-                                          ordhour +
-                                          " " +
-                                          ordprice +
-                                          " " +
-                                          ordrepeated +
-                                          " " +
-                                          orddate +
-                                          " " +
-                                          ordtype),
-                                      showAlertDialog(context),
-                                    };
-                            }),
-                      )
                     ],
                   ),
                 ),
@@ -698,7 +747,7 @@ class _techState extends State<tech> {
     Widget okButton = TextButton(
       child: Text("اتمام"),
       onPressed: () {
-        createord(context, orduname, ordwname, ordhour, ordprice, ordrepeated,
+        createord(context, usname, ordwname, ordhour, ordprice, ordrepeated,
             orddate, ordadd, ordserv, ordtype);
       },
     );

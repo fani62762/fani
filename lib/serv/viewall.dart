@@ -35,11 +35,11 @@ Future<void> createord(
     List<String> add,
     List<String> serv,
     String type) async {
-  print(type + wname + uname);
+  print(type + wname + "us" + usname);
   final body = jsonEncode({
     'TypeServ': type,
     'Wname': wname,
-    'uname': uname,
+    'uname': usname,
     'Price': Price,
     'Hour': Hour,
     'serv': serv,
@@ -388,7 +388,7 @@ class _viewaState extends State<viewa> {
     Widget okButton = TextButton(
       child: Text("اتمام"),
       onPressed: () {
-        createord(context, orduname, ordwname, ordhour, ordprice, ordrepeated,
+        createord(context, usname, ordwname, ordhour, ordprice, ordrepeated,
             orddate, ordadd, ordserv, ordtype);
       },
     );
