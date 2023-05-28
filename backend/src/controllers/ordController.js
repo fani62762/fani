@@ -14,6 +14,13 @@ const createord = async (req, res) => {
     res.json(myDoc);
     });
 };
+//getallorder
+const getallorder = async (req, res) => {
+ 
+  const allserv = await ordModel.find({}).then(function(myDoc) {
+  res.json(myDoc);
+  });
+};
 
 const deleteord = async (req, res) =>{
     const { id } = req.params;
@@ -215,5 +222,6 @@ const getOrderCountsByService = async (req, res)=> {
     getOrderCountsByService,
     getUserordwork,
     getUserord,
+    getallorder,
 
 };
