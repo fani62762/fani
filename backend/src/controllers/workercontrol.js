@@ -40,6 +40,41 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+
+const delemail = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const wor = await workerModel.findOne({ name });
+    if (!wor) {
+      return res.status(404).json({ message: 'هذا الاسم غير مسجل بالنظام' });
+    }
+    await wor.save();
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "fani62762@gmail.com",
+        pass: "kuuhbddzrzwtfpnd"
+      }
+    });
+
+    const mailOptions = {
+      to: wor.email,
+      from:"fani62762@gmail.com",
+      subject: '',
+     text:`${resetCode} للأسف تم حذف حسابك من تطبيق فني \n من خلال الادمين \n لأي استفسار تواصل مع رقم الادمين `,
+      // html: `يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية.<b>كلمة السر الجديدة الخاصة بك هي: ${resetCode}</b>`
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: `تم الارسال الى البري الإلكتروني ${wor.email}` });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err });
+  }
+};
+
 const addworker= async (req,res) => {
     const {name,password,email,gender,phone,date}=req.body;
     const newworker= await workerModel.create({name,password,email,gender,phone,date});
@@ -200,5 +235,6 @@ module.exports={
     updateworkerrate,
     updateworkerbio,
     forgotPassword,
-    gendercount
+    gendercount,
+    delemail
 };

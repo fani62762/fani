@@ -1,5 +1,5 @@
 const express= require('express');
-const {gendercount,addworker,getallworker,forgotPassword,updateworker,updateworkerbio,getsingleworker,deleteworker,updateworkerimg,getworker,submitCredentials, updateworkerrate, updateworkerLoc} = require('../controllers/workercontrol');
+const {delemail,gendercount,addworker,getallworker,forgotPassword,updateworker,updateworkerbio,getsingleworker,deleteworker,updateworkerimg,getworker,submitCredentials, updateworkerrate, updateworkerLoc} = require('../controllers/workercontrol');
 const workerrouter =express.Router();
 const cors = require('cors');
 
@@ -17,5 +17,5 @@ workerrouter.put('/location/:name',updateworkerLoc);
 workerrouter.put('/3/:name',updateworkerrate);
 workerrouter.put('/4/:name',updateworkerbio);
 workerrouter.post('/forgot-password', forgotPassword);//
-
+workerrouter.post('/delworkemail', delemail);
 module.exports=workerrouter;

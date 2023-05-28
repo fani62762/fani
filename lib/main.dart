@@ -3,8 +3,51 @@ import 'package:fani/auth/login.dart';
 import 'package:fani/auth/signup.dart';
 import 'package:fani/notifi/notifi_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
+
+//Background && Tirmin
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (kDebugMode) {
+    print('Handling a background message ${message.messageId}');
+  }
+}
+void req()async{
+  FirebaseMessaging messaging=FirebaseMessaging.instance;
+  NotificationSettings settings=await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+
+  );
+  if(settings.authorizationStatus==AuthorizationStatus.authorized) {print("user perm");}
+  else{print ("no");}
+
+FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  print(message.notification?.title);
+});
+
+///back
+FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  print("go back");
+});
+}
+//tir
+initalMessage() async
+{
+  var message=await FirebaseMessaging.instance.getInitialMessage();
+  if(message!=null)
+  {
+     print("go tir");
+   
+  }
+}
 
 int t = 0;
 
@@ -20,11 +63,13 @@ List<dynamic> types = [];
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   NotificationService().initNotification();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -52,6 +97,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var serverToken="AAAAfAZYhAo:APA91bH4KtyI1wyJVnYjT6FU60RLY2Vfu0U0mXlMCa-Hq_2lYuZtL5imkfVrAw8Yb2xWvbf0X5GSUjSd8K2-Wo4W4au8jhl_oqT2d7DTBHXJh5nu8JXbBnJy1A3c1RnD9zh0R_fekvdI";
+ sendNotfiy (String title, String body, String id,String name) async {
+await http.post(
+Uri.parse('https://fcm.googleapis.com/fcm/send'),
+headers: <String, String>{
+'Content-Type': 'application/json',
+'Authorization': 'key=$serverToken',
+},
+body: jsonEncode(
+<String, dynamic>{
+'notification': <String, dynamic>{
+'body': body.toString(),
+'title': title.toString()
+},
+'priority': 'high',
+'data': <String, dynamic>{
+'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+'id': id.toString(),
+"name":name
+},
+'to': await FirebaseMessaging.instance.getToken()
+},
+),
+);
+ }
   Future<void> getAlltype() async {
     servicesList.clear();
     final response =
@@ -73,9 +143,10 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void initState() {
+  void initState() { 
+     super.initState();
     getAlltype();
-    super.initState();
+  req();
   }
 
   @override
