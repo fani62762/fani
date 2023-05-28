@@ -14,6 +14,13 @@ const createord = async (req, res) => {
     res.json(myDoc);
     });
 };
+//getallorder
+const getallorder = async (req, res) => {
+ 
+  const allserv = await ordModel.find({}).then(function(myDoc) {
+  res.json(myDoc);
+  });
+};
 
 const deleteord = async (req, res) =>{
     const { id } = req.params;
@@ -58,6 +65,26 @@ const  getUserordu = async (req, res) => {
     console.log(myDoc);
     res.json(myDoc);
     });
+};
+
+const  getUserordwork = async (req, res) => {
+  const uname= req.params.uname;
+  const Wname= req.params.wname;
+  
+  const allserv = await ordModel.find({uname,Wname}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
+};
+
+const  getUserord = async (req, res) => {
+  const uname= req.params.uname;
+ 
+  
+  const allserv = await ordModel.find({uname}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
 };
 
 // const updateaccw= async (req,res)=>{
@@ -192,6 +219,9 @@ const getOrderCountsByService = async (req, res)=> {
     getUserordc,
     getOrdersCountByMonth,
     getOrdersCountByDay,
-    getOrderCountsByService
+    getOrderCountsByService,
+    getUserordwork,
+    getUserord,
+    getallorder,
 
 };

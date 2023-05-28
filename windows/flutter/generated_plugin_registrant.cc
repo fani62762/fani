@@ -9,6 +9,7 @@
 #include <geolocator_windows/geolocator_windows.h>
 #include <modal_progress_hud_nsn/modal_progress_hud_nsn_plugin.h>
 #include <record_windows/record_windows_plugin_c_api.h>
+#include <rive_common/rive_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   GeolocatorWindowsRegisterWithRegistrar(
@@ -17,4 +18,6 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("ModalProgressHudNsnPlugin"));
   RecordWindowsPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("RecordWindowsPluginCApi"));
+  RivePluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("RivePlugin"));
 }

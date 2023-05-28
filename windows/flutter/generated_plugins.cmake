@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   geolocator_windows
   modal_progress_hud_nsn
   record_windows
+  rive_common
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
