@@ -18,6 +18,7 @@ const createord = async (req, res) => {
 const getallorder = async (req, res) => {
  
   const allserv = await ordModel.find({}).then(function(myDoc) {
+    console.log(myDoc);
   res.json(myDoc);
   });
 };
