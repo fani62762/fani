@@ -48,7 +48,7 @@ module.exports = {
     updateserv,
     deleteserv,
     getserv,
-    getAllservt,
+    //getAllservt,
     getAllservn,
 };
 
