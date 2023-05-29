@@ -133,7 +133,7 @@ class _DateAndTimeState extends State<DateAndTime> {
           ),
           backgroundColor: dy,
           title: Text(
-            'مرحبا, شهد بلال ',
+              'مرحبا, $nee  ',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
           ),
           automaticallyImplyLeading: false,

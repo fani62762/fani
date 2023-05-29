@@ -134,7 +134,7 @@ class _GservState extends State<Gserv> {
                       padding:
                           EdgeInsets.only(top: 50.0, right: 20.0, left: 20.0),
                       child: Text(
-                        'ما الذي تريد اصلاحه؟',
+                        'تحديد الخدمة التي تريد حجزها ',
                         style: TextStyle(
                           fontSize: 35,
                           color: Colors.grey.shade900,
