@@ -52,7 +52,20 @@ const deleteserv = async (req, res) =>{
     res.json (deletedserv)
 };
 
+const deleteServicesByType = async (req, res) => {
+  const { type } = req.params; // Assuming the type is provided in the URL parameters
+  
+  try {
+    const deletedServices = await servModel.deleteMany({ type });
+    res.json({ message: `Deleted ${deletedServices.deletedCount} services with type '${type}'` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
+    deleteServicesByType,
     createserv,
     getAllserv,
     updateserv,
