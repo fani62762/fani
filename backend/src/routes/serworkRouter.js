@@ -1,11 +1,11 @@
 const express=require('express');
-const { getSerWorkert,getow,getw,createWork, getlimits, deleteWork,getAllworks,updateworkerrate,getSerWorker, getServiceWorker, getmyService} = require('../controllers/serworkControllers');
+const { deleteservworker,getSerWorkert,getow,getw,createWork, getlimits, deleteWork,getAllworks,updateworkerrate,getSerWorker, getServiceWorker, getmyService} = require('../controllers/serworkControllers');
 
 const servworkrouter=express.Router()
 
 servworkrouter.post('/',createWork);
 servworkrouter.delete('/', deleteWork );
-//servworkrouter.delete('/:name', deleteservworker );
+//servworkrouter.delete('/delse/:Wname', deleteservworker );
 servworkrouter.get('/',getAllworks);
 servworkrouter.get('/1/',getServiceWorker);
 servworkrouter.get('/2/',getmyService);
