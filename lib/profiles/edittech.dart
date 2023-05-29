@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:fani/main.dart';
 import 'package:fani/notifi/notifi_service.dart';
 import 'package:fani/profiles/fortech.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -336,7 +337,38 @@ class _editTechState extends State<editTech> {
       print('Error: ${response.statusCode}');
     }
   }
+ void req()async{
+  FirebaseMessaging messaging=FirebaseMessaging.instance;
+  NotificationSettings settings=await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
 
+  );
+  if(settings.authorizationStatus==AuthorizationStatus.authorized) {print("user perm");}
+  else{print ("no");}
+
+FirebaseMessaging.onMessage.listen((message) {
+  print(message.notification?.body);
+  if (message.data['name'] == widget.techName) {
+    print(widget.techName);
+    print(message.data['name']);
+      NotificationService().showNotification(
+          title: message.notification?.title,
+          body: message.notification?.body);
+   }
+});
+
+///back
+FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  print("go back");
+});
+}
+ 
   Future<void> deleteServworker(String TypeServ, String Wname) async {
     final body = jsonEncode({"TypeServ": TypeServ, "Wname": Wname});
     final response = await http.delete(
@@ -609,14 +641,16 @@ class _editTechState extends State<editTech> {
   }
 
   void initState() {
-    super.initState();
+   
+       req();
     selecServ.clear();
     timeSelec.clear();
     servwork.clear();
     getAlltype();
     workerInfo(widget.techName);
     getalls(widget.techName);
-    getmyeWorker(widget.techName);
+    getmyeWorker(widget.techName); 
+    super.initState();
   }
 
   @override

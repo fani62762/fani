@@ -49,6 +49,7 @@ type:String,
 default:"لم يتم تعين الموقع "
 }, 
 
+
 latitude:
 {
 type: Number,

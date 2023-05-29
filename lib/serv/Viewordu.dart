@@ -174,6 +174,7 @@ class _VieworduState extends State<Viewordu> {
     return Scaffold(
         appBar: AppBar(
           title: Text('الطلبات'),
+           centerTitle: true,
         ),
         body: Column(
           children: [

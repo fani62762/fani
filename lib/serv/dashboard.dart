@@ -1,287 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class Order {
-//   String typeOfService;
-//   String workerName;
-//   String userName;
-//   List<String> services;
-//   List<String> additionalServices;
-//   String hour;
-//   String appointmentTime;
-//   bool isRepeated;
-//   double pricePerHour;
-
-//   Order({
-//     required this.typeOfService,
-//     required this.workerName,
-//     required this.userName,
-//     required this.services,
-//     required this.additionalServices,
-//     required this.hour,
-//     required this.appointmentTime,
-//     required this.isRepeated,
-//     required this.pricePerHour,
-//   });
-// }
-
-// class OrderCard extends StatelessWidget {
-//   final Order order;
-//   final VoidCallback? onAccept;
-//   final VoidCallback? onReject;
-//   final VoidCallback? onTap;
-
-//   OrderCard({
-//     required this.order,
-//     this.onAccept,
-//     this.onReject,
-//     this.onTap,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: onTap,
-//       child: Container(
-//         padding: EdgeInsets.all(16.0),
-//         margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(8.0),
-//           gradient: LinearGradient(
-//             colors: [
-//               Colors.yellow[50]!,
-//               Colors.yellow[100]!,
-//               Colors.yellow[200]!
-//             ],
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//           ),
-//         ),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   order.typeOfService,
-//                   style: TextStyle(fontSize: 18.0),
-//                 ),
-//                 Text(
-//                   '${order.pricePerHour} \$ / hour',
-//                   style: TextStyle(fontSize: 18.0),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 16.0),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   order.workerName,
-//                   style: TextStyle(fontSize: 18.0),
-//                 ),
-//                 Text(
-//                   order.userName,
-//                   style: TextStyle(fontSize: 18.0),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 16.0),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   order.services.join(', '),
-//                   style: TextStyle(fontSize: 16.0),
-//                 ),
-//                 Icon(Icons.arrow_forward_ios_rounded),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class OrdersInWaitScreen extends StatelessWidget {
-//   final List<Order> orders;
-//   final Function(Order)? onAccept;
-//   final Function(Order)? onReject;
-
-//   OrdersInWaitScreen({
-//     required this.orders,
-//     this.onAccept,
-//     this.onReject,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Orders in Wait')),
-//       body: ListView.builder(
-//         itemCount: orders.length,
-//         itemBuilder: (context, index) {
-//           return OrderCard(
-//             order: orders[index],
-//             onAccept: () => onAccept?.call(orders[index]),
-//             onReject: () => onReject?.call(orders[index]),
-//             onTap: () => _navigateToOrderDetails(context, orders[index]),
-//           );
-//         },
-//       ),
-//     );
-//   }
-
-//   void _navigateToOrderDetails(BuildContext context, Order order) {
-//     Navigator.of(context).push(MaterialPageRoute(
-//       builder: (context) => OrderDetailsScreen(order: order),
-//     ));
-//   }
-// }
-
-// class OrdersCompletedScreen extends StatefulWidget {
-//   final List<Order> orders;
-
-//   OrdersCompletedScreen({required this.orders});
-
-//   @override
-//   _OrdersCompletedScreenState createState() => _OrdersCompletedScreenState();
-// }
-
-// class _OrdersCompletedScreenState extends State<OrdersCompletedScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Orders Completed'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: widget.orders.length,
-//         itemBuilder: (context, index) {
-//           final order = widget.orders[index];
-//           return ListTile(
-//             leading: Text(order.typeOfService),
-//             title: Text(order.workerName),
-//             subtitle: Text(order.userName),
-//             trailing: Text(order.pricePerHour.toString()),
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => OrderDetailsScreen(order: order),
-//                 ),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// class OrdersRejectedScreen extends StatefulWidget {
-//   final List<Order> orders;
-
-//   OrdersRejectedScreen({required this.orders});
-
-//   @override
-//   _OrdersRejectedScreenState createState() => _OrdersRejectedScreenState();
-// }
-
-// class _OrdersRejectedScreenState extends State<OrdersRejectedScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Orders Rejected'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: widget.orders.length,
-//         itemBuilder: (context, index) {
-//           final order = widget.orders[index];
-//           return ListTile(
-//             leading: Text(order.typeOfService),
-//             title: Text(order.workerName),
-//             subtitle: Text(order.userName),
-//             trailing: Text(order.pricePerHour.toString()),
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => OrderDetailsScreen(order: order),
-//                 ),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// class OrderDetailsScreen extends StatelessWidget {
-//   final Order order;
-
-//   OrderDetailsScreen({required this.order});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Order Details'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               'Type of Service: ${order.typeOfService}',
-//               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//             ),
-//             SizedBox(height: 8),
-//             Text(
-//               'Worker Name: ${order.workerName}',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//             SizedBox(height: 8),
-//             Text(
-//               'User Name: ${order.userName}',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//             SizedBox(height: 8),
-//             Text(
-//               'Services: ${order.services.join(", ")}',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//             SizedBox(height: 8),
-//             if (order.additionalServices.isNotEmpty)
-//               Text(
-//                 'Additional Services: ${order.additionalServices.join(", ")}',
-//                 style: TextStyle(fontSize: 16),
-//               ),
-//             SizedBox(height: 8),
-//             Text(
-//               'Hour and Time of Appointment: ${order.appointmentTime}',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//             SizedBox(height: 8),
-//             Text(
-//               'Is it Repeated: ${order.isRepeated ? "Yes" : "No"}',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//             SizedBox(height: 8),
-//             Text(
-//               'Price per Hour: ${order.pricePerHour}',
-//               style: TextStyle(fontSize: 16),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:fani/serv/viewordu.dart';
@@ -910,47 +626,50 @@ class _StatsScreenState extends State<StatsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Palette.primaryColor,
-      //appBar: CustomAppBar(),
-      appBar: builbar(),
-      endDrawer: billenddrawer(context),
-      body: CustomScrollView(
-        physics: ClampingScrollPhysics(),
-        slivers: <Widget>[
-          _buildHeader(),
-          _buildRegionTabBar(),
-          if (ch == 2) _buildStatsTabBar(),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            //sliver: SliverToBoxAdapter(
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return ch == 1
-                      ? StatsGrid(orderg: naccp[index], index: index)
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Palette.primaryColor,
+        //appBar: CustomAppBar(),
+        appBar: builbar(),
+        endDrawer: billenddrawer(context),
+        body: CustomScrollView(
+          physics: ClampingScrollPhysics(),
+          slivers: <Widget>[
+            _buildHeader(),
+            _buildRegionTabBar(),
+            if (ch == 2) _buildStatsTabBar(),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              //sliver: SliverToBoxAdapter(
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return ch == 1
+                        ? StatsGrid(orderg: naccp[index], index: index)
+                        : ch2 == 1
+                            ? StatsGrid(orderg: accp[index], index: index)
+                            : StatsGrid(orderg: cccp[index], index: index);
+                    // return ListTile(
+                    //   title: Text('Item $index'),
+                    // );
+                  },
+                  childCount: ch == 1
+                      ? naccp.length
                       : ch2 == 1
-                          ? StatsGrid(orderg: accp[index], index: index)
-                          : StatsGrid(orderg: cccp[index], index: index);
-                  // return ListTile(
-                  //   title: Text('Item $index'),
-                  // );
-                },
-                childCount: ch == 1
-                    ? naccp.length
-                    : ch2 == 1
-                        ? accp.length
-                        : cccp.length,
+                          ? accp.length
+                          : cccp.length,
+                ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(top: 20.0),
-            sliver: SliverToBoxAdapter(
-                // child: CovidBarChart(covidCases: covidUSADailyNewCases),
-                ),
-          ),
-        ],
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 20.0),
+              sliver: SliverToBoxAdapter(
+                  // child: CovidBarChart(covidCases: covidUSADailyNewCases),
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }

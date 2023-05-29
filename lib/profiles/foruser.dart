@@ -140,9 +140,38 @@ class _ForUserState extends State<ForUser> {
                 ),
               ],
             ),
-            SingleChildScrollView(
-                child: Row(
+     
+          ],
+        ),
+      );
+    }
+   Widget builipref() {
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        // padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Color.fromARGB(255, 223, 223, 223),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                
+                Text(
+                  'تحديد أهم صفات العمال  :',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                
+              ],
+            ),
+            SizedBox(height: 10),
+        SingleChildScrollView(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+
                 ElevatedButton(
                   onPressed: togglePreferencesVisibility,
                   child: Text('الاولويات'),
@@ -154,7 +183,7 @@ class _ForUserState extends State<ForUser> {
                   child: ConstrainedBox(
                       constraints: BoxConstraints(
                         maxHeight: 300,
-                        maxWidth: 800,
+                        maxWidth: 600,
                       ),
                       child: ListView.builder(
                         itemCount: orderedPreferences.length,
@@ -175,29 +204,13 @@ class _ForUserState extends State<ForUser> {
                 )
               ],
             ))
-//             Row(
-//              child: ListView.builder(
-//   itemCount: orderedPreferences.length,
-//   itemBuilder: (context, index) {
-//     Preference preference = orderedPreferences[index];
-
-//     return ListTile(
-//       title: Text(preference.label),
-//       leading: Checkbox(
-//         value: selectedPreferences.contains(preference),
-//         onChanged: (value) {
-//           togglePreferenceSelection(preference);
-//         },
-//       ),
-//     );
-//   },
-// )
-//             ),
+          
           ],
         ),
       );
     }
 
+  
     Widget builcon() {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
@@ -329,6 +342,7 @@ class _ForUserState extends State<ForUser> {
               SizedBox(height: 20),
               builcon(),
               SizedBox(height: 20),
+              builipref(),
               SizedBox(height: 20),
             ],
           ),
