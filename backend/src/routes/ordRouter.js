@@ -9,7 +9,7 @@ router.get('/getday', getOrdersCountByDay );
 router.get('/getservord', getOrderCountsByService );
 router.post('/',createord);
 router.delete('/:id', deleteord );
-router.delete('/:name', deleteordsworker );
+router.delete('/delse/:Wname', deleteordsworker );
 router.get('/5/:name',getworkordd);
 router.get('/6/:name',getworkordu);
 router.get('/3/:name',getUserordd);
