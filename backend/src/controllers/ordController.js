@@ -107,6 +107,19 @@ const  getworkord = async (req, res) => {
   });
 };
 
+const retrieveUnamesByWorker = async (req, res) => {
+  const { Wname } = req.params;
+
+  try {
+    const orders = await ordModel.find({ Wname: Wname });
+    const unames = [...new Set(orders.map(order => order.uname))];
+
+    res.json(unames);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
 // const updateaccw= async (req,res)=>{
 //   const  id  = req.params.id;
 //   const { acc} = req.body;
@@ -244,6 +257,7 @@ const getOrderCountsByService = async (req, res)=> {
     getUserord,
     getallorder,
     getworkord,
-    deleteordsworker
+    deleteordsworker,
+    retrieveUnamesByWorker
 
 };
