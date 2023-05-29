@@ -251,12 +251,12 @@ class _UserpageState extends State<Userpage> {
 
 FirebaseMessaging.onMessage.listen((RemoteMessage message) {
   print(message.notification?.body);
-  // if (message.notification?. == widget.userName) {
+  if (message.data['name'] == widget.userName) {
       NotificationService().showNotification(
           title: message.notification?.title,
           body: message.notification?.body);
     
-   // }
+   }
 });
 
 ///back
