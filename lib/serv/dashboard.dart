@@ -910,47 +910,50 @@ class _StatsScreenState extends State<StatsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Palette.primaryColor,
-      //appBar: CustomAppBar(),
-      appBar: builbar(),
-      endDrawer: billenddrawer(context),
-      body: CustomScrollView(
-        physics: ClampingScrollPhysics(),
-        slivers: <Widget>[
-          _buildHeader(),
-          _buildRegionTabBar(),
-          if (ch == 2) _buildStatsTabBar(),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            //sliver: SliverToBoxAdapter(
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return ch == 1
-                      ? StatsGrid(orderg: naccp[index], index: index)
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Palette.primaryColor,
+        //appBar: CustomAppBar(),
+        appBar: builbar(),
+        endDrawer: billenddrawer(context),
+        body: CustomScrollView(
+          physics: ClampingScrollPhysics(),
+          slivers: <Widget>[
+            _buildHeader(),
+            _buildRegionTabBar(),
+            if (ch == 2) _buildStatsTabBar(),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              //sliver: SliverToBoxAdapter(
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return ch == 1
+                        ? StatsGrid(orderg: naccp[index], index: index)
+                        : ch2 == 1
+                            ? StatsGrid(orderg: accp[index], index: index)
+                            : StatsGrid(orderg: cccp[index], index: index);
+                    // return ListTile(
+                    //   title: Text('Item $index'),
+                    // );
+                  },
+                  childCount: ch == 1
+                      ? naccp.length
                       : ch2 == 1
-                          ? StatsGrid(orderg: accp[index], index: index)
-                          : StatsGrid(orderg: cccp[index], index: index);
-                  // return ListTile(
-                  //   title: Text('Item $index'),
-                  // );
-                },
-                childCount: ch == 1
-                    ? naccp.length
-                    : ch2 == 1
-                        ? accp.length
-                        : cccp.length,
+                          ? accp.length
+                          : cccp.length,
+                ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(top: 20.0),
-            sliver: SliverToBoxAdapter(
-                // child: CovidBarChart(covidCases: covidUSADailyNewCases),
-                ),
-          ),
-        ],
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 20.0),
+              sliver: SliverToBoxAdapter(
+                  // child: CovidBarChart(covidCases: covidUSADailyNewCases),
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }

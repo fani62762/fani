@@ -174,6 +174,7 @@ class _ViewordState extends State<Vieword> {
       child: Scaffold(
           appBar: AppBar(
             title: Text('الطلبات'),
+             centerTitle: true,
           ),
           body: Column(
             children: [
