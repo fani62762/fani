@@ -48,6 +48,11 @@ address:
 type:String,
 default:"لم يتم تعين الموقع "
 }, 
+Token:
+{
+type:String,
+default:""
+}, 
 
 latitude:
 {
