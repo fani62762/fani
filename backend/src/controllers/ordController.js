@@ -87,6 +87,15 @@ const  getUserord = async (req, res) => {
   res.json(myDoc);
   });
 };
+const  getworkord = async (req, res) => {
+  const Wname= req.params.Wname;
+ 
+  
+  const allserv = await ordModel.find({Wname}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
+};
 
 // const updateaccw= async (req,res)=>{
 //   const  id  = req.params.id;
@@ -224,5 +233,6 @@ const getOrderCountsByService = async (req, res)=> {
     getUserordwork,
     getUserord,
     getallorder,
+    getworkord,
 
 };
