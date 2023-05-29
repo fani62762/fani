@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:fani/notifi/notifi_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fani/main.dart';
@@ -40,6 +42,7 @@ class _UortState extends State<Uort> {
       'password': password,
       'phone': phone,
       'gender': gen,
+      'Token': await FirebaseMessaging.instance.getToken(),
       'date': dat
     });
     final response = await http.post(
@@ -64,6 +67,7 @@ class _UortState extends State<Uort> {
       'password': password,
       'phone': phone,
       'gender': gen,
+      'Token': await FirebaseMessaging.instance.getToken(),
       'date': dat
     });
     final response = await http.post(

@@ -4,6 +4,7 @@ import 'package:fani/auth/forget.dart';
 import 'package:fani/auth/signup.dart';
 import 'package:fani/auth/user.dart';
 import 'package:fani/profiles/edittech.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fani/main.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +52,7 @@ class _LoginState extends State<Login> {
       body: jsonEncode({
         'name': name,
         'password': password,
+        'Token': await FirebaseMessaging.instance.getToken(),
       }),
     );
 
@@ -60,6 +62,7 @@ class _LoginState extends State<Login> {
       body: jsonEncode({
         'name': name,
         'password': password,
+        'Token': await FirebaseMessaging.instance.getToken(),
       }),
     );
 
