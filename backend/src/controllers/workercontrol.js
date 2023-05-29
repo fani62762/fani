@@ -13,7 +13,6 @@ const forgotPassword = async (req, res) => {
     console.log(resetCode);
     wor.password = resetCode;
     await wor.save();
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -29,18 +28,13 @@ const forgotPassword = async (req, res) => {
      text:`${resetCode} كلمة السر الجديدة الخاصة بك هي \n يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية  `,
       // html: `يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية.<b>كلمة السر الجديدة الخاصة بك هي: ${resetCode}</b>`
     };
-
     await transporter.sendMail(mailOptions);
-
     res.status(200).json({ message: `يرجى التحقق من بريدك الإلكتروني ${wor.email} \nللحصول على التعليمات \n ` });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: err });
   }
 };
-
-
 const delemail = async (req, res) => {
   const { name } = req.body;
   try {
@@ -48,7 +42,6 @@ const delemail = async (req, res) => {
     if (!wor) {
       return res.status(404).json({ message: 'هذا الاسم غير مسجل بالنظام' });
     }
-    await wor.save();
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
