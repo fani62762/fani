@@ -80,7 +80,7 @@ const  getUserordu = async (req, res) => {
 
 const  getUserordwork = async (req, res) => {
   const uname= req.params.uname;
-  const Wname= req.params.wname;
+  const Wname= req.params.Wname;
   
   const allserv = await ordModel.find({uname,Wname}).then(function(myDoc) {
   console.log(myDoc);
