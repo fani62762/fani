@@ -249,13 +249,14 @@ class _UserpageState extends State<Userpage> {
   if(settings.authorizationStatus==AuthorizationStatus.authorized) {print("user perm");}
   else{print ("no");}
 
-FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+FirebaseMessaging.onMessage.listen((message) {
   print(message.notification?.body);
   if (message.data['name'] == widget.userName) {
+    print(widget.userName);
+    print(message.data['name']);
       NotificationService().showNotification(
           title: message.notification?.title,
           body: message.notification?.body);
-    
    }
 });
 
