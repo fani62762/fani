@@ -1,15 +1,18 @@
 const express=require('express');
-const {getworkord,deleteordsworker,getallorder,getUserord,getUserordwork,getOrderCountsByService,getOrdersCountByDay,getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkordd,getworkordu,getUserordd,getUserordu,updateaccw,updateaccu} = require('../controllers/ordController');
+const {deleteordsusers,retrieveWorkerssByuname,retrieveUnamesByWorker,getworkord,deleteordsworker,getallorder,getUserord,getUserordwork,getOrderCountsByService,getOrdersCountByDay,getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkordd,getworkordu,getUserordd,getUserordu,updateaccw,updateaccu} = require('../controllers/ordController');
 
 const router=express.Router()
 router.get('/1/:id', getorder );
 router.get('/', getallorder );
 router.get('/getmon', getOrdersCountByMonth );
+router.get('/retrieveUnams/:Wname', retrieveUnamesByWorker );
+router.get('/retrieveWnams/:uname', retrieveWorkerssByuname );
 router.get('/getday', getOrdersCountByDay );
 router.get('/getservord', getOrderCountsByService );
 router.post('/',createord);
 router.delete('/:id', deleteord );
-router.delete('/:name', deleteordsworker );
+router.delete('/delse/:Wname', deleteordsworker );
+router.delete('/delseordsuser/:uname', deleteordsusers );
 router.get('/5/:name',getworkordd);
 router.get('/6/:name',getworkordu);
 router.get('/3/:name',getUserordd);

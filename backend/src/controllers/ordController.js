@@ -33,6 +33,17 @@ const deleteordsworker = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete orders', message: error.message });
   }
 };
+const deleteordsusers = async (req, res) => {
+  const { uname } = req.params;
+
+  try {
+    const deletedOrders = await ordModel.deleteMany({ uname: uname });
+    res.json({ message: 'Orders deleted successfully' });
+    console.log(uname);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete orders', message: error.message });
+  }
+};
 const deleteord = async (req, res) =>{
     const { id } = req.params;
     const deletedord = await ordModel.findOneAndDelete({ id: id })
@@ -105,6 +116,31 @@ const  getworkord = async (req, res) => {
   console.log(myDoc);
   res.json(myDoc);
   });
+};
+
+const retrieveUnamesByWorker = async (req, res) => {
+  const { Wname } = req.params;
+
+  try {
+    const orders = await ordModel.find({ Wname: Wname });
+    const unames = [...new Set(orders.map(order => order.uname))];
+
+    res.json(unames);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+const retrieveWorkerssByuname = async (req, res) => {
+  const { uname } = req.params;
+
+  try {
+    const orders = await ordModel.find({ uname: uname });
+    const wnames = [...new Set(orders.map(order => order.Wname))];
+
+    res.json(wnames);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
 };
 
 // const updateaccw= async (req,res)=>{
@@ -244,6 +280,10 @@ const getOrderCountsByService = async (req, res)=> {
     getUserord,
     getallorder,
     getworkord,
-    deleteordsworker
+    deleteordsworker,
+    deleteordsusers,
+    retrieveUnamesByWorker,
+    retrieveWorkerssByuname
+
 
 };
