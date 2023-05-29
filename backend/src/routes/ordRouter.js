@@ -1,5 +1,5 @@
 const express=require('express');
-const {deleteordsworker,getallorder,getUserord,getUserordwork,getOrderCountsByService,getOrdersCountByDay,getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkordd,getworkordu,getUserordd,getUserordu,updateaccw,updateaccu} = require('../controllers/ordController');
+const {getworkord,deleteordsworker,getallorder,getUserord,getUserordwork,getOrderCountsByService,getOrdersCountByDay,getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkordd,getworkordu,getUserordd,getUserordu,updateaccw,updateaccu} = require('../controllers/ordController');
 
 const router=express.Router()
 router.get('/1/:id', getorder );
@@ -19,5 +19,6 @@ router.put('/7/:id',updateaccw);
 router.put('/8/:id',updateaccu);
 router.get('/10/:uname/:wname',getUserordwork);
 router.get('/11/:uname',getUserord);
+router.get('/12/:Wname',getworkord);
 
 module.exports=router;
