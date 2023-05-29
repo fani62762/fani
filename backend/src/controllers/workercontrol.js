@@ -69,8 +69,8 @@ const delemail = async (req, res) => {
 };
 
 const addworker= async (req,res) => {
-    const {name,password,email,gender,phone,date,Token}=req.body;
-    const newworker= await workerModel.create({name,password,email,gender,phone,date,Token});
+    const {name,password,email,gender,phone,date}=req.body;
+    const newworker= await workerModel.create({name,password,email,gender,phone,date});
     res.json(newworker);
 };
 
@@ -80,7 +80,7 @@ const getallworker= async (req,res) =>{
 };
 
 const submitCredentials = async (req, res) => {
-  const { name, password,Token } = req.body;
+  const { name, password } = req.body;
   try {
     const wor = await workerModel.findOne({ name });
     if (!wor) {
@@ -90,11 +90,6 @@ const submitCredentials = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid passwordW' });
     }
-     await workerModel.findOneAndUpdate(
-      { name },
-      { Token:Token },
-      { new: true }
-    );
     return res.status(200).json({ message: 'Success' });
   } catch (error) {
     console.error(error);
