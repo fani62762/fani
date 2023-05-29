@@ -1,5 +1,5 @@
 const express=require('express');
-const { getSerWorkert,getow,getw,createWork, getlimits, deleteWork,getAllworks,updateworkerrate,getSerWorker, getServiceWorker, getmyService} = require('../controllers/serworkControllers');
+const { deleteservworker,getSerWorkert,getow,getw,createWork, getlimits, deleteWork,getAllworks,updateworkerrate,getSerWorker, getServiceWorker, getmyService} = require('../controllers/serworkControllers');
 
 const servworkrouter=express.Router()
 
