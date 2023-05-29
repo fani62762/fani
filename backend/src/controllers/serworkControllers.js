@@ -16,10 +16,10 @@ const deleteservworker = async (req, res) => {
 
   try {
     const deletedOrders = await serworkModel.deleteMany({ Wname: Wname });
-    res.json({ message: 'Orders deleted successfully' });
+    res.json({ message: 'servworker deleted successfully' });
     console.log(Wname);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete orders', message: error.message });
+    res.status(500).json({ error: 'Failed to delete servworker', message: error.message });
   }
 };
 const getlimits = async (req, res) => {
