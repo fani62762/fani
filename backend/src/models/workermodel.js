@@ -18,7 +18,11 @@ type: String,
 required: true,
 unique: true
 },
-
+Token:
+{
+type:String,
+default:""
+}, 
 phone: {
 type: String,
 required: true,

@@ -169,118 +169,121 @@ class _ViewordState extends State<Vieword> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('الطلبات'),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: naccp.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                      child: ListTile(
-                    leading: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.info_outline),
-                          onPressed: () {
-                            _showOrderDialog(context, naccp[index]);
-                          },
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              naccp[index].acc = 1;
-                              accp.add(naccp[index]);
-                              updateaccw(naccp[index].id, 1);
-                              naccp.removeAt(index);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.check,
-                            color: Colors.green,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('الطلبات'),
+          ),
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: naccp.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                        child: ListTile(
+                      leading: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.info_outline),
+                            onPressed: () {
+                              _showOrderDialog(context, naccp[index]);
+                            },
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              naccp[index].acc = -1;
-                              naccp.removeAt(index);
-                              updateaccw(naccp[index].id, -1);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            color: Colors.red,
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                naccp[index].acc = 1;
+                                accp.add(naccp[index]);
+                                updateaccw(naccp[index].id, 1);
+                                naccp.removeAt(index);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.check,
+                              color: Colors.green,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    title: Text(
-                      naccp[index].uname,
-                      style: TextStyle(
-                        fontFamily: 'cairo',
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                naccp[index].acc = -1;
+                                naccp.removeAt(index);
+                                updateaccw(naccp[index].id, -1);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    subtitle: Text(
-                      naccp[index].TypeServ + " " + naccp[index].Price,
-                      style: TextStyle(
-                        fontFamily: 'cairo',
-                      ),
-                    ),
-                  ));
-                },
-              ),
-            ),
-            Divider(),
-            Expanded(
-              child: ListView.builder(
-                itemCount: accp.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
                       title: Text(
-                        accp[index].uname,
+                        naccp[index].uname,
                         style: TextStyle(
                           fontFamily: 'cairo',
                         ),
                       ),
                       subtitle: Text(
-                        accp[index].TypeServ + " " + accp[index].Price,
+                        naccp[index].TypeServ + " " + naccp[index].Price,
                         style: TextStyle(
                           fontFamily: 'cairo',
                         ),
                       ),
-                      leading: Row(mainAxisSize: MainAxisSize.min, children: [
-                        IconButton(
-                          icon: Icon(Icons.info_outline),
-                          onPressed: () {
-                            _showOrderDialog(context, accp[index]);
-                          },
+                    ));
+                  },
+                ),
+              ),
+              Divider(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: accp.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: ListTile(
+                        title: Text(
+                          accp[index].uname,
+                          style: TextStyle(
+                            fontFamily: 'cairo',
+                          ),
                         ),
-                      ]),
-                      trailing: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            deleteo(accp[index].id);
-                            accp.removeAt(index);
-                          });
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
+                        subtitle: Text(
+                          accp[index].TypeServ + " " + accp[index].Price,
+                          style: TextStyle(
+                            fontFamily: 'cairo',
+                          ),
+                        ),
+                        leading: Row(mainAxisSize: MainAxisSize.min, children: [
+                          IconButton(
+                            icon: Icon(Icons.info_outline),
+                            onPressed: () {
+                              _showOrderDialog(context, accp[index]);
+                            },
+                          ),
+                        ]),
+                        trailing: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              deleteo(accp[index].id);
+                              accp.removeAt(index);
+                            });
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ));
+            ],
+          )),
+    );
   }
 }
 
