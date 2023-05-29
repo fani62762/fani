@@ -5,7 +5,7 @@ const router=express.Router()
 router.get('/1/:id', getorder );
 router.get('/', getallorder );
 router.get('/getmon', getOrdersCountByMonth );
-router.get('/retrieveUnams', retrieveUnamesByWorker );
+router.get('/retrieveUnams/:Wname', retrieveUnamesByWorker );
 router.get('/getday', getOrdersCountByDay );
 router.get('/getservord', getOrderCountsByService );
 router.post('/',createord);
