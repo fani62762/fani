@@ -2,6 +2,7 @@ import 'package:fani/main.dart';
 import 'package:fani/msgs/viewmsg.dart';
 import 'package:fani/notifi/notifi_service.dart';
 import 'package:fani/profiles/foruser.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fani/serv/globalserv.dart';
 import 'package:fani/serv/dashboard.dart';
@@ -233,6 +234,36 @@ class lim {
 }
 
 class _UserpageState extends State<Userpage> {
+  void req()async{
+  FirebaseMessaging messaging=FirebaseMessaging.instance;
+  NotificationSettings settings=await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+
+  );
+  if(settings.authorizationStatus==AuthorizationStatus.authorized) {print("user perm");}
+  else{print ("no");}
+
+FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  print(message.notification?.body);
+  // if (message.notification?. == widget.userName) {
+      NotificationService().showNotification(
+          title: message.notification?.title,
+          body: message.notification?.body);
+    
+   // }
+});
+
+///back
+FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  print("go back");
+});
+}
   Future<void> userInfo(String name) async {
     final responseU = await http
         .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
@@ -318,6 +349,7 @@ class _UserpageState extends State<Userpage> {
 
   @override
   void initState() {
+      req();
     getAlltype();
     getlimits();
     userInfo(widget.userName);
