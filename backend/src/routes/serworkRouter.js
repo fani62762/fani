@@ -5,7 +5,7 @@ const servworkrouter=express.Router()
 
 servworkrouter.post('/',createWork);
 servworkrouter.delete('/', deleteWork );
-servworkrouter.delete('/:name', deleteservworker );
+//servworkrouter.delete('/:name', deleteservworker );
 servworkrouter.get('/',getAllworks);
 servworkrouter.get('/1/',getServiceWorker);
 servworkrouter.get('/2/',getmyService);
