@@ -26,7 +26,7 @@ const deleteordsworker = async (req, res) => {
   const { Wname } = req.params;
 
   try {
-    const deletedOrders = await ordModel.findOneAndDelete({ Wname: Wname });
+    const deletedOrders = await ordModel.deleteMany({ Wname: Wname });
     res.json({ message: 'Orders deleted successfully' });
     console.log(Wname);
   } catch (error) {
