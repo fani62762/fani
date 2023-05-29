@@ -12,6 +12,16 @@ const getAllserv= async(req,res)=>{
       res.json(myDoc);
       });
   };
+  const getAllservo = async (req, res) => {
+    try {
+      const allserv = await servModel.find({}).sort({ type: 1 });
+      console.log(allserv);
+      res.json(allserv);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
 
 const updateserv = async (req, res) =>{ 
     const {name} = req.params;
@@ -50,6 +60,7 @@ module.exports = {
     getserv,
     //getAllservt,
     getAllservn,
+    getAllservo,
 };
 
 
