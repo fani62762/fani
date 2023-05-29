@@ -22,16 +22,17 @@ const getallorder = async (req, res) => {
   res.json(myDoc);
   });
 };
-const deleteordsworker = async (req, res) =>{
-  const { Wname } =req.params;
+const deleteordsworker = async (req, res) => {
+  const { Wname } = req.params;
+
   try {
     const deletedOrders = await ordModel.deleteMany({ Wname: Wname });
-    res.json({ message: 'Orders deleted successfully', deletedCount: deletedOrders.deletedCount });
+    res.json({ message: 'Orders deleted successfully' });
     console.log(Wname);
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete orders', message: error.message });
   }
-}
+};
 const deleteord = async (req, res) =>{
     const { id } = req.params;
     const deletedord = await ordModel.findOneAndDelete({ id: id })
