@@ -27,6 +27,7 @@ const deleteordsworker = async (req, res) =>{
   try {
     const deletedOrders = await ordModel.deleteMany({ Wname: wname });
     res.json({ message: 'Orders deleted successfully', deletedCount: deletedOrders.deletedCount });
+    console.log(wname);
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete orders', message: error.message });
   }
