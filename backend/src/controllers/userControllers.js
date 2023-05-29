@@ -39,7 +39,36 @@ const forgotPassword = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+const delemail = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const use = await UserModel.findOne({ name });
+    if (!use) {
+      return res.status(404).json({ message: 'هذا الاسم غير مسجل بالنظام' });
+    }
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "fani62762@gmail.com",
+        pass: "kuuhbddzrzwtfpnd"
+      }
+    });
 
+    const mailOptions = {
+      to: wor.email,
+      from:"fani62762@gmail.com",
+      subject: 'حذف حساب',
+     text:` للأسف تم حذف حسابك من تطبيق فني \n من خلال الادمين \n لأي استفسار تواصل من خلال هذا الايميل  `,
+      // html: `يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية.<b>كلمة السر الجديدة الخاصة بك هي: ${resetCode}</b>`
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: `تم الارسال الى البريد الإلكتروني ${use.email}` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err });
+  }
+};
 const adduser= async (req,res) => {
   const {name,password,email,gender,phone,date}=req.body;
   const newworker= await UserModel.create({name,password,email,gender,phone,date});
@@ -169,5 +198,6 @@ module.exports = {
     submitCredentials,
     forgotPassword,
     updatUsererLoc,
-    gendercount
+    gendercount,
+    delemail
 };

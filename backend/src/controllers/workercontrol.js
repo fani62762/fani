@@ -53,14 +53,14 @@ const delemail = async (req, res) => {
     const mailOptions = {
       to: wor.email,
       from:"fani62762@gmail.com",
-      subject: '',
-     text:` للأسف تم حذف حسابك من تطبيق فني \n من خلال الادمين \n لأي استفسار تواصل مع رقم الادمين `,
+      subject: 'حذف حساب',
+     text:` للأسف تم حذف حسابك من تطبيق فني \n من خلال الادمين \n لأي استفسار تواصل من خلال هذا الايميل  `,
       // html: `يرجى الدخول الى تعديل الصفحة الشخصية الخاص بك لتحديث كلمتك السرية.<b>كلمة السر الجديدة الخاصة بك هي: ${resetCode}</b>`
     };
 
     await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ message: `تم الارسال الى البري الإلكتروني ${wor.email}` });
+    res.status(200).json({ message: `تم الارسال الى البريد الإلكتروني ${wor.email}` });
 
   } catch (err) {
     console.error(err);
