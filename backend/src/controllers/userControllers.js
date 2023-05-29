@@ -166,11 +166,11 @@ const gendercount = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) =>{
-    const { userId } = req.params;
-    const deleteduser = await UserModel.findByIdAndDelete (userId)
-    res.json (deleteduser)
-};
+// const deleteUser = async (req, res) =>{
+//     const { userId } = req.params;
+//     const deleteduser = await UserModel.findByIdAndDelete (userId)
+//     res.json (deleteduser)
+// };
 
 const updateuserimg =async (req , res)=> {
       const { name } = req.params;
@@ -186,6 +186,11 @@ const updateuserimg =async (req , res)=> {
           res.status(500).send('Server error');
         }
 }; 
+const deleteUser = async (req,res)=>{
+  const {name}=req.params;
+  const deletedworker=await UserModel.findOneAndDelete({"name": name});
+  res.json(deletedworker);
+};
 
 module.exports = {
     adduser,
