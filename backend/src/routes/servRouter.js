@@ -1,11 +1,12 @@
 const express=require('express');
-const {deleteServicesByType,getAllservo, getAllservn,getserv,getAllserv,createserv,updateserv,deleteserv } = require('../controllers/servController');
+const {createservt,deleteServicesByType,getAllservo, getAllservn,getserv,getAllserv,createserv,updateserv,deleteserv } = require('../controllers/servController');
 
 const router=express.Router()
 router.get('/2/:type',getserv);
 router.get('/',getAllserv);
 router.get('/4/',getAllservo);
 router.post('/',createserv);
+router.post('/:type',createservt);
 router.put('/:type',updateserv );
 router.delete('/:type', deleteserv );
 router.delete('/1/:type', deleteServicesByType );

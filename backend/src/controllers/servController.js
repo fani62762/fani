@@ -5,6 +5,12 @@ const createserv = async (req, res) => {
     const newserv = await servModel.create({ name, type,avatar});
     res.json(newserv);
   };
+  const createservt = async (req, res) => {
+    cont type = req.params.type;
+    const { name} = req.body;
+    const newserv = await servModel.create({ name, type});
+    res.json(newserv);
+  };
 
 const getAllserv= async(req,res)=>{
       const allserv = await servModel.find({}).then(function(myDoc) {
@@ -74,6 +80,7 @@ module.exports = {
     //getAllservt,
     getAllservn,
     getAllservo,
+    createservt,
 };
 
 
