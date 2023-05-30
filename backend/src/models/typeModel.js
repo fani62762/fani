@@ -17,7 +17,8 @@ required: true,
 
 avatar: {
 type: String, 
-required: true
+required: true,
+default:"images/gardening.png",
 }
 
 }); 
