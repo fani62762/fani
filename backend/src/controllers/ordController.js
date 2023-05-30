@@ -243,6 +243,34 @@ const getDayAbbreviation = (dayIndex) => {
   return dayAbbreviations[dayIndex];
 };
 
+const getOrdersCountWByDay = async (req, res) => {
+  const { Wname } = req.params;
+  try {
+    const orders = await ordModel.find({ Wname: Wname });
+    const ordersCountByDay = {};
+
+    // Initialize the ordersCountByDay object with all days set to 0
+    const dayAbbreviations = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    dayAbbreviations.forEach(dayAbbreviation => {
+      ordersCountByDay[dayAbbreviation] = 0;
+    });
+
+    orders.forEach(order => {
+      const date = new Date(Date.parse(order.date));
+      const day = date.getDay(); // Get the day of the week (0 - Sunday, 1 - Monday, etc.)
+      const dayAbbreviation = getDayAbbreviation(day); // Function to get the day abbreviation from the day index
+
+      ordersCountByDay[dayAbbreviation]++;
+    });
+
+    res.json(ordersCountByDay);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+};
+
+
+
 const getOrderCountsByService = async (req, res)=> {
   try {
    const orderCountsByService = await ordModel.aggregate([
@@ -260,6 +288,26 @@ const getOrderCountsByService = async (req, res)=> {
  };
 }
 
+const getOrderCountsWByService = async (req, res) => {
+  const { Wname } = req.params;
+  try {
+    const orderCountsByService = await ordModel.aggregate([
+      {
+        $match: { Wname: Wname }
+      },
+      {
+        $group: {
+          _id: '$TypeServ',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    res.json(orderCountsByService);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve order counts by service' });
+  }
+};
 
 
   module.exports = {
@@ -283,7 +331,10 @@ const getOrderCountsByService = async (req, res)=> {
     deleteordsworker,
     deleteordsusers,
     retrieveUnamesByWorker,
-    retrieveWorkerssByuname
+    retrieveWorkerssByuname,
+    getOrdersCountWByDay,
+    getOrderCountsWByService
+
 
 
 };
