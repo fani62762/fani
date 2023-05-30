@@ -6,8 +6,8 @@ const createserv = async (req, res) => {
     res.json(newserv);
   };
   const createservt = async (req, res) => {
-    cont type = req.params.type;
-    const { name} = req.body;
+    
+    const { name,type} = req.body;
     const newserv = await servModel.create({ name, type});
     res.json(newserv);
   };

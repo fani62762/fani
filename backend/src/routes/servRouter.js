@@ -6,7 +6,7 @@ router.get('/2/:type',getserv);
 router.get('/',getAllserv);
 router.get('/4/',getAllservo);
 router.post('/',createserv);
-router.post('/:type',createservt);
+router.post('/1/',createservt);
 router.put('/:type',updateserv );
 router.delete('/:type', deleteserv );
 router.delete('/1/:type', deleteServicesByType );
