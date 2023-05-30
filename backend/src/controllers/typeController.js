@@ -8,6 +8,11 @@ const createtype = async (req, res) => {
     const newtype = await typeModel.create({  type,avatar});
     res.json(newtype);
 };
+const createtypet = async (req, res) => {
+    const {  type } = req.body;
+    const newtype = await typeModel.create({  type});
+    res.json(newtype);
+};
 
 const updatetype = async (req, res) =>{ 
     const {type} = req.params;
@@ -47,5 +52,6 @@ module.exports = {
     deletetype,
     gettype,
     getAlltype,
-    alltypes
+    alltypes,
+    createtypet
 };
