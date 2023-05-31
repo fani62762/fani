@@ -17,16 +17,22 @@ class ViewMsgT extends StatefulWidget {
 }
 
 class _ViewMsgTState extends State<ViewMsgT> {
-  Widget builimg(String usen) {
+  Widget builimg(String usen,int index) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        if (index == Users.length - 1) {
+                              
+                                 
+                              } else {
+                                Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => TsU(
                     userName: usen,
                   )),
         );
+                              }
+       
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 5.5,
@@ -151,7 +157,7 @@ class _ViewMsgTState extends State<ViewMsgT> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 20),
-                        builimg(Users[index]['name']),
+                        builimg(Users[index]['name'],index),
                         SizedBox(width: 8.0),
                         Expanded(
                           child: Column(
@@ -178,6 +184,7 @@ class _ViewMsgTState extends State<ViewMsgT> {
                                       fontSize: 16.0, color: Colors.grey),
                                 ),
                               }
+                              
                             ],
                           ),
                         ),

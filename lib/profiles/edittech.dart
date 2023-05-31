@@ -61,7 +61,7 @@ class _editTechState extends State<editTech> {
       setState(() {
         servwork = data;
       });
-      print(servwork);
+      // print(servwork);
     } else {
       print('Error fetching workers data: ${response.statusCode}');
     }
@@ -353,10 +353,10 @@ class _editTechState extends State<editTech> {
   else{print ("no");}
 
 FirebaseMessaging.onMessage.listen((message) {
-  print(message.notification?.body);
+  // print(message.notification?.body);
   if (message.data['name'] == widget.techName) {
-    print(widget.techName);
-    print(message.data['name']);
+    // print(widget.techName);
+    // print(message.data['name']);
       NotificationService().showNotification(
           title: message.notification?.title,
           body: message.notification?.body);
