@@ -11,7 +11,7 @@ router.put('/:type',updateserv );
 router.delete('/:type', deleteserv );
 router.delete('/1/:type', deleteServicesByType );
 router.get('/3/:name',getAllservn);
-router.put('/img',updateservimg);
+router.put('/img/',updateservimg);
 //router.get('/4/:type',getAllservt);
 
 
