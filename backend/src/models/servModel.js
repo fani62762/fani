@@ -6,13 +6,13 @@ const servSchema = new Schema({
 type: {
 type: String,
 required: true,
-unique: false,
+
 },
 
 name: {
 type: String,
 required: true,
-unique: true,
+
 },
 
 avatar: {
