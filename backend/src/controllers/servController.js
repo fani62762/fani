@@ -6,8 +6,8 @@ const createserv = async (req, res) => {
     res.json(newserv);
   };
   const updateservimg = async (req, res) => {
-    console.error(avatar);
     const { name, type, avatar } = req.body;
+    console.error(avatar);
     try {
       console.error("avatar");
       const updUser = await servModel.findOneAndUpdate(
@@ -27,6 +27,7 @@ const createserv = async (req, res) => {
       res.status(500).send('Server error');
     }
   };
+  
   
   
   const createservt = async (req, res) => {
