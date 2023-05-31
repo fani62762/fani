@@ -6,10 +6,15 @@ const createserv = async (req, res) => {
     res.json(newserv);
   };
   const createservt = async (req, res) => {
-    
-    const { name,type} = req.body;
-    const newserv = await servModel.create({ name, type});
-    res.json(newserv);
+    try {
+      const { name, type } = req.body;
+      const newserv = await servModel.create({ name, type });
+      res.json(newserv);
+    } catch (error) {
+      // Handle the error appropriately
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   };
 
 const getAllserv= async(req,res)=>{
