@@ -6,11 +6,11 @@ const createserv = async (req, res) => {
     res.json(newserv);
   };
   const updatservimg =async (req , res)=> {
-    const { name } = req.params;
+    const { name,type } = req.params;
       const { avatar } = req.body;
       try {
         const updUser = await servModel.findOneAndUpdate(
-          { name },
+          { name,type },
           { avatar:avatar },
           { new: true }
         );
