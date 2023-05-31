@@ -4,8 +4,8 @@ import 'package:fani/profiles/edittech.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http2;
 import 'package:intl/intl.dart';
+import 'package:fani/serv/compord.dart';
 import 'dart:ui' as ui;
-
 
 String techname = "";
 
@@ -119,43 +119,45 @@ class _ViewordState extends State<Vieword> {
     }
     return parsed.map((e) => morder.fromJson(e)).toList();
   }
-  var serverToken="AAAAfAZYhAo:APA91bH4KtyI1wyJVnYjT6FU60RLY2Vfu0U0mXlMCa-Hq_2lYuZtL5imkfVrAw8Yb2xWvbf0X5GSUjSd8K2-Wo4W4au8jhl_oqT2d7DTBHXJh5nu8JXbBnJy1A3c1RnD9zh0R_fekvdI";
-Future<void> sendNotificationToAll(String title, String body,String name) async {
-  final url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
-  final headers = {
-    'Content-Type': 'application/json',
-    'Authorization': 'key=$serverToken',
-  };
+  var serverToken =
+      "AAAAfAZYhAo:APA91bH4KtyI1wyJVnYjT6FU60RLY2Vfu0U0mXlMCa-Hq_2lYuZtL5imkfVrAw8Yb2xWvbf0X5GSUjSd8K2-Wo4W4au8jhl_oqT2d7DTBHXJh5nu8JXbBnJy1A3c1RnD9zh0R_fekvdI";
+  Future<void> sendNotificationToAll(
+      String title, String body, String name) async {
+    final url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
-  final notification = {
-    'body': body,
-    'title': title,
-  };
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=$serverToken',
+    };
 
-  final message = {
-    'notification': notification,
-    'priority': 'high',
-    'to': '/topics/all',
-    'data': <String, dynamic>{
-'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+    final notification = {
+      'body': body,
+      'title': title,
+    };
 
-"name":name
-},
-  };
+    final message = {
+      'notification': notification,
+      'priority': 'high',
+      'to': '/topics/all',
+      'data': <String, dynamic>{
+        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        "name": name
+      },
+    };
 
-  final response = await http2.post(
-    url,
-    headers: headers,
-    body: jsonEncode(message),
-  );
+    final response = await http2.post(
+      url,
+      headers: headers,
+      body: jsonEncode(message),
+    );
 
-  if (response.statusCode == 200) {
-    print('Notification sent successfully');
-  } else {
-    print('Failed to send notification. Status code: ${response.statusCode}');
+    if (response.statusCode == 200) {
+      print('Notification sent successfully');
+    } else {
+      print('Failed to send notification. Status code: ${response.statusCode}');
+    }
   }
-}
 
   Future<void> updateaccw(String id, int acc) async {
     print("hihihi");
@@ -215,266 +217,343 @@ Future<void> sendNotificationToAll(String title, String body,String name) async 
       child: Scaffold(
           appBar: AppBar(
             title: Text('الطلبات'),
-             centerTitle: true,
+            centerTitle: true,
           ),
           body: Column(
             children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: naccp.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        child: ListTile(
-                      leading: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.info_outline),
-                            onPressed: () {
-                              _showOrderDialog(context, naccp[index]);
-                            },
-                          ),
-                          IconButton(
-                            onPressed: ()async {
-                              await sendNotificationToAll(
-        "قبول الطلب ",
-        "تم قبول طلبك من قبل العامل ${naccp[index].Wname}",
-        naccp[index].uname,
-      );
-                              setState(()  {
-                                 
-                                naccp[index].acc = 1;
-                                accp.add(naccp[index]);
-                                updateaccw(naccp[index].id, 1);
-                                naccp.removeAt(index);
-                               
-                              });
-                            },
-                            icon: Icon(
-                              Icons.check,
-                              color: Colors.green,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              setState(() async {
-                                  await sendNotificationToAll(
-        "رفض الطلب ",
-        "تم رفض طلبك من قبل العامل ${accp[index].Wname}",
-        accp[index].uname,
-      );
-                                naccp[index].acc = -1;
-
-                                naccp.removeAt(index);
-                                updateaccw(naccp[index].id, -1);
-                               
-                              });
-                            },
-                            icon: Icon(
-                              Icons.close,
+              SizedBox(
+                height: 5,
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Viewordcomp()),
+                    );
+                  },
+                  child: Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: Text(
+                        'عرض الطلبات المكتملة',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'cairo',
+                          color: Colors.green,
+                        ),
+                      ))),
+              SizedBox(
+                height: 5,
+              ),
+              Container(
+                  height:
+                      300, // Adjust the height value according to your needs
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional.center,
+                          child: Text(
+                            ' الطلبات',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'cairo',
                               color: Colors.red,
                             ),
                           ),
-                        ],
-                      ),
-                      title: Text(
-                        naccp[index].uname,
-                        style: TextStyle(
-                          fontFamily: 'cairo',
                         ),
-                      ),
-                      subtitle: Text(
-                        naccp[index].TypeServ + " " + naccp[index].Price,
-                        style: TextStyle(
-                          fontFamily: 'cairo',
-                        ),
-                      ),
-                    ));
-                  },
-                ),
-              ),
-              Divider(),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: accp.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                          accp[index].uname,
-                          style: TextStyle(
-                            fontFamily: 'cairo',
-                          ),
-                        ),
-                        subtitle: Text(
-                          accp[index].TypeServ + " " + accp[index].Price,
-                          style: TextStyle(
-                            fontFamily: 'cairo',
-                          ),
-                        ),
-                        leading: Row(mainAxisSize: MainAxisSize.min, children: [
-                          IconButton(
-                            icon: Icon(Icons.info_outline),
-                            onPressed: () {
-                              _showOrderDialog(context, accp[index]);
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: naccp.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Card(
+                                  child: ListTile(
+                                leading: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.info_outline),
+                                      onPressed: () {
+                                        _showOrderDialog(context, naccp[index]);
+                                      },
+                                    ),
+                                    IconButton(
+                                      onPressed: () async {
+                                        await sendNotificationToAll(
+                                          "قبول الطلب ",
+                                          "تم قبول طلبك من قبل العامل ${naccp[index].Wname}",
+                                          naccp[index].uname,
+                                        );
+                                        setState(() {
+                                          naccp[index].acc = 1;
+                                          accp.add(naccp[index]);
+                                          updateaccw(naccp[index].id, 1);
+                                          naccp.removeAt(index);
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() async {
+                                          await sendNotificationToAll(
+                                            "رفض الطلب ",
+                                            "تم رفض طلبك من قبل العامل ${accp[index].Wname}",
+                                            accp[index].uname,
+                                          );
+                                          naccp[index].acc = -1;
+
+                                          naccp.removeAt(index);
+                                          updateaccw(naccp[index].id, -1);
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                title: Text(
+                                  naccp[index].uname,
+                                  style: TextStyle(
+                                    fontFamily: 'cairo',
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  naccp[index].TypeServ +
+                                      " " +
+                                      naccp[index].Price,
+                                  style: TextStyle(
+                                    fontFamily: 'cairo',
+                                  ),
+                                ),
+                              ));
                             },
                           ),
-                        ]),
-                        trailing: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              deleteo(accp[index].id);
-                              accp.removeAt(index);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
+                        )
+                      ])),
+              Divider(),
+              Container(
+                  height:
+                      300, // Adjust the height value according to your needs
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional.center,
+                          child: Text(
+                            'قيد التنفيذ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'cairo',
+                              color: Colors.orange,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: accp.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Card(
+                                child: ListTile(
+                                  title: Text(
+                                    accp[index].uname,
+                                    style: TextStyle(
+                                      fontFamily: 'cairo',
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    accp[index].TypeServ +
+                                        " " +
+                                        accp[index].Price,
+                                    style: TextStyle(
+                                      fontFamily: 'cairo',
+                                    ),
+                                  ),
+                                  leading: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.info_outline),
+                                          onPressed: () {
+                                            _showOrderDialog(
+                                                context, accp[index]);
+                                          },
+                                        ),
+                                      ]),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        deleteo(accp[index].id);
+                                        accp.removeAt(index);
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ]))
             ],
           )),
     );
   }
 }
- void _showOrderDialog(BuildContext context, morder order) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-    return Directionality(
-      textDirection: ui.TextDirection.rtl,
-      child: AlertDialog(
-      title: Center(child: Text('تفاصيل الطلب', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold))),
-      backgroundColor: Colors.white,
-      content: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'نوع الخدمة:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${order.TypeServ}',
-                style: TextStyle(color: db),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'السعر:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${order.Price}',
-                style: TextStyle(color: db),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'الوقت:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${order.Hour}',
-                style: TextStyle(color:db),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'الخدمات:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${order.serv.toString()}',
-                style: TextStyle(color:db),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'التاريخ:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${DateFormat('dd/MM/yyyy').format(DateTime.parse(order.date))}',
-                style: TextStyle(color: db),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'خدمات اضافية:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${order.add.toString()}',
-                style: TextStyle(color: db),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'التكرار:',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${order.isrepeated}',
-                style: TextStyle(color: db),
-              ),
-            ],
-          ),
-        ],
-      ),
-      ),
-      actions: [
-      TextButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: Center(child: Text('اغلاق', style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold))),
-      ),
-      ],
-    ),
-    );
-  },
-    );
-  }
 
-  
-
+void _showOrderDialog(BuildContext context, morder order) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Directionality(
+        textDirection: ui.TextDirection.rtl,
+        child: AlertDialog(
+          title: Center(
+              child: Text('تفاصيل الطلب',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold))),
+          backgroundColor: Colors.white,
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'نوع الخدمة:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${order.TypeServ}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'السعر:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${order.Price}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'الوقت:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${order.Hour}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'الخدمات:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${order.serv.toString()}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'التاريخ:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${DateFormat('dd/MM/yyyy').format(DateTime.parse(order.date))}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'خدمات اضافية:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${order.add.toString()}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'التكرار:',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      '${order.isrepeated}',
+                      style: TextStyle(color: db),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Center(
+                  child: Text('اغلاق',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold))),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}

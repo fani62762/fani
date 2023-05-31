@@ -57,6 +57,13 @@ const getworkordu = async (req, res) => {
       res.json(myDoc);
       });
   };
+  const getworkordc = async (req, res) => {
+    const Wname= req.params.name;
+    const allserv = await ordModel.find({Wname,acc:{ $eq: 2 }}).then(function(myDoc) {
+      console.log(myDoc);
+      res.json(myDoc);
+      });
+  };
 
 const getworkordd = async (req, res) => {
       const Wname= req.params.name;
@@ -333,7 +340,8 @@ const getOrderCountsWByService = async (req, res) => {
     retrieveUnamesByWorker,
     retrieveWorkerssByuname,
     getOrdersCountWByDay,
-    getOrderCountsWByService
+    getOrderCountsWByService,
+    getworkordc,
 
 
 

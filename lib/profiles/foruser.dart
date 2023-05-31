@@ -54,7 +54,8 @@ class _ForUserState extends State<ForUser> {
       showPreferences = !showPreferences;
     });
   }
- Future<void> userInfo(String name) async {
+
+  Future<void> userInfo(String name) async {
     final responseU = await http
         .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
     if (responseU.statusCode == 200) {
@@ -84,13 +85,12 @@ class _ForUserState extends State<ForUser> {
     }
   }
 
- 
   @override
   void initState() {
     super.initState();
-     addressList = addrr.split(',');
-  print(addressList);
-     userInfo(nee);
+    addressList = addrr.split(',');
+    print(addressList);
+    userInfo(nee);
 
     List<String> preferenceIds = ordpref.split(',');
     orderedPreferences = preferenceIds.map((id) {
@@ -177,12 +177,12 @@ class _ForUserState extends State<ForUser> {
                 ),
               ],
             ),
-     
           ],
         ),
       );
     }
-   Widget builipref() {
+
+    Widget builipref() {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
         // padding: EdgeInsets.all(10),
@@ -195,33 +195,34 @@ class _ForUserState extends State<ForUser> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 Text(
                   'تحديد أهم صفات العمال  :',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                
               ],
             ),
             SizedBox(height: 10),
-        SingleChildScrollView(
+            SingleChildScrollView(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
+                //Expanded(
                 ElevatedButton(
                   onPressed: togglePreferencesVisibility,
                   child: Text('الاولويات'),
                 ),
 
                 // Other widgets in the Row
-                Visibility(
+                Expanded(
+                    child: Visibility(
                   visible: showPreferences,
                   child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: 300,
-                        maxWidth: 600,
-                      ),
+                    constraints: BoxConstraints(
+                      maxHeight: 300,
+                      maxWidth: 600,
+                    ),
+                    child: Container(
+                      width: double.infinity, // Adjust the width as needed
                       child: ListView.builder(
                         itemCount: orderedPreferences.length,
                         itemBuilder: (context, index) {
@@ -237,17 +238,41 @@ class _ForUserState extends State<ForUser> {
                             // ),
                           );
                         },
-                      )),
-                )
+                      ),
+                    ),
+                  ),
+                ))
+                // Visibility(
+                //   visible: showPreferences,
+                //   child: ConstrainedBox(
+                //       constraints: BoxConstraints(
+                //         maxHeight: 300,
+                //         maxWidth: 600,
+                //       ),
+                //       child: ListView.builder(
+                //         itemCount: orderedPreferences.length,
+                //         itemBuilder: (context, index) {
+                //           Preference preference = orderedPreferences[index];
+
+                //           return ListTile(
+                //             title: Text(preference.label),
+                //             // leading: Checkbox(
+                //             //   value: selectedPreferences.contains(preference),
+                //             //   onChanged: (value) {
+                //             //     togglePreferenceSelection(preference);
+                //             //   },
+                //             // ),
+                //           );
+                //         },
+                //       )),
+                // )
               ],
             ))
-          
           ],
         ),
       );
     }
 
-  
     Widget builcon() {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
