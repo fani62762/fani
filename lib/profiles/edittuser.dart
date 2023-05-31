@@ -66,6 +66,7 @@ class _editUserState extends State<editUser> {
         pss = userr['password'];
         pnn = userr['phone'];
         addrr = userr['address'];
+        print(addrr);
         ordpref = userr['pref'];
         imagg = NetworkImage(userr['image']);
       });
@@ -207,7 +208,25 @@ class _editUserState extends State<editUser> {
         print('Failed to update User');
       }
     }
+  Future<void> _selectDate(BuildContext context) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(1900),
+    lastDate: DateTime.now(),
+    // You can customize the date picker appearance and behavior further if needed
+  );
+  if (picked != null && picked != selectedDateu) {
+    setState(() {
+      selectedDateu = picked;
+        dtt =
+                          "${picked.year.toString()}-${picked.month.toString()}-${picked.day.toString()}";
+                           dttCon = TextEditingController(text:"${picked.year.toString()}-${picked.month.toString()}-${picked.day.toString()}");
+    });
+  }
+}
 
+ 
     Widget builedittinfo() {
       return Column(children: <Widget>[
         SizedBox(height: 15.0),
@@ -289,27 +308,6 @@ class _editUserState extends State<editUser> {
         ),
         SizedBox(height: 15.0),
         TextField(
-          controller: gnnCon,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            hintText: "نوع المستخدم",
-            hintStyle: TextStyle(
-              color: dy,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: db,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: dy,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 15.0),
-        TextField(
           controller: addrrcon,
           decoration: InputDecoration(
             hintText: "الموقع",
@@ -328,28 +326,59 @@ class _editUserState extends State<editUser> {
             ),
           ),
         ),
+        
         SizedBox(height: 15.0),
-        TextField(
-          controller: dttCon,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            hintText: "تاريخ الميلاد ",
-            hintStyle: TextStyle(
-              color: dy,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: db,
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: dy,
-              ),
-            ),
+        GestureDetector(
+  onTap: () {
+    _selectDate(context);
+  },
+  child: AbsorbPointer(
+    child: TextField(
+      controller: dttCon,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        hintText: "تاريخ الميلاد",
+        hintStyle: TextStyle(
+          color: dy,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: db,
           ),
         ),
-        SizedBox(height: 15.0),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: dy,
+          ),
+        ),
+      ),
+    ),
+  ),
+),
+      SizedBox(height: 15.0),
+      DropdownButtonFormField<String>(
+         value: gee,
+         decoration: InputDecoration(
+           labelText: 'اختر الجنس',
+           icon: Icon(Icons.person),
+         ),
+         items: [
+           DropdownMenuItem<String>(
+             value: 'ذكر',
+             child: Center(child: Text('ذكر')),
+           ),
+           DropdownMenuItem<String>(
+             value: 'أنثى',
+             child: Center(child: Text('أنثى')),
+           ),
+         ],
+         onChanged: (value) {
+           setState(() {
+             gee = value;
+           });
+         },
+       ), 
+      SizedBox(height: 15.0),
         SizedBox(height: 20.0),
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: 300),

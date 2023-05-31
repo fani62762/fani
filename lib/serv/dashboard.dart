@@ -17,6 +17,9 @@ import 'package:fani/serv/dashboard.dart';
 import 'dart:async';
 import 'package:flutter/rendering.dart';
 import 'dart:convert';
+import 'dart:ui' as ui;
+import 'package:intl/intl.dart';
+
 
 int ch = 1;
 int ch2 = 1;
@@ -319,13 +322,14 @@ class _StatsGridState extends State<StatsGrid> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.4,
       child: Column(
         children: <Widget>[
           Flexible(
             child: Row(
               children: <Widget>[
                 _buildStatCard(
+                  
                     ' اسم العامل ونوع الخدمة',
                     widget.orderg.Wname + "\n" + widget.orderg.TypeServ,
                     Colors.orange),
@@ -339,9 +343,9 @@ class _StatsGridState extends State<StatsGrid> {
               children: <Widget>[
                 _buildStatCard(
                     'التاريخ والوقت',
-                    widget.orderg.Hour +
+                    '${DateFormat('dd/MM/yyyy').format(DateTime.parse(  widget.orderg.date))}' +
                         "\n" +
-                        widget.orderg.date +
+                        widget.orderg.Hour +
                         "\n" +
                         widget.orderg.isrepeated,
                     Colors.green),
@@ -402,13 +406,13 @@ class _StatsGridState extends State<StatsGrid> {
       ),
       child: SingleChildScrollView(
         child: Column(
-          textDirection: TextDirection.rtl,
+          textDirection:ui. TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               title,
-              textDirection: TextDirection.rtl,
+              textDirection: ui.TextDirection.rtl,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15.0,
@@ -417,7 +421,7 @@ class _StatsGridState extends State<StatsGrid> {
             ),
             Text(
               count,
-              textDirection: TextDirection.rtl,
+              textDirection: ui.TextDirection.rtl,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 15.0,
@@ -627,7 +631,7 @@ class _StatsScreenState extends State<StatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: ui.TextDirection.rtl,
       child: Scaffold(
         backgroundColor: Palette.primaryColor,
         //appBar: CustomAppBar(),
@@ -680,7 +684,7 @@ class _StatsScreenState extends State<StatsScreen> {
       sliver: SliverToBoxAdapter(
         child: Text(
           'طلباتي',
-          textDirection: TextDirection.rtl,
+          textDirection: ui.TextDirection.rtl,
           style: const TextStyle(
             color: Colors.white,
             fontSize: 25.0,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fani/auth/user.dart';
 import 'package:fani/msgs/viewmsg.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:fani/main.dart';
 import 'package:fani/profiles/edittuser.dart';
 //import 'package:fani/serv/Viewordu.dart';
 import 'package:fani/serv/dashboard.dart';
+import 'package:http/http.dart' as http;
 
 class Preference {
   final String id;
@@ -51,10 +54,44 @@ class _ForUserState extends State<ForUser> {
       showPreferences = !showPreferences;
     });
   }
+ Future<void> userInfo(String name) async {
+    final responseU = await http
+        .get(Uri.parse('https://fani-service.onrender.com/users/2/$name'));
+    if (responseU.statusCode == 200) {
+      final userr = jsonDecode(responseU.body);
+      setState(() {
+        naaCon = TextEditingController(text: userr['name']);
+        emmCon = TextEditingController(text: userr['email']);
+        mobbC = TextEditingController(text: userr['phone']);
+        pssCon = TextEditingController(text: userr['password']);
+        gnnCon = TextEditingController(text: userr['gender']);
+        dttCon = TextEditingController(text: userr['date']);
+        addrrcon = TextEditingController(text: userr['address']);
+        nee = userr['name'];
+        gee = userr['gender'];
+        dtt = userr['date'];
+        emm = userr['email'];
+        pss = userr['password'];
+        pnn = userr['phone'];
+        addrr = userr['address'];
+        print(addrr);
+        ordpref = userr['pref'];
+        imagg = NetworkImage(userr['image']);
+      });
+    } else {
+      print('uur: ${responseU.statusCode}');
+      print("not exsist");
+    }
+  }
 
+ 
   @override
   void initState() {
     super.initState();
+     addressList = addrr.split(',');
+  print(addressList);
+     userInfo(nee);
+
     List<String> preferenceIds = ordpref.split(',');
     orderedPreferences = preferenceIds.map((id) {
       return availablePreferences
