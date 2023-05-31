@@ -748,7 +748,7 @@ class _techState extends State<tech> {
   showAlertDialog(BuildContext context) {
     // Create button
     Widget okButton = TextButton(
-      child: Text("اتمام"),
+      child: Center(child: Text("اتمام")),
       onPressed: () {
         createord(context, usname, ordwname, ordhour, ordprice, ordrepeated,
             orddate, ordadd, ordserv, ordtype);
@@ -757,8 +757,8 @@ class _techState extends State<tech> {
 
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("تأكيد عملية الطلب"),
-      content: Text("هل تريد اتمام عملية الطلب"),
+      title: Center(child: Text("تأكيد عملية الطلب")),
+      content: Center(child: Text("هل تريد اتمام عملية الطلب")),
       actions: [
         okButton,
       ],
