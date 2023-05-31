@@ -8,6 +8,16 @@ const createserv = async (req, res) => {
   const createservt = async (req, res) => {
     try {
       const { name, type } = req.body;
+  
+      // Check if the combination of name and type already exists
+      const existingServ = await servModel.findOne({ name, type });
+  
+      if (existingServ) {
+        // Return an error response indicating the combination already exists
+        return res.status(400).json({ error: 'Combination of name and type already exists' });
+      }
+  
+      // Create a new service
       const newserv = await servModel.create({ name, type });
       res.json(newserv);
     } catch (error) {
@@ -16,6 +26,7 @@ const createserv = async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+  
 
 const getAllserv= async(req,res)=>{
       const allserv = await servModel.find({}).then(function(myDoc) {
