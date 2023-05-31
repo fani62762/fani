@@ -70,8 +70,9 @@ const delemail = async (req, res) => {
   }
 };
 const adduser= async (req,res) => {
+  const pref ="m,t,d,p,b";
   const {name,password,email,gender,phone,date}=req.body;
-  const newworker= await UserModel.create({name,password,email,gender,phone,date});
+  const newworker= await UserModel.create({name,password,email,gender,phone,date,pref});
   res.json(newworker);
 };
 
