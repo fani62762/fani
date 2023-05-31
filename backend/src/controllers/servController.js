@@ -13,12 +13,18 @@ const createserv = async (req, res) => {
         { avatar },
         { new: true }
       );
-      res.status(200).send(avatar);
-      res.json(updUser);
+      if (!updUser) {
+        // If no matching document was found, send a 404 status code
+        return res.status(404).send('Service not found');
+      }
+      res.status(200).json(updUser);
     } catch (error) {
+      // Handle the error appropriately
+      console.error(error);
       res.status(500).send('Server error');
     }
   };
+  
   
   const createservt = async (req, res) => {
     try {
