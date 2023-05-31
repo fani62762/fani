@@ -196,6 +196,20 @@ const updateaccu= async (req,res)=>{
     res.status(500).send('Server error');
   }
 }
+const updaterate= async (req,res)=>{
+  const { id } = req.params.id;
+  const { rating } = req.body;
+  try {
+    const updUser = await ordModel.findOneAndUpdate(
+      { id },
+      { rating },
+      { new: true }
+    );
+    res.json(updUser);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+}
 const getOrdersCountByMonth = async (req, res) => {
   console.log("hi");
   try {
@@ -342,6 +356,7 @@ const getOrderCountsWByService = async (req, res) => {
     getOrdersCountWByDay,
     getOrderCountsWByService,
     getworkordc,
+    updaterate,
 
 
 

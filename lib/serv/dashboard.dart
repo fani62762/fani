@@ -20,10 +20,19 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:intl/intl.dart';
 
-
 int ch = 1;
 int ch2 = 1;
 int oldrat = 0;
+String myid = "";
+int additionalValue = 0; // The additional value to add to the color
+
+Color originalColor = Colors.white;
+Color modifiedColor = Color.fromARGB(
+  originalColor.alpha,
+  originalColor.red + additionalValue,
+  originalColor.green + additionalValue,
+  originalColor.blue + additionalValue,
+);
 
 class morder {
   final String TypeServ;
@@ -96,6 +105,7 @@ class servwork {
     this.master = 0,
     this.id = "",
   });
+  int additionalValue = 50; // The additional value to add to the color
 
   factory servwork.fromJson(Map<String, dynamic> json) {
     return servwork(
@@ -249,6 +259,7 @@ class _StatsGridState extends State<StatsGrid> {
 
                 naccp[index].acc = 2;
                 accp.add(naccp[index]);
+                myid = naccp[index].id;
                 await inst.updateaccw(naccp[index].id, 2);
                 await naccp.removeAt(index);
 
@@ -329,12 +340,11 @@ class _StatsGridState extends State<StatsGrid> {
             child: Row(
               children: <Widget>[
                 _buildStatCard(
-                  
                     ' اسم العامل ونوع الخدمة',
                     widget.orderg.Wname + "\n" + widget.orderg.TypeServ,
-                    Colors.orange),
+                    modifiedColor),
                 _buildStatCard(
-                    'السعر في الساعة', widget.orderg.Price, Colors.red),
+                    'السعر في الساعة', widget.orderg.Price, modifiedColor),
               ],
             ),
           ),
@@ -343,16 +353,16 @@ class _StatsGridState extends State<StatsGrid> {
               children: <Widget>[
                 _buildStatCard(
                     'التاريخ والوقت',
-                    '${DateFormat('dd/MM/yyyy').format(DateTime.parse(  widget.orderg.date))}' +
+                    '${DateFormat('dd/MM/yyyy').format(DateTime.parse(widget.orderg.date))}' +
                         "\n" +
                         widget.orderg.Hour +
                         "\n" +
                         widget.orderg.isrepeated,
-                    Colors.green),
+                    modifiedColor),
                 _buildStatCard(
-                    'الخدمات', widget.orderg.serv.toString(), Colors.brown),
+                    'الخدمات', widget.orderg.serv.toString(), modifiedColor),
                 _buildStatCard('طلبات اضافية', widget.orderg.add.toString(),
-                    Colors.purple),
+                    modifiedColor),
               ],
             ),
           ),
@@ -394,7 +404,7 @@ class _StatsGridState extends State<StatsGrid> {
     });
   }
 
-  Expanded _buildStatCard(String title, String count, MaterialColor color) {
+  Expanded _buildStatCard(String title, String count, Color color) {
     return Expanded(
         child: Container(
       height: MediaQuery.of(context).size.height * .50,
@@ -406,7 +416,7 @@ class _StatsGridState extends State<StatsGrid> {
       ),
       child: SingleChildScrollView(
         child: Column(
-          textDirection:ui. TextDirection.rtl,
+          textDirection: ui.TextDirection.rtl,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -454,7 +464,7 @@ class Styles {
 }
 
 class Palette {
-  static const Color primaryColor = Color.fromARGB(255, 152, 201, 241);
+  static const Color primaryColor = Colors.white;
 }
 
 class StatsScreen extends StatefulWidget {
@@ -513,6 +523,7 @@ class _StatsScreenState extends State<StatsScreen> {
       int newm = ((master + service[0].master) / 2).round();
       int newt = ((behave + service[0].behave) / 2).round();
       int newb = ((timing + service[0].timing) / 2).round();
+      updaterate2(myid, _rating);
       inst.updaterate(naccp[index].Wname, naccp[index].TypeServ, _rating,
           service[0].rating, newm, newb, newt);
       // }
@@ -539,6 +550,23 @@ class _StatsScreenState extends State<StatsScreen> {
       });
     }
     return parsed.map((e) => morder.fromJson(e)).toList();
+  }
+
+  Future<void> updaterate2(String id, int rating) async {
+    print("hihihi" + id + rating.toString());
+    final body = jsonEncode({
+      'acc': rating,
+    });
+    final response = await http2.put(
+      Uri.parse('https://fani-service.onrender.com/ord/88/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: body,
+    );
+    if (response.statusCode == 200) {
+      print('success to update');
+    } else {
+      print('Failed to update ');
+    }
   }
 
   Future<void> updateaccw(String id, int acc) async {
@@ -649,14 +677,35 @@ class _StatsScreenState extends State<StatsScreen> {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return ch == 1
-                        ? StatsGrid(orderg: naccp[index], index: index)
-                        : ch2 == 1
-                            ? StatsGrid(orderg: accp[index], index: index)
-                            : StatsGrid(orderg: cccp[index], index: index);
-                    // return ListTile(
-                    //   title: Text('Item $index'),
-                    // );
+                    additionalValue += 50;
+                    modifiedColor = Color.fromARGB(
+                      originalColor.alpha,
+                      modifiedColor.red + additionalValue,
+                      modifiedColor.green + additionalValue,
+                      modifiedColor.blue + additionalValue,
+                    );
+                    if (ch == 1) {
+                      return Column(
+                        children: [
+                          StatsGrid(orderg: naccp[index], index: index),
+                          Divider(color: Colors.black, thickness: 1.0),
+                        ],
+                      );
+                    } else if (ch2 == 1) {
+                      return Column(
+                        children: [
+                          StatsGrid(orderg: accp[index], index: index),
+                          Divider(color: Colors.black, thickness: 1.0),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          StatsGrid(orderg: cccp[index], index: index),
+                          Divider(color: Colors.black, thickness: 1.0),
+                        ],
+                      );
+                    }
                   },
                   childCount: ch == 1
                       ? naccp.length
@@ -686,7 +735,7 @@ class _StatsScreenState extends State<StatsScreen> {
           'طلباتي',
           textDirection: ui.TextDirection.rtl,
           style: const TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 25.0,
             fontWeight: FontWeight.bold,
           ),
@@ -833,7 +882,7 @@ class _StatsScreenState extends State<StatsScreen> {
             ),
             labelStyle: Styles.tabTextStyle,
             labelColor: Colors.black,
-            unselectedLabelColor: Colors.white,
+            unselectedLabelColor: Colors.blue,
             tabs: <Widget>[
               Text('قيد التنفيذ'),
               Text('طلبات سابقة'),
@@ -874,8 +923,8 @@ class _StatsScreenState extends State<StatsScreen> {
           child: TabBar(
             indicatorColor: Color.fromARGB(0, 115, 90, 241),
             labelStyle: Styles.tabTextStyle,
-            labelColor: Colors.white,
-            unselectedLabelColor: Color.fromARGB(153, 255, 255, 255),
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.blue,
             tabs: <Widget>[
               Text('تمت'),
               Text('تم الغاؤها'),

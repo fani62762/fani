@@ -50,6 +50,11 @@ acc: {
 type: Number,
 },
 
+rating:{
+type : Number,
+default:0
+},
+
 });
 const model=mongoose.model('ord',newSchema);
 module.exports = model;
