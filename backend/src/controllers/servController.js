@@ -7,9 +7,9 @@ const createserv = async (req, res) => {
   };
   const updateservimg = async (req, res) => {
     const { name, type, avatar } = req.body;
-    console.error(avatar);
+    console.log(avatar);
     try {
-      console.error("avatar");
+      console.log("avatar");
       const updUser = await servModel.findOneAndUpdate(
         { name, type },
         { avatar },
@@ -19,7 +19,7 @@ const createserv = async (req, res) => {
         // If no matching document was found, send a 404 status code
         return res.status(404).send('Service not found');
       }
-      console.error(avatar);
+      console.log(avatar);
       res.status(200).json(updUser);
     } catch (error) {
       // Handle the error appropriately
