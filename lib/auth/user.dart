@@ -517,11 +517,12 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            stype[index].avatar,
-                            width: MediaQuery.of(context).size.width / 5,
-                            height: MediaQuery.of(context).size.width / 5,
-                          ),
+                        Image.network(
+  stype[index].avatar,
+  width: MediaQuery.of(context).size.width / 5,
+  height: MediaQuery.of(context).size.width / 5,
+),
+
                           SizedBox(height: 5.0),
                           Text(
                             stype[index].type,
