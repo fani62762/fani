@@ -26,13 +26,14 @@ TextEditingController addrrcon = TextEditingController();
 
 String ordpref = "";
 String nee = "";
-String gee = "";
+var gee ;
 String dtt = "";
 String emm = "";
 String pss = "";
 String pnn = "";
 String ptt = "";
 String addrr = "";
+DateTime ?selectedDateu;
 
 var exwork = List<int>.filled(15, 0, growable: true); // [0, 0, 0]
 

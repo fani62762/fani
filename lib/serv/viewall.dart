@@ -54,6 +54,13 @@ Future<void> createord(
   );
   if (response.statusCode == 200) {
     // name = name;
+
+      await sendNotificationToAll(
+        "وصول طلب الطلب ",
+        "تم ارسال طلب خدمة من قبل المستخدم $usname",
+        wname,
+      );
+
     final worker = jsonDecode(response.body);
     QuickAlert.show(
       context: context,
@@ -61,11 +68,53 @@ Future<void> createord(
       text: 'تمت عملية الطلب بنجاح',
       autoCloseDuration: const Duration(seconds: 2),
     );
+     Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Userpage(
+                                    userName: nee,
+                                  )));
   } else {
     print('Error: ${response.statusCode}');
   }
 }
+var serverToken="AAAAfAZYhAo:APA91bH4KtyI1wyJVnYjT6FU60RLY2Vfu0U0mXlMCa-Hq_2lYuZtL5imkfVrAw8Yb2xWvbf0X5GSUjSd8K2-Wo4W4au8jhl_oqT2d7DTBHXJh5nu8JXbBnJy1A3c1RnD9zh0R_fekvdI";
+Future<void> sendNotificationToAll(String title, String body,String name) async {
+  final url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'key=$serverToken',
+  };
+
+  final notification = {
+    'body': body,
+    'title': title,
+  };
+
+  final message = {
+    'notification': notification,
+    'priority': 'high',
+    'to': '/topics/all',
+    'data': <String, dynamic>{
+'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+
+"name":name
+},
+  };
+
+  final response = await http2.post(
+    url,
+    headers: headers,
+    body: jsonEncode(message),
+  );
+
+  if (response.statusCode == 200) {
+    print('Notification sent successfully');
+  } else {
+    print('Failed to send notification. Status code: ${response.statusCode}');
+  }
+}
 class _viewaState extends State<viewa> {
   // List<Service> services = [
   //];
