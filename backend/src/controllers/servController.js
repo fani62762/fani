@@ -8,24 +8,24 @@ const createserv = async (req, res) => {
   const updateservimg = async (req, res) => {
     const { name, type, avatar } = req.body;
     console.log(avatar);
-    try {
-      console.log("avatar");
-      const updUser = await servModel.findOneAndUpdate(
-        { name, type },
-        { avatar },
-        { new: true }
-      );
-      if (!updUser) {
-        // If no matching document was found, send a 404 status code
-        return res.status(404).send('Service not found');
-      }
-      console.log(avatar);
-      res.status(200).json(updUser);
-    } catch (error) {
-      // Handle the error appropriately
-      console.error(error);
-      res.status(500).send('Server error');
-    }
+    // try {
+    //   console.log("avatar");
+    //   const updUser = await servModel.findOneAndUpdate(
+    //     { name, type },
+    //     { avatar },
+    //     { new: true }
+    //   );
+    //   if (!updUser) {
+    //     // If no matching document was found, send a 404 status code
+    //     return res.status(404).send('Service not found');
+    //   }
+    //   console.log(avatar);
+    //   res.status(200).json(updUser);
+    // } catch (error) {
+    //   // Handle the error appropriately
+    //   console.error(error);
+    //   res.status(500).send('Server error');
+    // }
   };
   
   
