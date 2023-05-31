@@ -19,7 +19,20 @@ const createtypet = async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   };
-  
+  const updattypeimg =async (req , res)=> {
+    const { type } = req.params;
+      const { avatar } = req.body;
+      try {
+        const updUser = await typeModel.findOneAndUpdate(
+          { type },
+          { avatar:avatar },
+          { new: true }
+        );
+        res.json(updUser);
+      } catch (error) {
+        res.status(500).send('Server error');
+      }
+}; 
 
 const updatetype = async (req, res) =>{ 
     const {type} = req.params;
@@ -60,5 +73,6 @@ module.exports = {
     gettype,
     getAlltype,
     alltypes,
-    createtypet
+    createtypet,
+    updattypeimg
 };
