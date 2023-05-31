@@ -185,11 +185,13 @@ class _GservState extends State<Gserv> {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        v.avatar,
+                         Image.network(
+ v.avatar,
                         width: 52,
                         height: 52,
-                      ),
+),
+
+                     
                       SizedBox(
                         width: 20.0,
                       ),
