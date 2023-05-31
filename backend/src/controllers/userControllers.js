@@ -167,11 +167,7 @@ const gendercount = async (req, res) => {
   }
 };
 
-// const deleteUser = async (req, res) =>{
-//     const { userId } = req.params;
-//     const deleteduser = await UserModel.findByIdAndDelete (userId)
-//     res.json (deleteduser)
-// };
+
 
 const updateuserimg =async (req , res)=> {
       const { name } = req.params;

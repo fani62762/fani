@@ -5,6 +5,19 @@ const createserv = async (req, res) => {
     const newserv = await servModel.create({ name, type,avatar});
     res.json(newserv);
   };
+  const updateservimg =async (req , res)=> {
+    const { name, type,avatar } = req.body;
+      try {
+        const updUser = await servModel.findOneAndUpdate(
+          { name, type },
+          { avatar:avatar },
+          { new: true }
+        );
+        res.json(updUser);
+      } catch (error) {
+        res.status(500).send('Server error');
+      }
+}; 
   const createservt = async (req, res) => {
     try {
       const { name, type } = req.body;
@@ -95,6 +108,7 @@ module.exports = {
     getserv,
     //getAllservt,
     getAllservn,
+    updateservimg,
     getAllservo,
     createservt,
 };
