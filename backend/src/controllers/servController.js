@@ -5,28 +5,20 @@ const createserv = async (req, res) => {
     const newserv = await servModel.create({ name, type,avatar});
     res.json(newserv);
   };
-  const updateservimg = async (req, res) => {
-   // const { name, type, avatar } = req.body;
-    console.log("avatar");
-    // try {
-    //   console.log("avatar");
-    //   const updUser = await servModel.findOneAndUpdate(
-    //     { name, type },
-    //     { avatar },
-    //     { new: true }
-    //   );
-    //   if (!updUser) {
-    //     // If no matching document was found, send a 404 status code
-    //     return res.status(404).send('Service not found');
-    //   }
-    //   console.log(avatar);
-    //   res.status(200).json(updUser);
-    // } catch (error) {
-    //   // Handle the error appropriately
-    //   console.error(error);
-    //   res.status(500).send('Server error');
-    // }
-  };
+  const updatservimg =async (req , res)=> {
+    const { name } = req.params;
+      const { avatar } = req.body;
+      try {
+        const updUser = await servModel.findOneAndUpdate(
+          { name },
+          { avatar:avatar },
+          { new: true }
+        );
+        res.json(updUser);
+      } catch (error) {
+        res.status(500).send('Server error');
+      }
+}; 
   
   
   
@@ -120,7 +112,7 @@ module.exports = {
     getserv,
     //getAllservt,
     getAllservn,
-    updateservimg,
+    updatservimg,
     getAllservo,
     createservt,
 };
