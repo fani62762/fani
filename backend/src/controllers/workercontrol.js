@@ -195,8 +195,8 @@ const getworker = async (req, res) => {
 const gendercount = async (req, res) => {
   try {
     const wg = await workerModel.find();
-    const maleCount = wg.filter(worker => worker.gender === 'أنثى').length;
-    const femaleCount = wg.filter(worker => worker.gender === 'ذكر').length;
+    const femaleCount = wg.filter(worker => worker.gender === 'أنثى').length;
+    const maleCount = wg.filter(worker => worker.gender === 'ذكر').length;
 
     res.json({
       maleCount: maleCount,
