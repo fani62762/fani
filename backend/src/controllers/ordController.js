@@ -4,6 +4,7 @@ const fs = require('fs');
 const createord = async (req, res) => {
     const { uname, TypeServ ,Wname,Price,Hour,serv,date,add,isrepeated} = req.body;
     const acc=0;
+   
     const neword = await ordModel.create({ TypeServ ,Wname,uname, Price,Hour,serv,date,add,isrepeated,acc});
     res.json(neword);
   };
