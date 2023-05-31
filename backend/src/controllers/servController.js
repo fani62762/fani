@@ -6,8 +6,8 @@ const createserv = async (req, res) => {
     res.json(newserv);
   };
   const updateservimg = async (req, res) => {
-    const { name, type, avatar } = req.body;
-    console.log(avatar);
+   // const { name, type, avatar } = req.body;
+    console.log("avatar");
     // try {
     //   console.log("avatar");
     //   const updUser = await servModel.findOneAndUpdate(
