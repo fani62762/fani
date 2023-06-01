@@ -342,7 +342,6 @@ class _StatsGridState extends State<StatsGrid> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                
                 _buildStatCard(
                     ' اسم العامل ونوع الخدمة',
                     widget.orderg.Wname + "\n" + widget.orderg.TypeServ,
@@ -371,7 +370,7 @@ class _StatsGridState extends State<StatsGrid> {
               ],
             ),
           ),
-          if (ch == 1 && ch1 == 1)
+          if (ch == 1 && ch1 == 2)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -677,6 +676,7 @@ class _StatsScreenState extends State<StatsScreen> {
     getUserordu();
     getUserordd();
     getUserordc();
+    getUserordw();
   }
 
   @override
@@ -693,7 +693,7 @@ class _StatsScreenState extends State<StatsScreen> {
           slivers: <Widget>[
             _buildHeader(),
             _buildRegionTabBar(),
-            ch == 1 ? _buildStatsTabBard() : _buildStatsTabBard(),
+            ch == 1 ? _buildStatsTabBard() : _buildStatsTabBar(),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               //sliver: SliverToBoxAdapter(
@@ -988,7 +988,7 @@ class _StatsScreenState extends State<StatsScreen> {
   }
 
   SliverPadding _buildStatsTabBard() {
-    print("silver");
+    print("silver2");
     return SliverPadding(
       padding: const EdgeInsets.all(20.0),
       sliver: SliverToBoxAdapter(

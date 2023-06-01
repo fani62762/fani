@@ -53,8 +53,16 @@ Future<void> createord(
     body: body,
   );
   if (response.statusCode == 200) {
+    final worker = jsonDecode(response.body);
+    print(worker);
+    print("in order function2");
+    await QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      text: 'تمت عملية الطلب بنجاح',
+      autoCloseDuration: const Duration(seconds: 2),
+    );
     // name = name;
-    print("in order function");
 
     await sendNotificationToAll(
       "وصول طلب الطلب ",
@@ -62,14 +70,7 @@ Future<void> createord(
       wname,
     );
 
-    final worker = jsonDecode(response.body);
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      text: 'تمت عملية الطلب بنجاح',
-      autoCloseDuration: const Duration(seconds: 2),
-    );
-    Navigator.pushReplacement(
+    await Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => Userpage(
