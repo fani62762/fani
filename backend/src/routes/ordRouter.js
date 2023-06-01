@@ -1,5 +1,5 @@
 const express=require('express');
-const {updaterate,getworkordc,getOrdersCountWByDay,getOrderCountsWByService,deleteordsusers,retrieveWorkerssByuname,retrieveUnamesByWorker,getworkord,deleteordsworker,getallorder,getUserord,getUserordwork,getOrderCountsByService,getOrdersCountByDay,getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkordd,getworkordu,getUserordd,getUserordu,updateaccw,updateaccu} = require('../controllers/ordController');
+const {getUserordw,updaterate,getworkordc,getOrdersCountWByDay,getOrderCountsWByService,deleteordsusers,retrieveWorkerssByuname,retrieveUnamesByWorker,getworkord,deleteordsworker,getallorder,getUserord,getUserordwork,getOrderCountsByService,getOrdersCountByDay,getOrdersCountByMonth,getUserordc, getorder,createord,deleteord,getworkordd,getworkordu,getUserordd,getUserordu,updateaccw,updateaccu} = require('../controllers/ordController');
 
 const router=express.Router()
 router.get('/1/:id', getorder );
