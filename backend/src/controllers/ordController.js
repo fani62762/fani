@@ -81,6 +81,13 @@ const  getUserordd = async (req, res) => {
     res.json(myDoc);
     });
 };
+const  getUserordw = async (req, res) => {
+  const uname= req.params.name;
+  const allserv = await ordModel.find({uname,acc:{ $eq: 0 }}).then(function(myDoc) {
+  console.log(myDoc);
+  res.json(myDoc);
+  });
+};
 const  getUserordc = async (req, res) => {
   const uname= req.params.name;
   const allserv = await ordModel.find({uname,acc:{ $eq: -2 }}).then(function(myDoc) {
@@ -358,6 +365,7 @@ const getOrderCountsWByService = async (req, res) => {
     getOrderCountsWByService,
     getworkordc,
     updaterate,
+    getUserordw
 
 
 

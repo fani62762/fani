@@ -21,6 +21,7 @@ import 'dart:ui' as ui;
 import 'package:intl/intl.dart';
 
 int ch = 1;
+int ch1 = 1;
 int ch2 = 1;
 int oldrat = 0;
 String myid = "";
@@ -366,7 +367,7 @@ class _StatsGridState extends State<StatsGrid> {
               ],
             ),
           ),
-          if (ch == 1)
+          if (ch == 1 && ch1 == 1)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -389,7 +390,8 @@ class _StatsGridState extends State<StatsGrid> {
                 ),
               ],
             ),
-          if (ch == 2) SizedBox(height: 10),
+          // if (ch == 2)
+          if (ch == 2 || ch1 == 2) SizedBox(height: 10),
         ],
       ),
     );
@@ -474,6 +476,7 @@ class StatsScreen extends StatefulWidget {
 }
 
 List<morder> naccp = [];
+List<morder> waccp = [];
 List<morder> accp = [];
 List<morder> cccp = [];
 List<servwork> service = [];
@@ -647,6 +650,22 @@ class _StatsScreenState extends State<StatsScreen> {
     return parsed.map((e) => morder.fromJson(e)).toList();
   }
 
+  Future<List<morder>> getUserordw() async {
+    final resp = await http2.get(
+      Uri.parse('https://fani-service.onrender.com/ord/99/$usname'),
+      headers: {'Content-Type': 'application/json'},
+    );
+    final parsed = jsonDecode(resp.body) as List;
+    if (this.mounted) {
+      setState(() {
+        waccp = parsed.map((e) => morder.fromJson(e)).toList();
+        print(waccp);
+      });
+    }
+
+    return parsed.map((e) => morder.fromJson(e)).toList();
+  }
+
   @override
   void initState() {
     techname = tname;
@@ -670,7 +689,7 @@ class _StatsScreenState extends State<StatsScreen> {
           slivers: <Widget>[
             _buildHeader(),
             _buildRegionTabBar(),
-            if (ch == 2) _buildStatsTabBar(),
+            ch == 1 ? _buildStatsTabBard() : _buildStatsTabBard(),
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               //sliver: SliverToBoxAdapter(
@@ -685,12 +704,21 @@ class _StatsScreenState extends State<StatsScreen> {
                       modifiedColor.blue + additionalValue,
                     );
                     if (ch == 1) {
-                      return Column(
-                        children: [
-                          StatsGrid(orderg: naccp[index], index: index),
-                          Divider(color: Colors.black, thickness: 1.0),
-                        ],
-                      );
+                      if (ch1 == 1) {
+                        return Column(
+                          children: [
+                            StatsGrid(orderg: waccp[index], index: index),
+                            Divider(color: Colors.black, thickness: 1.0),
+                          ],
+                        );
+                      } else if (ch1 == 2) {
+                        return Column(
+                          children: [
+                            StatsGrid(orderg: naccp[index], index: index),
+                            Divider(color: Colors.black, thickness: 1.0),
+                          ],
+                        );
+                      }
                     } else if (ch2 == 1) {
                       return Column(
                         children: [
@@ -707,11 +735,13 @@ class _StatsScreenState extends State<StatsScreen> {
                       );
                     }
                   },
-                  childCount: ch == 1
-                      ? naccp.length
-                      : ch2 == 1
-                          ? accp.length
-                          : cccp.length,
+                  childCount: ch == 1 && ch1 == 1
+                      ? waccp.length
+                      : ch == 1 && ch1 == 2
+                          ? naccp.length
+                          : ch == 2 && ch2 == 1
+                              ? accp.length
+                              : cccp.length,
                 ),
               ),
             ),
@@ -942,6 +972,46 @@ class _StatsScreenState extends State<StatsScreen> {
                   setState(() {
                     //datatime = nt
                     ch2 = 2;
+                  });
+                  print("ex");
+                  break;
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  SliverPadding _buildStatsTabBard() {
+    print("silver");
+    return SliverPadding(
+      padding: const EdgeInsets.all(20.0),
+      sliver: SliverToBoxAdapter(
+        child: DefaultTabController(
+          length: 2,
+          child: TabBar(
+            indicatorColor: Color.fromARGB(0, 115, 90, 241),
+            labelStyle: Styles.tabTextStyle,
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.blue,
+            tabs: <Widget>[
+              Text('بانتظار موافقة العامل'),
+              Text('قيد التنفيذ '),
+              // Text('Yesterday'),
+            ],
+            onTap: (index) {
+              switch (index) {
+                case 0:
+                  print("curr");
+                  setState(() =>
+                      //datatime = nt
+                      ch1 = 1);
+                  break;
+                case 1:
+                  setState(() {
+                    //datatime = nt
+                    ch1 = 2;
                   });
                   print("ex");
                   break;

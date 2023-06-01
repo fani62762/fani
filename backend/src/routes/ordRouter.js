@@ -21,6 +21,8 @@ router.get('/66/:name',getworkordc);
 router.get('/3/:name',getUserordd);
 router.get('/4/:name',getUserordu);
 router.get('/9/:name',getUserordc);
+
+router.get('/99/:name',getUserordw);
 router.put('/7/:id',updateaccw);
 router.put('/8/:id',updateaccu);
 router.put('/88/:id',updaterate);
