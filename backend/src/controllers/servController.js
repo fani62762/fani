@@ -5,12 +5,45 @@ const createserv = async (req, res) => {
     const newserv = await servModel.create({ name, type,avatar});
     res.json(newserv);
   };
+  const updatservimg =async (req , res)=> {
+    const { name,type } = req.params;
+      const { avatar } = req.body;
+      try {
+        const updUser = await servModel.findOneAndUpdate(
+          { name,type },
+          { avatar:avatar },
+          { new: true }
+        );
+        res.json(updUser);
+      } catch (error) {
+        res.status(500).send('Server error');
+      }
+}; 
+  
+  
+  
   const createservt = async (req, res) => {
-    
-    const { name,type} = req.body;
-    const newserv = await servModel.create({ name, type});
-    res.json(newserv);
+    try {
+      const { name, type } = req.body;
+  
+      // Check if the combination of name and type already exists
+      const existingServ = await servModel.findOne({ name, type });
+  
+      if (existingServ) {
+        // Return an error response indicating the combination already exists
+        return res.status(400).json({ error: 'Combination of name and type already exists' });
+      }
+  
+      // Create a new service
+      const newserv = await servModel.create({ name, type });
+      res.json(newserv);
+    } catch (error) {
+      // Handle the error appropriately
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
   };
+  
 
 const getAllserv= async(req,res)=>{
       const allserv = await servModel.find({}).then(function(myDoc) {
@@ -79,6 +112,7 @@ module.exports = {
     getserv,
     //getAllservt,
     getAllservn,
+    updatservimg,
     getAllservo,
     createservt,
 };

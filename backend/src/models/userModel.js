@@ -63,7 +63,7 @@ default:35.22223124412008
 },
 pref: {
     type: String,
-    defualt:"m,t,d,p,b"
+    default:"m,t,d,p,b"
    
 },
 

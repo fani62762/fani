@@ -336,10 +336,13 @@ class _StatsGridState extends State<StatsGrid> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.4,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Flexible(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                
                 _buildStatCard(
                     ' اسم العامل ونوع الخدمة',
                     widget.orderg.Wname + "\n" + widget.orderg.TypeServ,
@@ -351,6 +354,7 @@ class _StatsGridState extends State<StatsGrid> {
           ),
           Flexible(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buildStatCard(
                     'التاريخ والوقت',
