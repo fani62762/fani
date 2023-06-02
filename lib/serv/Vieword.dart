@@ -298,16 +298,19 @@ class _ViewordState extends State<Vieword> {
                                       ),
                                     ),
                                     IconButton(
-                                      onPressed: () {
-                                        setState(() async {
-                                          await sendNotificationToAll(
+                                      onPressed: () async {
+                                                await sendNotificationToAll(
                                             "رفض الطلب ",
                                             "تم رفض طلبك من قبل العامل ${naccp[index].Wname}",
                                             naccp[index].uname,
                                           );
+                                        setState(()  {
+                                  
+                                          print("hi");
                                           naccp[index].acc = -1;
+                                           updateaccw(naccp[index].id, -1);
                                           naccp.removeAt(index);
-                                          updateaccw(naccp[index].id, -1);
+                                         
                                         });
                                       },
                                       icon: Icon(
