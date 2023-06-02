@@ -306,7 +306,6 @@ class _ViewordState extends State<Vieword> {
                                             naccp[index].uname,
                                           );
                                           naccp[index].acc = -1;
-
                                           naccp.removeAt(index);
                                           updateaccw(naccp[index].id, -1);
                                         });
