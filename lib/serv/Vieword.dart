@@ -285,10 +285,11 @@ class _ViewordState extends State<Vieword> {
                                           "تم قبول طلبك من قبل العامل ${naccp[index].Wname}",
                                           naccp[index].uname,
                                         );
+                                        await   updateaccw(naccp[index].id, 1);
                                         setState(() {
                                           naccp[index].acc = 1;
                                           accp.add(naccp[index]);
-                                          updateaccw(naccp[index].id, 1);
+                                        
                                           naccp.removeAt(index);
                                         });
                                       },
@@ -304,11 +305,12 @@ class _ViewordState extends State<Vieword> {
                                             "تم رفض طلبك من قبل العامل ${naccp[index].Wname}",
                                             naccp[index].uname,
                                           );
+                                           await updateaccw(naccp[index].id, -1);
                                         setState(()  {
                                   
                                           print("hi");
                                           naccp[index].acc = -1;
-                                           updateaccw(naccp[index].id, -1);
+                                         
                                           naccp.removeAt(index);
                                          
                                         });
