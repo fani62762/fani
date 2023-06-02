@@ -31,29 +31,13 @@ List<Preference> availablePreferences = [
   Preference('m', 'الاتقان'),
   Preference('t', 'الدقة في المواعيد'),
   Preference('b', 'الاسلوب'),
-  // Add more preferences as needed
+ 
 ];
 
-// Order order = Order(
-//   typeOfService: 'Cleaning',
-//   hour: '2-4',
-//   workerName: 'John Doe',
-//   userName: 'Jane Doe',
-//   services: ['Kitchen', 'Bathroom', 'Living Room'],
-//   additionalServices: ['Windows Cleaning', 'Carpet Cleaning'],
-//   appointmentTime: '2-2-2002', //DateTime(2022, 5, 15, 14, 30),
-//   isRepeated: true,
-//   pricePerHour: 25.0,
-// );
+
 
 class _ForUserState extends State<ForUser> {
-  bool showPreferences = false; // Flag to control visibility
 
-  void togglePreferencesVisibility() {
-    setState(() {
-      showPreferences = !showPreferences;
-    });
-  }
 
   Future<void> userInfo(String name) async {
     final responseU = await http
@@ -192,82 +176,38 @@ class _ForUserState extends State<ForUser> {
         ),
         child: Column(
           children: [
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'تحديد أهم صفات العمال  :',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ' صفات العمال  ',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             SizedBox(height: 10),
             SingleChildScrollView(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //Expanded(
-                ElevatedButton(
-                  onPressed: togglePreferencesVisibility,
-                  child: Text('الاولويات'),
-                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: 300,
+                    maxWidth: 600,
+                  ),
+                  child: Container(
+                    child:
+                     ListView.builder(
+                      itemCount: orderedPreferences.length,
+                      itemBuilder: (context, index) {
+                        Preference preference = orderedPreferences[index];
 
-                // Other widgets in the Row
-                Expanded(
-                    child: Visibility(
-                  visible: showPreferences,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: 300,
-                      maxWidth: 600,
-                    ),
-                    child: Container(
-                      width: double.infinity, // Adjust the width as needed
-                      child: ListView.builder(
-                        itemCount: orderedPreferences.length,
-                        itemBuilder: (context, index) {
-                          Preference preference = orderedPreferences[index];
-
-                          return ListTile(
-                            title: Text(preference.label),
-                            // leading: Checkbox(
-                            //   value: selectedPreferences.contains(preference),
-                            //   onChanged: (value) {
-                            //     togglePreferenceSelection(preference);
-                            //   },
-                            // ),
-                          );
-                        },
-                      ),
+                        return ListTile(
+                          title: Text(preference.label),
+                         
+                        );
+                      },
                     ),
                   ),
                 ))
-                // Visibility(
-                //   visible: showPreferences,
-                //   child: ConstrainedBox(
-                //       constraints: BoxConstraints(
-                //         maxHeight: 300,
-                //         maxWidth: 600,
-                //       ),
-                //       child: ListView.builder(
-                //         itemCount: orderedPreferences.length,
-                //         itemBuilder: (context, index) {
-                //           Preference preference = orderedPreferences[index];
-
-                //           return ListTile(
-                //             title: Text(preference.label),
-                //             // leading: Checkbox(
-                //             //   value: selectedPreferences.contains(preference),
-                //             //   onChanged: (value) {
-                //             //     togglePreferenceSelection(preference);
-                //             //   },
-                //             // ),
-                //           );
-                //         },
-                //       )),
-                // )
-              ],
-            ))
           ],
         ),
       );

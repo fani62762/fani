@@ -335,19 +335,7 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     return parsed.map((e) => types.fromJson(e)).toList();
   }
 
-  Timer getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (pageNo == 4) {
-        pageNo = 0;
-      }
-      // pageController.animateToPage(
-      //   pageNo,
-      //   duration: const Duration(seconds: 1),
-      //   curve: Curves.easeInOutCirc,
-      // );
-      pageNo++;
-    });
-  }
+  
 
   @override
   void initState() {
@@ -357,7 +345,7 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     userInfo(widget.userName);
     usname = widget.userName;
     pageController = PageController(initialPage: 0, viewportFraction: 0.85);
-    carasouelTmer = getTimer();
+ 
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -417,28 +405,12 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
                     builder: (ctx, child) {
                       return child!;
                     },
-                    child: GestureDetector(
-                      onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Hello you tapped at ${index + 1} "),
-                          ),
-                        );
-                      },
-                      onPanDown: (d) {
-                        carasouelTmer?.cancel();
-                        carasouelTmer = null;
-                      },
-                      onPanCancel: () {
-                        carasouelTmer = getTimer();
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            right: 8, left: 8, top: 24, bottom: 12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
-                          color: Colors.amberAccent,
-                        ),
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          right: 8, left: 8, top: 24, bottom: 12),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        color: Colors.amberAccent,
                       ),
                     ),
                   );
@@ -454,7 +426,7 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
                   hintStyle: TextStyle(color: db),
                   helperText: '',
                   prefixIcon: Icon(Icons.search_sharp, color: db),
-                  suffixIcon: Icon(Icons.camera_alt, color: db),
+                  // suffixIcon: Icon(Icons.camera_alt, color: db),
                 ),
                 validator: (value) {
                   print(value);

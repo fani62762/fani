@@ -258,6 +258,7 @@ class _SignUpState extends State<SignUp> {
                 Container(
                   padding: EdgeInsets.only(right: 0),
                   child: Row(
+                    
                     children: [
                       Text(
                         "هل لديك بالفعل حساب مِن قبل ؟ ",

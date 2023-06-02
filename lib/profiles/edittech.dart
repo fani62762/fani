@@ -641,7 +641,7 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
   }
 
   void initState() {
-   
+     super.initState();
        req();
     selecServ.clear();
     timeSelec.clear();
@@ -650,7 +650,7 @@ FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     workerInfo(widget.techName);
     getalls(widget.techName);
     getmyeWorker(widget.techName); 
-    super.initState();
+  
   }
 
   @override

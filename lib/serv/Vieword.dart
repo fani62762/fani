@@ -247,7 +247,7 @@ class _ViewordState extends State<Vieword> {
               ),
               Container(
                   height:
-                      300, // Adjust the height value according to your needs
+                      200, // Adjust the height value according to your needs
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -302,8 +302,8 @@ class _ViewordState extends State<Vieword> {
                                         setState(() async {
                                           await sendNotificationToAll(
                                             "رفض الطلب ",
-                                            "تم رفض طلبك من قبل العامل ${accp[index].Wname}",
-                                            accp[index].uname,
+                                            "تم رفض طلبك من قبل العامل ${naccp[index].Wname}",
+                                            naccp[index].uname,
                                           );
                                           naccp[index].acc = -1;
 
@@ -340,7 +340,7 @@ class _ViewordState extends State<Vieword> {
               Divider(),
               Container(
                   height:
-                      300, // Adjust the height value according to your needs
+                      200, // Adjust the height value according to your needs
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
