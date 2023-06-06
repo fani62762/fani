@@ -745,34 +745,37 @@ class _techState extends State<tech> {
         ])));
   }
 
-  showAlertDialog(BuildContext context) {
-    // Create button
-    Widget okButton = TextButton(
-      child: Center(child: Text("اتمام")),
-      onPressed: () {
-        createord(context, usname, ordwname, ordhour, ordprice, ordrepeated,
-            orddate, ordadd, ordserv, ordtype);
-      },
-    );
+showAlertDialog(BuildContext context) {
+  // Create button
+  Widget okButton = TextButton(
+    child: Center(child: Text("اتمام")),
+    onPressed: () {
+      createord(context, usname, ordwname, ordhour, ordprice, ordrepeated,
+          orddate, ordadd, ordserv, ordtype);
+    },
+  );
 
-    // Create AlertDialog
-    AlertDialog alert = AlertDialog(
-    
-      title: Center(child: Text("تأكيد عملية الطلب")),
-      content: Center(child: Text("هل تريد اتمام عملية الطلب")),
-      actions: [
-        okButton,
-      ],
-    );
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Center(child: Text("تأكيد عملية الطلب")),
+    content: Container(
+      height: 80, // Set the desired height
+      child: Center(child: Text("هل تريد اتمام عملية الطلب")),
+    ),
+    actions: [
+      okButton,
+    ],
+  );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 
   serviceContainer(String name, int index) {
     return GestureDetector(
