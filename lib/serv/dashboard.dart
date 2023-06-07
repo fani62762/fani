@@ -345,9 +345,9 @@ class _StatsGridState extends State<StatsGrid> {
                 _buildStatCard(
                     ' اسم العامل ونوع الخدمة',
                     widget.orderg.Wname + "\n" + widget.orderg.TypeServ,
-                    modifiedColor),
+                    Colors.orange),
                 _buildStatCard(
-                    'السعر في الساعة', widget.orderg.Price, modifiedColor),
+                    'السعر في الساعة', widget.orderg.Price, Colors.orange),
               ],
             ),
           ),
@@ -362,11 +362,11 @@ class _StatsGridState extends State<StatsGrid> {
                         widget.orderg.Hour +
                         "\n" +
                         widget.orderg.isrepeated,
-                    modifiedColor),
+                    Colors.green),
                 _buildStatCard(
-                    'الخدمات', widget.orderg.serv.toString(), modifiedColor),
+                    'الخدمات', widget.orderg.serv.toString(), Colors.green),
                 _buildStatCard('طلبات اضافية', widget.orderg.add.toString(),
-                    modifiedColor),
+                    Colors.green),
               ],
             ),
           ),
@@ -469,7 +469,7 @@ class Styles {
 }
 
 class Palette {
-  static const Color primaryColor = Colors.white;
+  static const Color primaryColor = Color.fromARGB(255, 240, 248, 250);
 }
 
 class StatsScreen extends StatefulWidget {
