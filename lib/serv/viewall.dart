@@ -65,7 +65,7 @@ Future<void> createord(
     // name = name;
 
     await sendNotificationToAll(
-      "وصول طلب الطلب ",
+      "وصول الطلب ",
       "تم ارسال طلب خدمة من قبل المستخدم $usname",
       wname,
     );
